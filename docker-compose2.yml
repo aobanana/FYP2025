@@ -1,0 +1,14 @@
+version: '3.8'
+services:
+    nodeapp:
+        build: .
+        container_name: '8210-nodeapp'
+        working_dir: /usr/src/app
+        ports:
+            - '8211:3000'
+        volumes:
+          - .:/usr/src/app
+          - /usr/src/app/node_modules
+        #command: ["node", "index.js"]
+        # This makes the container run forever, so you can docker exec into it any time.
+        command: ["sh", "-c", "while true; do sleep 3600; done"]
