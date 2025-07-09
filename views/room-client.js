@@ -1,0 +1,121 @@
+document.addEventListener('DOMContentLoaded', () => {
+    // Get room ID from URL
+    const urlParams = new URLSearchParams(window.location.search);
+    const roomId = urlParams.get('room');
+    
+    if (!roomId) {
+        window.location.href = '/';
+        return;
+    }
+    
+    // Display room ID
+    document.getElementById('roomTitle').textContent = roomId;
+    
+    // Initialize Matter.js
+    const { Engine, Render, Runner, Bodies, Composite, Mouse, MouseConstraint } = Matter;
+    
+    // Create engine
+    const engine = Engine.create();
+    const { world } = engine;
+    
+    // Create renderer
+    const canvas = document.getElementById('physicsCanvas');
+    const render = Render.create({
+        canvas,
+        engine,
+        options: {
+            width: canvas.clientWidth,
+            height: canvas.clientHeight,
+            wireframes: false,
+            background: '#eee'
+        }
+    });
+    
+    // Add mouse control
+    const mouse = Mouse.create(render.canvas);
+    const mouseConstraint = MouseConstraint.create(engine, {
+        mouse,
+        constraint: {
+            stiffness: 0.2,
+            render: {
+                visible: false
+            }
+        }
+    });
+    
+    Composite.add(world, mouseConstraint);
+    
+    // Keep the mouse in sync with rendering
+    render.mouse = mouse;
+    
+    // Run the engine
+    Engine.run(engine);
+    Render.run(render);
+    
+    // Socket.io connection
+    const socket = io();
+    
+    // Join the room
+    socket.emit('joinRoom', roomId);
+    
+    // Handle initial room state
+    socket.on('roomState', (state) => {
+        // Clear existing bodies
+        Composite.clear(world);
+        
+        // Add walls
+        const walls = [
+            Bodies.rectangle(400, 0, 800, 50, { isStatic: true }),
+            Bodies.rectangle(400, 600, 800, 50, { isStatic: true }),
+            Bodies.rectangle(0, 300, 50, 600, { isStatic: true }),
+            Bodies.rectangle(800, 300, 50, 600, { isStatic: true })
+        ];
+        
+        Composite.add(world, walls);
+        
+        // Add existing physics objects
+        if (state.physicsObjects && state.physicsObjects.length > 0) {
+            state.physicsObjects.forEach(obj => {
+                const body = Bodies.rectangle(obj.x, obj.y, obj.width, obj.height);
+                Composite.add(world, body);
+            });
+        }
+    });
+    
+    // Handle physics updates from other clients
+    socket.on('physicsUpdate', (objects) => {
+        // This would be more sophisticated in a real app
+        console.log('Received physics update', objects);
+    });
+    
+    // Handle canvas clicks to add objects
+    canvas.addEventListener('mousedown', (event) => {
+        if (event.button === 0) { // Left click
+            const rect = canvas.getBoundingClientRect();
+            const x = event.clientX - rect.left;
+            const y = event.clientY - rect.top;
+            
+            const box = Bodies.rectangle(x, y, 80, 80);
+            Composite.add(world, box);
+            
+            // Send update to server
+            const objects = world.bodies
+                .filter(b => !b.isStatic)
+                .map(b => ({
+                    x: b.position.x,
+                    y: b.position.y,
+                    width: 80,
+                    height: 80
+                }));
+            
+            socket.emit('physicsUpdate', { roomId, objects });
+        }
+    });
+    
+    // Window resize handler
+    window.addEventListener('resize', () => {
+        render.options.width = canvas.clientWidth;
+        render.options.height = canvas.clientHeight;
+        Render.setPixelRatio(render, window.devicePixelRatio);
+    });
+});

@@ -1,0 +1,28 @@
+<%- include('partials/header') %>
+    <style>
+      canvas { border: 1px solid black; }
+      #position { margin-top: 10px; font-family: monospace; }
+    </style>
+    <h1>Matter.js Demo</h1>
+    <canvas id="world"></canvas>
+    <div id="position">Box Y Position: </div>
+
+    <!-- Matter.js from CDN -->
+    <script src="https://cdn.jsdelivr.net/npm/matter-js@0.19.0/build/matter.min.js"></script>
+    <script src="index.js"></script>
+
+    <div class="container">
+        <h1>Matter.js Physics Demo</h1>
+        <div id="roomControls">
+            <input type="text" id="roomId" placeholder="Enter room ID">
+            <button id="joinRoom">Join Room</button>
+        </div>
+        <canvas id="physicsCanvas"></canvas>
+    </div>
+    <script src="/socket.io/socket.io.js"></script>
+    <!-- Matter.js from CDN -->
+    <script src="https://cdn.jsdelivr.net/npm/matter-js@0.19.0/build/matter.min.js"></script>
+    <!--script src="matter.js"></script-->
+    <script src="client.js"></script>
+
+<%- include('partials/footer') %>
