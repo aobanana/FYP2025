@@ -6,7 +6,7 @@ document.addEventListener('DOMContentLoaded', () => {
     joinRoomBtn.addEventListener('click', () => {
         const roomId = roomIdInput.value.trim();
         if (roomId) {
-            window.location.href = `/room.html?room=${roomId}`;
+            window.location.href = `/room?room=${roomId}`;
         }
     });
     

@@ -51,21 +51,60 @@ io.on('connection', (socket) => {
         
         if (!rooms.has(roomId)) {
             rooms.set(roomId, {
-                physicsObjects: []
+                physicsObjects: [],
+                objects: [],
+                lastUpdated: Date.now()
             });
         }
         
         // Send current room state to the new client
         socket.emit('roomState', rooms.get(roomId));
     });
+
+    // Handle new object creation
+    socket.on('createObject', ({ roomId, object }) => {
+        if (rooms.has(roomId)) {
+            const roomState = rooms.get(roomId);
+            /*roomState.objects.push(object);
+            roomState.lastUpdated = Date.now();
+            
+            // Broadcast to all in room except sender
+            socket.to(roomId).emit('addObject', object);*/
+            // Only add if not already exists
+            if (!roomState.objects.some(obj => obj.id === object.id)) {
+                roomState.objects.push(object);
+                roomState.lastUpdated = Date.now();
+                
+                // Broadcast to all in room except sender
+                socket.to(roomId).emit('addObject', object);
+            }
+        }
+    });
     
     // Handle physics updates
-    socket.on('physicsUpdate', (data) => {
+    /*socket.on('physicsUpdate', (data) => {
         const { roomId, objects } = data;
         
         if (rooms.has(roomId)) {
             rooms.get(roomId).physicsObjects = objects;
             socket.to(roomId).emit('physicsUpdate', objects);
+        }
+    });*/
+    // Handle physics updates
+    socket.on('physicsUpdate', ({ roomId, objects }) => {
+        if (rooms.has(roomId)) {
+            const roomState = rooms.get(roomId);
+            // Update existing objects
+            objects.forEach(updatedObj => {
+                const index = roomState.objects.findIndex(obj => obj.id === updatedObj.id);
+                if (index !== -1) {
+                    roomState.objects[index] = updatedObj;
+                }
+            });
+            roomState.lastUpdated = Date.now();
+            
+            // Broadcast to all in room except sender
+            socket.to(roomId).emit('updatePhysicsState', objects);
         }
     });
     
