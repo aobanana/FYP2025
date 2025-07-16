@@ -1,23 +1,39 @@
 body {
     font-family: Arial, sans-serif;
     margin: 0;
-    padding: 20px;
-    text-align: center;
+    padding: 0;
+    overflow: hidden;
 }
 
 h1 {
     color: #333;
+    position: absolute;
+    top: 10px;
+    left: 10px;
+    z-index: 100;
+    background: rgba(255, 255, 255, 0.7);
+    padding: 5px 10px;
+    border-radius: 3px;
 }
 
 #canvas-container {
-    margin: 20px auto;
-    border: 1px solid #ccc;
-    border-radius: 5px;
-    overflow: hidden;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    z-index: 1;
 }
 
 .controls {
-    margin: 20px 0;
+    position: fixed;
+    bottom: 20px;
+    left: 50%;
+    transform: translateX(-50%);
+    z-index: 100;
+    background: rgba(255, 255, 255, 0.7);
+    padding: 10px;
+    border-radius: 5px;
 }
 
 button {

@@ -2,16 +2,24 @@ document.addEventListener('DOMContentLoaded', () => {
     const roomId = 100;
     const socket = io();
     
-    // Join the room
-    socket.emit('joinRoom', roomId);
-    
+    // Default canvas dimensions (will be updated from index page)
+    let canvasWidth = 800;
+    let canvasHeight = 600;
+
+    // Listen for canvas dimension updates from index page
+    socket.on('canvasDimensions', (dimensions) => {
+        canvasWidth = dimensions.width;
+        canvasHeight = dimensions.height;
+        console.log('Updated canvas dimensions:', dimensions);
+    });
+
     // Button event listeners
     document.getElementById('addBox').addEventListener('click', () => {
         const box = {
             id: Date.now().toString(),
             type: 'rectangle',
-            x: 400,
-            y: 100,
+            x: canvasWidth / 2,  // Dynamic center based on current canvas width
+            y: 0,                // Top of the canvas
             width: 80,
             height: 80,
             options: {
@@ -29,8 +37,8 @@ document.addEventListener('DOMContentLoaded', () => {
         const circle = {
             id: Date.now().toString(),
             type: 'circle',
-            x: 400,
-            y: 100,
+            x: canvasWidth / 2,  // Dynamic center based on current canvas width
+            y: 0,                // Top of the canvas
             radius: 40,
             options: {
                 restitution: 0.8,
