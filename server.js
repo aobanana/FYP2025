@@ -1,122 +1,91 @@
 const express = require('express');
-const http = require('http');
-const socketIo = require('socket.io');
 const path = require('path');
-
+const fs = require('fs');
+const { v4: uuidv4 } = require('uuid');
 const app = express();
-const server = http.createServer(app);
-const io = socketIo(server);
+const server = require('http').createServer(app);
+const io = require('socket.io')(server);
 
+// Configuration
+const PORT = process.env.PORT || 3000;
+const DATA_FILE = path.join(__dirname, 'data', 'room_100.json');
+
+// Ensure data directory exists
+if (!fs.existsSync(path.join(__dirname, 'data'))) {
+    fs.mkdirSync(path.join(__dirname, 'data'));
+}
+
+// Initialize empty data file if it doesn't exist
+if (!fs.existsSync(DATA_FILE)) {
+    fs.writeFileSync(DATA_FILE, JSON.stringify({ objects: [] }, null, 2));
+}
+
+// Middleware
 app.set('view engine', 'ejs');
 app.set('views', path.join(__dirname, 'views'));
+app.use(express.static(path.join(__dirname, 'public')));
+app.use(express.json());
 
-// Serve static files with proper headers
-app.use('/styles.css', (req, res, next) => {
-  res.setHeader('Content-Type', 'text/css');
-  next();
-});
-
-// Add these routes before the static middleware
+// Routes
 app.get('/', (req, res) => {
-  //res.sendFile(path.join(__dirname, 'public', 'index.html'));
-  const roomId = 100;
-  res.render('index', { title: 'SENSO LAB' });
+    res.render('index', { roomId: 100 });
 });
 
-//app.get('/room.html', (req, res) => {
-//  res.sendFile(path.join(__dirname, 'public', 'room.html'));
-app.get('/dashboard', (req, res) => {
-  //const roomId = req.query.room;
-  const roomId = 100;
-  res.render('dashboard', { title: `Dashboard` });
+app.get('/control', (req, res) => {
+    res.render('control', { roomId: 100 });
 });
 
-// Static files middleware
-app.use(express.static(path.join(__dirname, 'public'), {
-  setHeaders: (res, path) => {
-    if (path.endsWith('.css')) {
-      res.setHeader('Content-Type', 'text/css');
-    }
-  }
-}));
-
-// Store room data
-const rooms = new Map();
+// API to get room data
+app.get('/api/room/:roomId', (req, res) => {
+    const roomId = req.params.roomId;
+    const data = getRoomData(roomId);
+    res.json(data);
+});
 
 // Socket.io connection
 io.on('connection', (socket) => {
-    console.log('New client connected');
-    
-    // Join a room
+    console.log('A user connected');
+
     socket.on('joinRoom', (roomId) => {
-        socket.join(roomId);
-        
-        if (!rooms.has(roomId)) {
-            rooms.set(roomId, {
-                physicsObjects: [],
-                objects: [],
-                lastUpdated: Date.now()
-            });
-        }
-        
-        // Send current room state to the new client
-        socket.emit('roomState', rooms.get(roomId));
+        socket.join(roomId.toString());
+        console.log(`User joined room ${roomId}`);
     });
 
-    // Handle new object creation
-    socket.on('createObject', ({ roomId, object }) => {
-        if (rooms.has(roomId)) {
-            const roomState = rooms.get(roomId);
-            /*roomState.objects.push(object);
-            roomState.lastUpdated = Date.now();
-            
-            // Broadcast to all in room except sender
-            socket.to(roomId).emit('addObject', object);*/
-            // Only add if not already exists
-            if (!roomState.objects.some(obj => obj.id === object.id)) {
-                roomState.objects.push(object);
-                roomState.lastUpdated = Date.now();
-                
-                // Broadcast to all in room except sender
-                socket.to(roomId).emit('addObject', object);
-            }
-        }
-    });
-    
-    // Handle physics updates
-    /*socket.on('physicsUpdate', (data) => {
-        const { roomId, objects } = data;
+    socket.on('addObject', ({ roomId, object }) => {
+        // Save to JSON file
+        const data = getRoomData(roomId);
+        data.objects.push(object);
+        saveRoomData(roomId, data);
         
-        if (rooms.has(roomId)) {
-            rooms.get(roomId).physicsObjects = objects;
-            socket.to(roomId).emit('physicsUpdate', objects);
-        }
-    });*/
-    // Handle physics updates
-    socket.on('physicsUpdate', ({ roomId, objects }) => {
-        if (rooms.has(roomId)) {
-            const roomState = rooms.get(roomId);
-            // Update existing objects
-            objects.forEach(updatedObj => {
-                const index = roomState.objects.findIndex(obj => obj.id === updatedObj.id);
-                if (index !== -1) {
-                    roomState.objects[index] = updatedObj;
-                }
-            });
-            roomState.lastUpdated = Date.now();
-            
-            // Broadcast to all in room except sender
-            socket.to(roomId).emit('updatePhysicsState', objects);
-        }
+        // Broadcast to all clients in the room
+        io.to(roomId.toString()).emit('newObject', object);
     });
-    
-    // Handle disconnection
+
     socket.on('disconnect', () => {
-        console.log('Client disconnected');
+        console.log('User disconnected');
     });
 });
 
-const PORT = process.env.PORT || 3000;
+// Helper functions
+function getRoomData(roomId) {
+    try {
+        const data = fs.readFileSync(DATA_FILE, 'utf8');
+        return JSON.parse(data);
+    } catch (err) {
+        console.error('Error reading room data:', err);
+        return { objects: [] };
+    }
+}
+
+function saveRoomData(roomId, data) {
+    try {
+        fs.writeFileSync(DATA_FILE, JSON.stringify(data, null, 2));
+    } catch (err) {
+        console.error('Error saving room data:', err);
+    }
+}
+
+// Start server
 server.listen(PORT, () => {
-    console.log(`Server running on port ${PORT}`);
+    console.log(`Server running on http://localhost:${PORT}`);
 });
