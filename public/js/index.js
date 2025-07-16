@@ -32,7 +32,8 @@ document.addEventListener('DOMContentLoaded', () => {
             width: viewport.width,
             height: viewport.height,
             wireframes: false,
-            background: '#f4f4f4'
+            background: '#f4f4f4',
+            showAngleIndicator: false  // Add this for cleaner rendering
         }
     });
     
@@ -51,6 +52,7 @@ document.addEventListener('DOMContentLoaded', () => {
     World.add(engine.world, walls);
 
     const addTextRectangle = (world, x, y, width, height, title, content) => {
+        // Create the physical rectangle body
         const body = Bodies.rectangle(x, y, width, height, {
             chamfer: { radius: 10 },
             render: {
@@ -59,51 +61,114 @@ document.addEventListener('DOMContentLoaded', () => {
                 lineWidth: 2
             }
         });
-        
-        // Create text element
-        const textElement = document.createElement('div');
-        textElement.className = 'text-rectangle';
-        textElement.style.position = 'absolute';
-        textElement.style.width = `${width}px`;
-        textElement.style.height = `${height}px`;
-        textElement.style.transform = 'translate(-50%, -50%)';
-        textElement.style.pointerEvents = 'none';
-        textElement.style.padding = '10px';
-        textElement.style.boxSizing = 'border-box';
-        textElement.innerHTML = `
-            <h3 style="margin: 0 0 10px 0; font-size: 16px;">${title}</h3>
-            <p style="margin: 0; font-size: 14px;">${content}</p>
-        `;
-        
-        document.getElementById('canvas-container').appendChild(textElement);
-        
-        // Update text position when body moves
-        const updateTextPosition = () => {
-            const position = body.position;
-            textElement.style.left = `${position.x}px`;
-            textElement.style.top = `${position.y}px`;
-        };
-        
-        // Initial position
-        updateTextPosition();
-        
-        // Store reference to update later
-        body.textElement = textElement;
-        body.updateTextPosition = updateTextPosition;
-        
+
+        // Store text data with the body
+        body.textData = { title, content, width, height };
+
+        // Add custom rendering
+        Events.on(render, 'afterRender', function() {
+            const ctx = render.context;
+            const bodies = Composite.allBodies(engine.world);
+            
+            bodies.forEach(body => {
+                if (body.textData) {
+                    ctx.save();
+                    
+                    // Get body position and angle
+                    const pos = body.position;
+                    const angle = body.angle;
+                    
+                    // Transform to body's coordinate system
+                    ctx.translate(pos.x, pos.y);
+                    ctx.rotate(angle);
+                    
+                    // Draw text
+                    ctx.fillStyle = '#000000';
+                    ctx.font = 'bold 16px Arial';
+                    ctx.textAlign = 'center';
+                    ctx.textBaseline = 'top';
+                    ctx.fillText(body.textData.title, 0, -body.textData.height/2 + 20);
+                    
+                    ctx.fillStyle = '#333333';
+                    ctx.font = '14px Arial';
+                    wrapText(ctx, body.textData.content, 0, -body.textData.height/2 + 50, 
+                            body.textData.width - 20, 18);
+                    
+                    ctx.restore();
+                }
+            });
+        });
+
         World.add(world, body);
         return body;
     };
 
+    // Helper function to create canvas texture with text
+    /*function createTextTexture(width, height, title, content) {
+        const canvas = document.createElement('canvas');
+        canvas.width = width;
+        canvas.height = height;
+        const ctx = canvas.getContext('2d');
+        
+        // Draw rectangle background
+        ctx.fillStyle = '#ffffff';
+        ctx.strokeStyle = '#333333';
+        ctx.lineWidth = 2;
+        ctx.beginPath();
+        ctx.roundRect(0, 0, width, height, 10);
+        ctx.fill();
+        ctx.stroke();
+        
+        // Draw title
+        ctx.fillStyle = '#000000';
+        ctx.font = 'bold 16px Arial';
+        ctx.textAlign = 'center';
+        ctx.fillText(title, width/2, 30);
+        
+        // Draw content
+        ctx.fillStyle = '#333333';
+        ctx.font = '14px Arial';
+        wrapText(ctx, content, width/2, 50, width - 20, 20);
+        
+        return canvas;
+    }*/
+
+    // Helper to wrap text
+    function wrapText(ctx, text, x, y, maxWidth, lineHeight) {
+        const words = text.split(' ');
+        let line = '';
+        let currentY = y;
+        
+        for(let n = 0; n < words.length; n++) {
+            const testLine = line + words[n] + ' ';
+            const metrics = ctx.measureText(testLine);
+            
+            if (metrics.width > maxWidth && n > 0) {
+                ctx.fillText(line, x, currentY);
+                line = words[n] + ' ';
+                currentY += lineHeight;
+                
+                // Stop if we've reached the bottom of the rectangle
+                if (currentY > y + 100) {
+                    ctx.fillText('...', x, currentY);
+                    break;
+                }
+            } else {
+                line = testLine;
+            }
+        }
+        ctx.fillText(line, x, currentY);
+    }
+
     // Add this to your animation loop or update function
-    Events.on(engine, 'afterUpdate', () => {
+    /*Events.on(engine, 'afterUpdate', () => {
         const bodies = Composite.allBodies(engine.world);
         bodies.forEach(body => {
             if (body.updateTextPosition) {
                 body.updateTextPosition();
             }
         });
-    });
+    });*/
     
     // Start the engine and renderer
     Engine.run(engine);
@@ -124,42 +189,42 @@ document.addEventListener('DOMContentLoaded', () => {
     
     // Load objects from server
     const loadObjects = () => {
-    return fetch(`/api/room/${roomId}`)
-        .then(response => response.json())
-        .then(data => {
-            // Clear existing bodies (except walls)
-            World.clear(engine.world, false);
-            
-            // Re-add walls
-            walls = createWalls();
-            World.add(engine.world, walls);
-            
-            // Add all objects from server
-            data.objects.forEach(obj => {
-                let newBody;
-                if (obj.type === 'rectangle') {
-                    newBody = Bodies.rectangle(obj.x, obj.y, obj.width, obj.height, obj.options);
-                } else if (obj.type === 'circle') {
-                    newBody = Bodies.circle(obj.x, obj.y, obj.radius, obj.options);
-                } else if (obj.type === 'textRectangle') {
-                    newBody = addTextRectangle(
-                        engine.world,
-                        obj.x,
-                        obj.y,
-                        obj.width,
-                        obj.height,
-                        obj.title,
-                        obj.content
-                    );
-                }
+        return fetch(`/api/room/${roomId}`)
+            .then(response => response.json())
+            .then(data => {
+                // Clear existing bodies (except walls)
+                World.clear(engine.world, false);
                 
-                if (newBody) {
-                    World.add(engine.world, newBody);
-                    currentBodies.push(newBody);
-                }
+                // Re-add walls
+                walls = createWalls();
+                World.add(engine.world, walls);
+                
+                // Add all objects from server
+                data.objects.forEach(obj => {
+                    let newBody;
+                    if (obj.type === 'rectangle') {
+                        newBody = Bodies.rectangle(obj.x, obj.y, obj.width, obj.height, obj.options);
+                    } else if (obj.type === 'circle') {
+                        newBody = Bodies.circle(obj.x, obj.y, obj.radius, obj.options);
+                    } else if (obj.type === 'textRectangle') {
+                        newBody = addTextRectangle(
+                            engine.world,
+                            obj.x,
+                            obj.y,
+                            obj.width,
+                            obj.height,
+                            obj.title,
+                            obj.content
+                        );
+                    }
+                    
+                    if (newBody) {
+                        World.add(engine.world, newBody);
+                        currentBodies.push(newBody);
+                    }
+                });
             });
-        });
-    };
+        };
     
     // Handle window resize with debounce
     const handleResize = () => {
@@ -233,9 +298,6 @@ document.addEventListener('DOMContentLoaded', () => {
         const bodies = Composite.allBodies(engine.world);
         bodies.forEach(body => {
             if (!body.isStatic) {  // Don't remove walls
-                if (body.textElement) {
-                    body.textElement.remove();
-                }
                 World.remove(engine.world, body);
             }
         });
