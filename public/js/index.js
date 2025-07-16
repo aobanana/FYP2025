@@ -143,10 +143,35 @@ document.addEventListener('DOMContentLoaded', () => {
     });
 
     // Broadcast canvas dimensions to control page
-    setInterval(() => {
+    socket.on('joinRoom', (room) => {
+        // Send immediately when control page joins
         socket.emit('canvasDimensions', {
             width: render.options.width,
             height: render.options.height
         });
-    }, 1000);
+    });
+
+    // Listen for clear events from server
+    socket.on('roomCleared', () => {
+        // Clear all bodies except walls
+        const bodies = Composite.allBodies(engine.world);
+        bodies.forEach(body => {
+            if (!body.isStatic) {  // Don't remove walls
+                World.remove(engine.world, body);
+            }
+        });
+        console.log('Room cleared - removed all objects');
+    });
+
+    // Also update on resize
+    const sendDimensions = () => {
+        socket.emit('canvasDimensions', {
+            width: render.options.width,
+            height: render.options.height
+        });
+    };
+
+    window.addEventListener('resize', debounce(() => {
+        sendDimensions();
+    }, 500));
 });

@@ -35,11 +35,32 @@ app.get('/control', (req, res) => {
     res.render('control', { roomId: 100 });
 });
 
+// Add this with your other routes
+app.get('/clear-json', (req, res) => {
+    res.render('clear-json', { roomId: 100 });
+});
+
 // API to get room data
 app.get('/api/room/:roomId', (req, res) => {
     const roomId = req.params.roomId;
     const data = getRoomData(roomId);
     res.json(data);
+});
+
+// Add this API endpoint
+app.post('/api/room/:roomId/clear', (req, res) => {
+    const roomId = req.params.roomId;
+    const emptyData = { objects: [] };
+    
+    try {
+        fs.writeFileSync(DATA_FILE, JSON.stringify(emptyData, null, 2));
+        // Broadcast clear event to all clients
+        io.to(roomId.toString()).emit('roomCleared');
+        res.json({ success: true });
+    } catch (err) {
+        console.error('Error clearing room data:', err);
+        res.status(500).json({ success: false });
+    }
 });
 
 // Socket.io connection

@@ -6,6 +6,9 @@ document.addEventListener('DOMContentLoaded', () => {
     let canvasWidth = 800;
     let canvasHeight = 600;
 
+    // Request dimensions when joining room
+    socket.emit('joinRoom', roomId);
+
     // Listen for canvas dimension updates from index page
     socket.on('canvasDimensions', (dimensions) => {
         canvasWidth = dimensions.width;
