@@ -16,6 +16,36 @@ document.addEventListener('DOMContentLoaded', () => {
         console.log('Updated canvas dimensions:', dimensions);
     });
 
+    // Form submission handler
+    document.getElementById('textObjectForm').addEventListener('submit', (e) => {
+        e.preventDefault();
+        
+        const title = document.getElementById('title').value;
+        const content = document.getElementById('content').value;
+        
+        const textObject = {
+            id: Date.now().toString(),
+            type: 'textRectangle',
+            x: canvasWidth / 2,
+            y: 0,
+            width: 200,
+            height: 150,
+            title: title,
+            content: content,
+            options: {
+                restitution: 0.5,
+                render: {
+                    fillStyle: '#ffffff',
+                    strokeStyle: '#333333',
+                    lineWidth: 2
+                }
+            }
+        };
+        
+        socket.emit('addObject', { roomId, object: textObject });
+        e.target.reset();
+    });
+
     // Button event listeners
     document.getElementById('addBox').addEventListener('click', () => {
         const box = {

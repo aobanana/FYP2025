@@ -3,7 +3,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const socket = io();
     
     // Matter.js setup
-    const { Engine, Render, World, Bodies, Body, Composite } = Matter;
+    const { Engine, Render, World, Bodies, Body, Composite, Events } = Matter;
     
     // Create engine
     const engine = Engine.create({
@@ -49,6 +49,61 @@ document.addEventListener('DOMContentLoaded', () => {
     
     let walls = createWalls();
     World.add(engine.world, walls);
+
+    const addTextRectangle = (world, x, y, width, height, title, content) => {
+        const body = Bodies.rectangle(x, y, width, height, {
+            chamfer: { radius: 10 },
+            render: {
+                fillStyle: '#ffffff',
+                strokeStyle: '#333333',
+                lineWidth: 2
+            }
+        });
+        
+        // Create text element
+        const textElement = document.createElement('div');
+        textElement.className = 'text-rectangle';
+        textElement.style.position = 'absolute';
+        textElement.style.width = `${width}px`;
+        textElement.style.height = `${height}px`;
+        textElement.style.transform = 'translate(-50%, -50%)';
+        textElement.style.pointerEvents = 'none';
+        textElement.style.padding = '10px';
+        textElement.style.boxSizing = 'border-box';
+        textElement.innerHTML = `
+            <h3 style="margin: 0 0 10px 0; font-size: 16px;">${title}</h3>
+            <p style="margin: 0; font-size: 14px;">${content}</p>
+        `;
+        
+        document.getElementById('canvas-container').appendChild(textElement);
+        
+        // Update text position when body moves
+        const updateTextPosition = () => {
+            const position = body.position;
+            textElement.style.left = `${position.x}px`;
+            textElement.style.top = `${position.y}px`;
+        };
+        
+        // Initial position
+        updateTextPosition();
+        
+        // Store reference to update later
+        body.textElement = textElement;
+        body.updateTextPosition = updateTextPosition;
+        
+        World.add(world, body);
+        return body;
+    };
+
+    // Add this to your animation loop or update function
+    Events.on(engine, 'afterUpdate', () => {
+        const bodies = Composite.allBodies(engine.world);
+        bodies.forEach(body => {
+            if (body.updateTextPosition) {
+                body.updateTextPosition();
+            }
+        });
+    });
     
     // Start the engine and renderer
     Engine.run(engine);
@@ -69,31 +124,41 @@ document.addEventListener('DOMContentLoaded', () => {
     
     // Load objects from server
     const loadObjects = () => {
-        return fetch(`/api/room/${roomId}`)
-            .then(response => response.json())
-            .then(data => {
-                // Clear existing bodies (except walls)
-                World.clear(engine.world, false);
+    return fetch(`/api/room/${roomId}`)
+        .then(response => response.json())
+        .then(data => {
+            // Clear existing bodies (except walls)
+            World.clear(engine.world, false);
+            
+            // Re-add walls
+            walls = createWalls();
+            World.add(engine.world, walls);
+            
+            // Add all objects from server
+            data.objects.forEach(obj => {
+                let newBody;
+                if (obj.type === 'rectangle') {
+                    newBody = Bodies.rectangle(obj.x, obj.y, obj.width, obj.height, obj.options);
+                } else if (obj.type === 'circle') {
+                    newBody = Bodies.circle(obj.x, obj.y, obj.radius, obj.options);
+                } else if (obj.type === 'textRectangle') {
+                    newBody = addTextRectangle(
+                        engine.world,
+                        obj.x,
+                        obj.y,
+                        obj.width,
+                        obj.height,
+                        obj.title,
+                        obj.content
+                    );
+                }
                 
-                // Re-add walls
-                walls = createWalls();
-                World.add(engine.world, walls);
-                
-                // Add all objects from server
-                data.objects.forEach(obj => {
-                    let newBody;
-                    if (obj.type === 'rectangle') {
-                        newBody = Bodies.rectangle(obj.x, obj.y, obj.width, obj.height, obj.options);
-                    } else if (obj.type === 'circle') {
-                        newBody = Bodies.circle(obj.x, obj.y, obj.radius, obj.options);
-                    }
-                    
-                    if (newBody) {
-                        World.add(engine.world, newBody);
-                        currentBodies.push(newBody);
-                    }
-                });
+                if (newBody) {
+                    World.add(engine.world, newBody);
+                    currentBodies.push(newBody);
+                }
             });
+        });
     };
     
     // Handle window resize with debounce
@@ -130,10 +195,21 @@ document.addEventListener('DOMContentLoaded', () => {
     // Listen for new objects from server
     socket.on('newObject', (object) => {
         let newBody;
+        
         if (object.type === 'rectangle') {
             newBody = Bodies.rectangle(object.x, object.y, object.width, object.height, object.options);
         } else if (object.type === 'circle') {
             newBody = Bodies.circle(object.x, object.y, object.radius, object.options);
+        } else if (object.type === 'textRectangle') {
+            newBody = addTextRectangle(
+                engine.world,
+                object.x,
+                object.y,
+                object.width,
+                object.height,
+                object.title,
+                object.content
+            );
         }
         
         if (newBody) {
@@ -157,6 +233,9 @@ document.addEventListener('DOMContentLoaded', () => {
         const bodies = Composite.allBodies(engine.world);
         bodies.forEach(body => {
             if (!body.isStatic) {  // Don't remove walls
+                if (body.textElement) {
+                    body.textElement.remove();
+                }
                 World.remove(engine.world, body);
             }
         });
