@@ -19,14 +19,16 @@ app.use('/styles.css', (req, res, next) => {
 // Add these routes before the static middleware
 app.get('/', (req, res) => {
   //res.sendFile(path.join(__dirname, 'public', 'index.html'));
-  res.render('index', { title: 'Matter.js Physics Demo' });
+  const roomId = 100;
+  res.render('index', { title: 'SENSO LAB' });
 });
 
 //app.get('/room.html', (req, res) => {
 //  res.sendFile(path.join(__dirname, 'public', 'room.html'));
-app.get('/room', (req, res) => {
-  const roomId = req.query.room;
-  res.render('room', { title: `Room: ${roomId}`, roomId });
+app.get('/dashboard', (req, res) => {
+  //const roomId = req.query.room;
+  const roomId = 100;
+  res.render('dashboard', { title: `Dashboard` });
 });
 
 // Static files middleware
