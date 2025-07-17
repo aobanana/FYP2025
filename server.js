@@ -1,179 +1,89 @@
 const express = require('express');
-const http = require('http');
-const socketIo = require('socket.io');
 const path = require('path');
-
 const fs = require('fs');
-const ROOMS_DATA_PATH = path.join(__dirname, 'rooms-data');
-if (!fs.existsSync(ROOMS_DATA_PATH)) {
-    fs.mkdirSync(ROOMS_DATA_PATH);
-}
-
-// Helper function to save room data
-function saveRoomData(roomId, data) {
-    const filePath = path.join(ROOMS_DATA_PATH, `room-${roomId}.json`);
-    fs.writeFileSync(filePath, JSON.stringify(data, null, 2));
-}
-
-// Helper function to load room data
-function loadRoomData(roomId) {
-    const filePath = path.join(ROOMS_DATA_PATH, `room-${roomId}.json`);
-    try {
-        if (fs.existsSync(filePath)) {
-            return JSON.parse(fs.readFileSync(filePath, 'utf8'));
-        }
-    } catch (err) {
-        console.error(`Error loading room ${roomId} data:`, err);
-    }
-    return null;
-}
-
+const { v4: uuidv4 } = require('uuid');
 const app = express();
-const server = http.createServer(app);
-const io = socketIo(server);
+const server = require('http').createServer(app);
+const io = require('socket.io')(server);
 
+// Configuration
+const PORT = process.env.PORT || 3000;
+const DATA_FILE = path.join(__dirname, 'data', 'room_100.json');
+
+// Ensure data directory exists
+if (!fs.existsSync(path.join(__dirname, 'data'))) {
+    fs.mkdirSync(path.join(__dirname, 'data'));
+}
+
+// Initialize empty data file if it doesn't exist
+if (!fs.existsSync(DATA_FILE)) {
+    fs.writeFileSync(DATA_FILE, JSON.stringify({ objects: [] }, null, 2));
+}
+
+// Middleware
 app.set('view engine', 'ejs');
 app.set('views', path.join(__dirname, 'views'));
+app.use(express.static(path.join(__dirname, 'public')));
+app.use(express.json());
 
-// Serve static files with proper headers
-app.use('/styles.css', (req, res, next) => {
-  res.setHeader('Content-Type', 'text/css');
-  next();
-});
-
-// Add these routes before the static middleware
+// Routes
 app.get('/', (req, res) => {
-  //res.sendFile(path.join(__dirname, 'public', 'index.html'));
-  const roomId = 101;
-  res.render('index', { title: 'SENSO LAB' });
+    res.render('index', { roomId: 100 });
 });
 
-//app.get('/room.html', (req, res) => {
-//  res.sendFile(path.join(__dirname, 'public', 'room.html'));
-app.get('/dashboard', (req, res) => {
-  //const roomId = req.query.room;
-  const roomId = 101;
-  res.render('dashboard', { title: `Dashboard` });
+app.get('/control', (req, res) => {
+    res.render('control', { roomId: 100 });
 });
 
-// Static files middleware
-app.use(express.static(path.join(__dirname, 'public'), {
-  setHeaders: (res, path) => {
-    if (path.endsWith('.css')) {
-      res.setHeader('Content-Type', 'text/css');
-    }
-  }
-}));
+// Add this with your other routes
+app.get('/clear-json', (req, res) => {
+    res.render('clear-json', { roomId: 100 });
+});
 
-// Load room endpoint
-app.get('/load-room/:roomId', (req, res) => {
+// API to get room data
+app.get('/api/room/:roomId', (req, res) => {
     const roomId = req.params.roomId;
-    const filePath = path.join(ROOMS_DATA_PATH, `room-${roomId}.json`);
+    const data = getRoomData(roomId);
+    res.json(data);
+});
+
+// Add this API endpoint
+app.post('/api/room/:roomId/clear', (req, res) => {
+    const roomId = req.params.roomId;
+    const emptyData = { objects: [] };
     
     try {
-        if (fs.existsSync(filePath)) {
-            const data = JSON.parse(fs.readFileSync(filePath, 'utf8'));
-            res.json(data);
-        } else {
-            res.json({ objects: [] }); // Return empty if no file exists
-        }
+        fs.writeFileSync(DATA_FILE, JSON.stringify(emptyData, null, 2));
+        // Broadcast clear event to all clients
+        io.to(roomId.toString()).emit('roomCleared');
+        res.json({ success: true });
     } catch (err) {
-        console.error('Error loading room data:', err);
-        res.status(500).json({ error: 'Failed to load room data' });
+        console.error('Error clearing room data:', err);
+        res.status(500).json({ success: false });
     }
 });
-
-// Store room data
-const rooms = new Map();
 
 // Socket.io connection
 io.on('connection', (socket) => {
-    console.log('New client connected');
-    rooms.set(socket.id, { roomId: null });
-    
-    // Join a room
+    console.log('A user connected');
+
     socket.on('joinRoom', (roomId) => {
-        const previousRoom = rooms.get(socket.id)?.roomId;
-        
-        // Leave previous room if different
-        if (previousRoom && previousRoom !== roomId) {
-            socket.leave(previousRoom);
-        }
-
-        socket.join(roomId);
-        rooms.set(socket.id, { roomId });
-        console.log('joinRoom: ' + roomId);
-
-        // Load or initialize room state
-        if (!rooms.has(roomId)) {
-            const savedData = loadRoomData(roomId) || {
-                objects: [],
-                lastUpdated: Date.now()
-            };
-            rooms.set(roomId, savedData);
-        }
-        
-        // Send current room state to the new client
-        socket.emit('roomState', rooms.get(roomId));
+        socket.join(roomId.toString());
+        console.log(`User joined room ${roomId}`);
     });
 
-    // Handle new object creation
-    socket.on('createObject', ({ roomId, object }) => {
-        if (rooms.has(roomId)) {
-            const roomState = rooms.get(roomId);
-            
-            // Check if object exists by ID
-            const existingIndex = roomState.objects.findIndex(obj => obj.id === object.id);
-            
-            if (existingIndex === -1) {
-                // Add new object
-                roomState.objects.push(object);
-                roomState.lastUpdated = Date.now();
-                
-                // Broadcast to all in room except sender
-                socket.to(roomId).emit('addObject', object);
-            } else {
-                // Update existing object
-                roomState.objects[existingIndex] = object;
-                roomState.lastUpdated = Date.now();
-                
-                // Broadcast update
-                socket.to(roomId).emit('updatePhysicsState', [object]);
-            }
-        }
-    });
-    
-    // Handle physics updates
-    /*socket.on('physicsUpdate', (data) => {
-        const { roomId, objects } = data;
+    socket.on('addObject', ({ roomId, object }) => {
+        // Save to JSON file
+        const data = getRoomData(roomId);
+        data.objects.push(object);
+        saveRoomData(roomId, data);
         
-        if (rooms.has(roomId)) {
-            rooms.get(roomId).physicsObjects = objects;
-            socket.to(roomId).emit('physicsUpdate', objects);
-        }
-    });*/
-    // Handle physics updates
-    socket.on('physicsUpdate', ({ roomId, objects }) => {
-        if (rooms.has(roomId)) {
-            const roomState = rooms.get(roomId);
-            // Update existing objects
-            objects.forEach(updatedObj => {
-                const index = roomState.objects.findIndex(obj => obj.id === updatedObj.id);
-                if (index !== -1) {
-                    roomState.objects[index] = updatedObj;
-                }
-            });
-            roomState.lastUpdated = Date.now();
-            
-            // Broadcast to all in room except sender
-            socket.to(roomId).emit('updatePhysicsState', objects);
-        }
+        // Broadcast to all clients in the room
+        io.to(roomId.toString()).emit('newObject', object);
     });
 
-    // Handle disconnection
     socket.on('disconnect', () => {
-        rooms.delete(socket.id);
-        console.log('Client disconnected');
+        console.log('User disconnected');
     });
 
     // Add periodic saving
@@ -184,7 +94,26 @@ io.on('connection', (socket) => {
     }, 30000); // Save every 30 seconds
 });
 
-const PORT = process.env.PORT || 3000;
+// Helper functions
+function getRoomData(roomId) {
+    try {
+        const data = fs.readFileSync(DATA_FILE, 'utf8');
+        return JSON.parse(data);
+    } catch (err) {
+        console.error('Error reading room data:', err);
+        return { objects: [] };
+    }
+}
+
+function saveRoomData(roomId, data) {
+    try {
+        fs.writeFileSync(DATA_FILE, JSON.stringify(data, null, 2));
+    } catch (err) {
+        console.error('Error saving room data:', err);
+    }
+}
+
+// Start server
 server.listen(PORT, () => {
-    console.log(`Server running on port ${PORT}`);
+    console.log(`Server running on http://localhost:${PORT}`);
 });
