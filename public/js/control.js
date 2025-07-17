@@ -280,14 +280,14 @@ document.addEventListener('DOMContentLoaded', () => {
                         obj.title,
                         obj.content
                     );
-                } else if (object.type === 'quarterDonut') {
+                } else if (obj.type === 'quarterDonut') {
                     newBody = addQuarterDonut(
                         engine.world,
-                        object.x,
-                        object.y,
-                        object.innerRadius,
-                        object.outerRadius,
-                        object.options
+                        obj.x,
+                        obj.y,
+                        obj.innerRadius,
+                        obj.outerRadius,
+                        obj.options
                     );
                 }
 
