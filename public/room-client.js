@@ -9,7 +9,7 @@ document.addEventListener('DOMContentLoaded', () => {
     // Display room ID
     document.getElementById('roomTitle').textContent = roomId;*/
 
-    const roomId = 100;
+    const roomId = 101;
     // Initialize Socket.io connection
     const socket = io();
 
@@ -26,6 +26,51 @@ document.addEventListener('DOMContentLoaded', () => {
     // Generate unique ID for objects
     function generateId() {
         return Math.random().toString(36).substr(2, 9);
+    }
+
+    // Add walls
+    const wallOptions = { isStatic: true, render: { visible: false } };
+    const wallThickness = 50;
+    const ground = Bodies.rectangle(canvas.width/2, canvas.height + wallThickness/2, canvas.width, wallThickness, wallOptions);
+    const leftWall = Bodies.rectangle(-wallThickness/2, canvas.height/2, wallThickness, canvas.height, wallOptions);
+    const rightWall = Bodies.rectangle(canvas.width + wallThickness/2, canvas.height/2, wallThickness, canvas.height, wallOptions);
+    const ceiling = Bodies.rectangle(canvas.width/2, -wallThickness/2, canvas.width, wallThickness, wallOptions);
+
+    Composite.add(world, [ground, leftWall, rightWall, ceiling]);
+
+    function loadRoomData(roomId) {
+        // First clear all non-wall objects
+        const bodies = Composite.allBodies(world);
+        bodies.forEach(body => {
+            if (!body.isStatic) { // Keep walls
+                Composite.remove(world, body);
+            }
+        });
+        physicsObjects.clear();
+
+        fetch(`/load-room/${roomId}`)
+            .then(response => response.json())
+            .then(data => {
+                if (data.objects && data.objects.length > 0) {
+                    // Add saved objects
+                    data.objects.forEach(obj => {
+                        const body = createSyncedObject(
+                            obj.x,
+                            obj.y,
+                            obj.width,
+                            obj.height,
+                            {
+                                ...obj.options,
+                                plugin: { id: obj.id }
+                            }
+                        );
+                        physicsObjects.set(obj.id, body);
+                    });
+                }
+            })
+            .catch(error => {
+                console.error('Error loading room data:', error);
+            });
     }
 
     // Create renderer
@@ -62,6 +107,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // Join the room
     socket.emit('joinRoom', roomId);
+    loadRoomData(roomId);
 
     // Create synchronized object
     function createSyncedObject(x, y, width, height, options = {}) {
@@ -89,6 +135,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // Handle incoming objects from other clients
     socket.on('addObject', (object) => {
+        console.log('Received new object:', object.id);
         if (!physicsObjects.has(object.id)) {
             const body = Bodies.rectangle(
                 object.x, object.y,
@@ -105,22 +152,21 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // Handle initial room state
     socket.on('roomState', (state) => {
-        // Clear existing bodies (except walls)
-        Composite.clear(world, false);
-
-        // Re-add walls
-        const walls = [
-            Bodies.rectangle(400, 0, 800, 50, { isStatic: true }),
-            Bodies.rectangle(400, 600, 800, 50, { isStatic: true }),
-            Bodies.rectangle(0, 300, 50, 600, { isStatic: true }),
-            Bodies.rectangle(800, 300, 50, 600, { isStatic: true })
-        ];
-
-        Composite.add(world, walls);
+        console.log('Received room state with', state.objects?.length || 0, 'objects');
+        // Clear only non-static bodies
+        const bodies = Composite.allBodies(world);
+        bodies.forEach(body => {
+            if (!body.isStatic) {
+                Composite.remove(world, body);
+                if (body.plugin?.id) {
+                    physicsObjects.delete(body.plugin.id);
+                }
+            }
+        });
 
         // Add existing physics objects
-        if (state.physicsObjects && state.physicsObjects.length > 0) {
-            state.physicsObjects.forEach(obj => {
+        if (state.objects && state.objects.length > 0) {
+            state.objects.forEach(obj => {
                 if (!physicsObjects.has(obj.id)) {
                     const body = Bodies.rectangle(
                         obj.x, obj.y,
@@ -137,11 +183,22 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     });
 
+    socket.on('connect', () => {
+        console.log('Connected to server - room');
+        // Rejoin room and reload data on reconnect
+        socket.emit('joinRoom', roomId);
+    });
+
+    socket.on('disconnect', () => {
+        console.log('Disconnected from server - room');
+    });
+
     // Handle physics state updates from other clients
     socket.on('updatePhysicsState', (objects) => {
         objects.forEach(obj => {
             const body = physicsObjects.get(obj.id);
             if (body) {
+                // Only update if the remote object is newer (based on timestamp if available)
                 Body.setPosition(body, { x: obj.x, y: obj.y });
                 Body.setVelocity(body, obj.velocity || { x: 0, y: 0 });
                 Body.setAngle(body, obj.angle || 0);
@@ -149,7 +206,7 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     });
 
-    // Synchronize physics state periodically
+    // Synchronize physics state with timestamp
     setInterval(() => {
         const objects = Array.from(physicsObjects.values()).map(body => ({
             id: body.plugin.id,
@@ -159,14 +216,15 @@ document.addEventListener('DOMContentLoaded', () => {
             height: body.bounds.max.y - body.bounds.min.y,
             angle: body.angle,
             velocity: body.velocity,
-            options: body.render
+            options: body.render,
+            timestamp: Date.now()
         }));
 
         socket.emit('physicsUpdate', {
             roomId: roomId,
             objects
         });
-    }, 100); // Update 10 times per second
+    }, 100); // 10 updates per second
 
     // Handle canvas clicks to add objects
     canvas.addEventListener('mousedown', (event) => {
