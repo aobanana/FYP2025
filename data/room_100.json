@@ -1,7 +1,7 @@
 {
   "objects": [
     {
-      "id": "1752682313197",
+      "id": "1752711399650",
       "type": "rectangle",
       "x": 400,
       "y": 0,
@@ -10,12 +10,12 @@
       "options": {
         "restitution": 0.8,
         "render": {
-          "fillStyle": "#367A9E"
+          "fillStyle": "#937BC4"
         }
       }
     },
     {
-      "id": "1752682313597",
+      "id": "1752711401002",
       "type": "circle",
       "x": 400,
       "y": 0,
@@ -23,66 +23,67 @@
       "options": {
         "restitution": 0.8,
         "render": {
-          "fillStyle": "#01AF5D"
+          "fillStyle": "#50341E"
         }
       }
     },
     {
-      "id": "1752682320277",
-      "type": "textRectangle",
+      "id": "1752714006535",
+      "type": "quarterDonut",
       "x": 400,
       "y": 0,
-      "width": 200,
-      "height": 150,
-      "title": "1",
-      "content": "1111",
+      "innerRadius": 30,
+      "outerRadius": 60,
       "options": {
-        "restitution": 0.5,
+        "restitution": 0.7,
         "render": {
-          "fillStyle": "#ffffff",
-          "strokeStyle": "#333333",
-          "lineWidth": 2
+          "fillStyle": "#3461E2"
         }
       }
     },
     {
-      "id": "1752682330652",
-      "type": "textRectangle",
+      "id": "1752714012615",
+      "type": "quarterDonut",
       "x": 400,
       "y": 0,
-      "width": 200,
-      "height": 150,
-      "title": "2",
-      "content": "2222",
+      "innerRadius": 30,
+      "outerRadius": 60,
       "options": {
-        "restitution": 0.5,
+        "restitution": 0.7,
         "render": {
-          "fillStyle": "#ffffff",
-          "strokeStyle": "#333333",
-          "lineWidth": 2
+          "fillStyle": "#CA33F2"
         }
       }
     },
     {
-      "id": "1752682345229",
-      "type": "textRectangle",
+      "id": "1752714017366",
+      "type": "quarterDonut",
       "x": 400,
       "y": 0,
-      "width": 200,
-      "height": 150,
-      "title": "3",
-      "content": "333333 333333 333333 333333 333333 333333 333333 333333 333333 333333 333333 ",
+      "innerRadius": 30,
+      "outerRadius": 60,
       "options": {
-        "restitution": 0.5,
+        "restitution": 0.7,
         "render": {
-          "fillStyle": "#ffffff",
-          "strokeStyle": "#333333",
-          "lineWidth": 2
+          "fillStyle": "#4F1A29"
         }
       }
     },
     {
-      "id": "1752682411180",
+      "id": "1752714018350",
+      "type": "circle",
+      "x": 400,
+      "y": 0,
+      "radius": 40,
+      "options": {
+        "restitution": 0.8,
+        "render": {
+          "fillStyle": "#3BBD53"
+        }
+      }
+    },
+    {
+      "id": "1752714019651",
       "type": "rectangle",
       "x": 400,
       "y": 0,
@@ -91,95 +92,147 @@
       "options": {
         "restitution": 0.8,
         "render": {
-          "fillStyle": "#77B332"
+          "fillStyle": "#0F32DC"
         }
       }
     },
     {
-      "id": "1752682411404",
-      "type": "rectangle",
+      "id": "1752714025050",
+      "type": "quarterDonut",
       "x": 400,
       "y": 0,
-      "width": 80,
-      "height": 80,
+      "innerRadius": 30,
+      "outerRadius": 60,
       "options": {
-        "restitution": 0.8,
+        "restitution": 0.7,
         "render": {
-          "fillStyle": "#EE85C7"
+          "fillStyle": "#BC7C4C"
         }
       }
     },
     {
-      "id": "1752682411572",
-      "type": "rectangle",
+      "id": "1752714027018",
+      "type": "quarterDonut",
       "x": 400,
       "y": 0,
-      "width": 80,
-      "height": 80,
+      "innerRadius": 30,
+      "outerRadius": 60,
       "options": {
-        "restitution": 0.8,
+        "restitution": 0.7,
         "render": {
-          "fillStyle": "#22EB74"
+          "fillStyle": "#56F76B"
         }
       }
     },
     {
-      "id": "1752682411740",
-      "type": "rectangle",
+      "id": "1752714027999",
+      "type": "quarterDonut",
       "x": 400,
       "y": 0,
-      "width": 80,
-      "height": 80,
+      "innerRadius": 30,
+      "outerRadius": 60,
       "options": {
-        "restitution": 0.8,
+        "restitution": 0.7,
         "render": {
-          "fillStyle": "#CC915C"
+          "fillStyle": "#9BC641"
         }
       }
     },
     {
-      "id": "1752682411924",
-      "type": "rectangle",
+      "id": "1752714070279",
+      "type": "quarterDonut",
       "x": 400,
       "y": 0,
-      "width": 80,
-      "height": 80,
+      "innerRadius": 30,
+      "outerRadius": 60,
       "options": {
-        "restitution": 0.8,
+        "restitution": 0.7,
         "render": {
-          "fillStyle": "#B0D622"
+          "fillStyle": "#74A706"
         }
       }
     },
     {
-      "id": "1752682412108",
-      "type": "rectangle",
+      "id": "1752715953450",
+      "type": "quarterDonut",
       "x": 400,
       "y": 0,
-      "width": 80,
-      "height": 80,
+      "innerRadius": 30,
+      "outerRadius": 60,
       "options": {
-        "restitution": 0.8,
+        "restitution": 0.7,
         "render": {
-          "fillStyle": "#0BF0D4"
+          "fillStyle": "#7C0AE8"
         }
       }
     },
     {
-      "id": "1752682423229",
-      "type": "textRectangle",
+      "id": "1752715955031",
+      "type": "quarterDonut",
       "x": 400,
       "y": 0,
-      "width": 200,
-      "height": 150,
-      "title": "4",
-      "content": "44",
+      "innerRadius": 30,
+      "outerRadius": 60,
       "options": {
-        "restitution": 0.5,
+        "restitution": 0.7,
         "render": {
-          "fillStyle": "#ffffff",
-          "strokeStyle": "#333333",
-          "lineWidth": 2
+          "fillStyle": "#38D065"
+        }
+      }
+    },
+    {
+      "id": "1752715958397",
+      "type": "quarterDonut",
+      "x": 400,
+      "y": 0,
+      "innerRadius": 30,
+      "outerRadius": 60,
+      "options": {
+        "restitution": 0.7,
+        "render": {
+          "fillStyle": "#86D0AC"
+        }
+      }
+    },
+    {
+      "id": "1752715959529",
+      "type": "quarterDonut",
+      "x": 400,
+      "y": 0,
+      "innerRadius": 30,
+      "outerRadius": 60,
+      "options": {
+        "restitution": 0.7,
+        "render": {
+          "fillStyle": "#6F687B"
+        }
+      }
+    },
+    {
+      "id": "1752715960666",
+      "type": "quarterDonut",
+      "x": 400,
+      "y": 0,
+      "innerRadius": 30,
+      "outerRadius": 60,
+      "options": {
+        "restitution": 0.7,
+        "render": {
+          "fillStyle": "#74FE92"
+        }
+      }
+    },
+    {
+      "id": "1752715961996",
+      "type": "quarterDonut",
+      "x": 400,
+      "y": 0,
+      "innerRadius": 30,
+      "outerRadius": 60,
+      "options": {
+        "restitution": 0.7,
+        "render": {
+          "fillStyle": "#9033A8"
         }
       }
     }
