@@ -85,6 +85,13 @@ io.on('connection', (socket) => {
     socket.on('disconnect', () => {
         console.log('User disconnected');
     });
+
+    // Add periodic saving
+    setInterval(() => {
+        rooms.forEach((data, roomId) => {
+            saveRoomData(roomId, data);
+        });
+    }, 30000); // Save every 30 seconds
 });
 
 // Helper functions
