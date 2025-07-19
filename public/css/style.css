@@ -26,9 +26,28 @@ h1 {
 
 button {
     font-family: "Cormorant Garamond", serif;
+    font-size: 16px;
     font-optical-sizing: auto;
     font-weight: 400;
     font-style: normal;
+    padding: 16px;
+    min-width: 160px;
+    margin: 0 10px;
+    background-color: transparent;
+    color: white;
+    border: 1px solid white;
+    border-radius: 50px;
+    cursor: pointer;
+}
+button:hover {
+    /*background-color: #45a049;*/
+}
+
+footer{
+    text-align: center;
+    font-size: 10px;
+    color: white;
+    padding: 20px 0;
 }
 
 #canvas-container {
@@ -38,32 +57,6 @@ button {
     width: 100vw;
     height: 100vh;
     z-index: 1;
-}
-
-.controls {
-    position: fixed;
-    bottom: 20px;
-    left: 50%;
-    transform: translateX(-50%);
-    z-index: 100;
-    background: rgba(255, 255, 255, 0.7);
-    padding: 10px;
-    border-radius: 5px;
-}
-
-button {
-    padding: 10px 20px;
-    margin: 0 10px;
-    font-size: 16px;
-    background-color: #4CAF50;
-    color: white;
-    border: none;
-    border-radius: 4px;
-    cursor: pointer;
-}
-
-button:hover {
-    background-color: #45a049;
 }
 
 /*.text-rectangle {

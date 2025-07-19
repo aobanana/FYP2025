@@ -1,6 +1,7 @@
 document.addEventListener('DOMContentLoaded', () => {
     // Add these near the top of control.js
     const MAX_OBJECTS_BEFORE_EXPAND = 15; // Adjust as needed
+    const CANVAS_BASE = 100;
     const CANVAS_EXPANSION_STEP = 200; // Pixels to expand by
     let autoExpandingEnabled = true;
     let expandCanvasHeightCount = 0;
@@ -12,9 +13,9 @@ document.addEventListener('DOMContentLoaded', () => {
         const bodies = Composite.allBodies(engine.world);
         const dynamicBodies = bodies.filter(body => !body.isStatic);
 
-        let extra = (dynamicBodies.length - 100 < 0)?0:dynamicBodies.length - 100;
+        let extra = (dynamicBodies.length - 100 < 0)?0:dynamicBodies.length - CANVAS_BASE;
         let level = Math.floor(extra / MAX_OBJECTS_BEFORE_EXPAND);
-        console.log(dynamicBodies.length  + ":" +  level + ":" + expandCanvasHeightCount);
+        //console.log(dynamicBodies.length  + ":" +  level + ":" + expandCanvasHeightCount);
 
         if (level > expandCanvasHeightCount) {
             expandCanvasHeight();
@@ -586,7 +587,11 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // Handle window resize with debounce
     const handleResize = () => {
+        expandCanvasHeightCount = 0;
+
         const { width, height } = getViewportDimensions();
+        /*const width = render.options.width;
+        const height = render.options.height;*/
         const oldHeight = render.options.height;
 
         // 1. Remove old walls
@@ -597,7 +602,7 @@ document.addEventListener('DOMContentLoaded', () => {
         render.options.height = height;
         render.canvas.width = width;
         render.canvas.height = height;
-        Render.setPixelRatio(render, window.devicePixelRatio);
+        //Render.setPixelRatio(render, window.devicePixelRatio);
 
         // 3. Create new walls
         walls = createWalls();
