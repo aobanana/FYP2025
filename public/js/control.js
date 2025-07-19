@@ -1,4 +1,62 @@
 document.addEventListener('DOMContentLoaded', () => {
+    // Add these near the top of control.js
+    const MAX_OBJECTS_BEFORE_EXPAND = 15; // Adjust as needed
+    const CANVAS_EXPANSION_STEP = 200; // Pixels to expand by
+    let autoExpandingEnabled = true;
+    let expandCanvasHeightCount = 0;
+
+    // Function to check if we need to expand the canvas
+    const checkCanvasExpansion = () => {
+        if (!autoExpandingEnabled) return;
+
+        const bodies = Composite.allBodies(engine.world);
+        const dynamicBodies = bodies.filter(body => !body.isStatic);
+
+        let extra = (dynamicBodies.length - 100 < 0)?0:dynamicBodies.length - 100;
+        let level = Math.floor(extra / MAX_OBJECTS_BEFORE_EXPAND);
+        console.log(dynamicBodies.length  + ":" +  level + ":" + expandCanvasHeightCount);
+
+        if (level > expandCanvasHeightCount) {
+            expandCanvasHeight();
+        }
+    };
+
+    // Function to expand the canvas height
+    const expandCanvasHeight = () => {
+        if (!autoExpandingEnabled) return;
+
+        expandCanvasHeightCount++;
+        const newHeight = render.options.height + CANVAS_EXPANSION_STEP;
+
+        // Update renderer dimensions
+        render.options.height = newHeight;
+        render.canvas.height = newHeight;
+
+        // Update walls (remove old ones first)
+        World.remove(engine.world, walls);
+
+        // Create new walls with expanded height
+        walls = createWalls();
+        World.add(engine.world, walls);
+
+        // Reposition existing bodies
+        const bodies = Composite.allBodies(engine.world).filter(b => !b.isStatic);
+        bodies.forEach(body => {
+            if (body.position.y > newHeight - 100) {
+                Body.setPosition(body, {
+                    x: body.position.x,
+                    y: newHeight - 100
+                });
+            }
+        });
+
+        // Update socket
+        socket.emit('canvasDimensions', {
+            width: render.options.width,
+            height: newHeight
+        });
+    };
+
     const roomId = 100;
     const socket = io();
 
@@ -38,13 +96,47 @@ document.addEventListener('DOMContentLoaded', () => {
     });
 
     // Add walls to contain objects
-    const createWalls = () => {
+    /*const createWalls = () => {
         const { width, height } = getViewportDimensions();
         return [
             Bodies.rectangle(width / 2, height + 30, width, 60, { isStatic: true }), // ground
             Bodies.rectangle(-30, height / 2, 60, height, { isStatic: true }), // left wall
             Bodies.rectangle(width + 30, height / 2, 60, height, { isStatic: true }), // right wall
             Bodies.rectangle(width / 2, -30, width, 60, { isStatic: true }) // ceiling
+        ];
+    };*/
+    const createWalls = () => {
+        //const { width, height } = getViewportDimensions();
+        const width = render.options.width;
+        const height = render.options.height;
+        const wallThickness = 60;
+        const wallExtension = 1000; // Extra height for side walls
+
+        return [
+            // Floor (moves down as canvas expands)
+            Bodies.rectangle(width / 2, height + wallThickness / 2, width, wallThickness, {
+                isStatic: true,
+                render: { fillStyle: '#2c3e50' },
+                label: 'floor' // Add label for easier identification
+            }),
+
+            // Left wall (extends beyond viewport)
+            Bodies.rectangle(-wallThickness / 2, height / 2, wallThickness, height + wallExtension, {
+                isStatic: true,
+                render: { fillStyle: '#2c3e50' }
+            }),
+
+            // Right wall (extends beyond viewport)
+            Bodies.rectangle(width + wallThickness / 2, height / 2, wallThickness, height + wallExtension, {
+                isStatic: true,
+                render: { fillStyle: '#2c3e50' }
+            }),
+
+            // Ceiling (stays at top)
+            Bodies.rectangle(width / 2, -wallThickness / 2, width, wallThickness, {
+                isStatic: true,
+                render: { fillStyle: '#2c3e50' }
+            })
         ];
     };
 
@@ -56,9 +148,9 @@ document.addEventListener('DOMContentLoaded', () => {
         const body = Bodies.rectangle(x, y, width, height, {
             chamfer: { radius: 10 },
             render: {
-                fillStyle: '#ffffff',
-                strokeStyle: '#333333',
-                lineWidth: 2
+                fillStyle: '#000000',
+                //strokeStyle: '#333333',
+                //lineWidth: 2
             }
         });
 
@@ -83,13 +175,15 @@ document.addEventListener('DOMContentLoaded', () => {
                     ctx.rotate(angle);
 
                     // Draw text
-                    ctx.fillStyle = '#000000';
+                    ctx.fillStyle = '#ffffff';
                     ctx.font = 'bold 16px Arial';
                     ctx.textAlign = 'center';
                     ctx.textBaseline = 'top';
                     ctx.fillText(body.textData.title, 0, -body.textData.height / 2 + 20);
+                    /*wrapText(ctx, body.textData.title, 0, -body.textData.height / 2 + 0,
+                        body.textData.width - 20, 18);*/
 
-                    ctx.fillStyle = '#333333';
+                    ctx.fillStyle = '#ffffff';
                     ctx.font = '14px Arial';
                     wrapText(ctx, body.textData.content, 0, -body.textData.height / 2 + 50,
                         body.textData.width - 20, 18);
@@ -160,6 +254,171 @@ document.addEventListener('DOMContentLoaded', () => {
         ctx.fillText(line, x, currentY);
     }
 
+    // Add this function to control.js (alongside addTextRectangle)
+    const addTextCircle = (world, x, y, radius, title, content) => {
+        // Create the physical circle body
+        const body = Bodies.circle(x, y, radius, {
+            render: {
+                fillStyle: '#ffffff',
+                strokeStyle: '#333333',
+                lineWidth: 2
+            }
+        });
+
+        // Store text data with the body
+        body.textData = { title, content, radius };
+
+        // Add custom rendering
+        Events.on(render, 'afterRender', function () {
+            const ctx = render.context;
+            const bodies = Composite.allBodies(engine.world);
+
+            bodies.forEach(body => {
+                if (body.textData) {
+                    ctx.save();
+
+                    // Get body position and angle
+                    const pos = body.position;
+                    const angle = body.angle;
+
+                    // Transform to body's coordinate system
+                    ctx.translate(pos.x, pos.y);
+                    ctx.rotate(angle);
+
+                    // Draw text
+                    ctx.fillStyle = '#000000';
+                    ctx.font = 'bold 14px Arial';
+                    ctx.textAlign = 'center';
+                    ctx.textBaseline = 'middle';
+
+                    // Draw title at top of circle
+                    ctx.fillText(body.textData.title, 0, -body.textData.radius / 2);
+
+                    // Draw content in center
+                    ctx.fillStyle = '#333333';
+                    ctx.font = '12px Arial';
+                    wrapTextInCircle(ctx, body.textData.content, 0, 0,
+                        body.textData.radius - 10, 16);
+
+                    ctx.restore();
+                }
+            });
+        });
+
+        World.add(world, body);
+        return body;
+    };
+
+    // Helper to wrap text inside a circle
+    function wrapTextInCircle(ctx, text, x, y, maxRadius, lineHeight) {
+        const words = text.split(' ');
+        let lines = [];
+        let currentLine = '';
+
+        // First break text into lines that fit horizontally
+        for (let n = 0; n < words.length; n++) {
+            const testLine = currentLine + words[n] + ' ';
+            const metrics = ctx.measureText(testLine);
+
+            if (metrics.width > maxRadius * 1.8 && currentLine !== '') {
+                lines.push(currentLine);
+                currentLine = words[n] + ' ';
+            } else {
+                currentLine = testLine;
+            }
+        }
+        lines.push(currentLine);
+
+        // Then adjust vertical placement
+        const totalHeight = lines.length * lineHeight;
+        let currentY = y - totalHeight / 2 + lineHeight;
+
+        // Draw each line centered
+        lines.forEach(line => {
+            ctx.fillText(line.trim(), x, currentY);
+            currentY += lineHeight;
+        });
+    }
+
+    const addTextTriangle = (world, x, y, size, title, content) => {
+        // Create triangle vertices
+        const triangleVertices = [
+            { x: 0, y: -size },       // Top point
+            { x: -size, y: size },    // Bottom left
+            { x: size, y: size }      // Bottom right
+        ];
+
+        // Create the physical triangle body
+        const body = Bodies.fromVertices(x, y, [triangleVertices], {
+            chamfer: { radius: 5 },
+            render: {
+                fillStyle: '#ffffff',
+                strokeStyle: '#333333',
+                lineWidth: 2
+            }
+        }, true);
+
+        // Store text data with the body
+        body.textData = { title, content, size };
+
+        // Add custom rendering
+        Events.on(render, 'afterRender', function () {
+            const ctx = render.context;
+            const bodies = Composite.allBodies(engine.world);
+
+            bodies.forEach(body => {
+                if (body.textData && body.textData.size) { // Check for triangle
+                    ctx.save();
+                    const pos = body.position;
+                    const angle = body.angle;
+
+                    // Transform to body's coordinate system
+                    ctx.translate(pos.x, pos.y);
+                    ctx.rotate(angle);
+
+                    // Draw title at top
+                    ctx.fillStyle = '#000000';
+                    ctx.font = 'bold 12px Arial';
+                    ctx.textAlign = 'center';
+                    ctx.fillText(body.textData.title, 0, -body.textData.size + 20);
+
+                    // Draw content in center
+                    ctx.fillStyle = '#333333';
+                    ctx.font = '10px Arial';
+                    wrapTextInTriangle(ctx, body.textData.content, 0, 0, body.textData.size - 15, 12);
+
+                    ctx.restore();
+                }
+            });
+        });
+
+        World.add(world, body);
+        return body;
+    };
+
+    // Helper to wrap text inside a triangle
+    function wrapTextInTriangle(ctx, text, x, y, maxWidth, lineHeight) {
+        const words = text.split(' ');
+        let line = '';
+        let currentY = y - maxWidth / 3;
+
+        for (let n = 0; n < words.length; n++) {
+            const testLine = line + words[n] + ' ';
+            const metrics = ctx.measureText(testLine);
+
+            if (metrics.width > maxWidth && n > 0) {
+                ctx.fillText(line, x, currentY);
+                line = words[n] + ' ';
+                currentY += lineHeight;
+            } else {
+                line = testLine;
+            }
+        }
+        ctx.fillText(line, x, currentY);
+    }
+
+
+
     // Add this function to create quarter donut shapes
     const addQuarterDonut = (world, x, y, innerRadius, outerRadius, options) => {
         // Create the outer quarter circle
@@ -210,7 +469,6 @@ document.addEventListener('DOMContentLoaded', () => {
         World.add(world, donut);
         return donut;
     };
-
     // Add this to your animation loop or update function
     /*Events.on(engine, 'afterUpdate', () => {
         const bodies = Composite.allBodies(engine.world);
@@ -220,6 +478,12 @@ document.addEventListener('DOMContentLoaded', () => {
             }
         });
     });*/
+    Events.on(engine, 'afterUpdate', () => {
+        // Check every 60 frames (about 1 second at 60fps)
+        if (Math.floor(engine.timing.timestamp) % 60 === 0) {
+            checkCanvasExpansion();
+        }
+    });
 
     // Start the engine and renderer
     Engine.run(engine);
@@ -280,6 +544,24 @@ document.addEventListener('DOMContentLoaded', () => {
                         obj.title,
                         obj.content
                     );
+                } else if (obj.type === 'textCircle') {
+                    newBody = addTextCircle(
+                        engine.world,
+                        obj.x,
+                        obj.y,
+                        obj.radius,
+                        obj.title,
+                        obj.content
+                    );
+                } else if (obj.type === 'textTriangle') {
+                    newBody = addTextTriangle(
+                        engine.world,
+                        obj.x,
+                        obj.y,
+                        obj.size,
+                        obj.title,
+                        obj.content
+                    );
                 } else if (obj.type === 'quarterDonut') {
                     newBody = addQuarterDonut(
                         engine.world,
@@ -305,15 +587,40 @@ document.addEventListener('DOMContentLoaded', () => {
     // Handle window resize with debounce
     const handleResize = () => {
         const { width, height } = getViewportDimensions();
+        const oldHeight = render.options.height;
 
-        // Update renderer dimensions
+        // 1. Remove old walls
+        World.remove(engine.world, walls);
+
+        // 2. Update renderer
         render.options.width = width;
         render.options.height = height;
         render.canvas.width = width;
         render.canvas.height = height;
-
-        // Update bounds for the renderer
         Render.setPixelRatio(render, window.devicePixelRatio);
+
+        // 3. Create new walls
+        walls = createWalls();
+        World.add(engine.world, walls);
+
+        // Adjust objects if height changed
+        if (height !== oldHeight) {
+            const bodies = Composite.allBodies(engine.world).filter(b => !b.isStatic);
+            bodies.forEach(body => {
+                if (body.position.y > height - 100) {
+                    Body.setPosition(body, {
+                        x: body.position.x,
+                        y: height - 100
+                    });
+                }
+            });
+        }
+
+        // 4. Notify other clients
+        socket.emit('canvasDimensions', {
+            width: width,
+            height: height
+        });
 
         // Reload objects to maintain their positions
         loadObjects().then(() => {
@@ -348,6 +655,24 @@ document.addEventListener('DOMContentLoaded', () => {
                 object.y,
                 object.width,
                 object.height,
+                object.title,
+                object.content
+            );
+        } else if (object.type === 'textCircle') {
+            newBody = addTextCircle(
+                engine.world,
+                object.x,
+                object.y,
+                object.radius,
+                object.title,
+                object.content
+            );
+        } else if (object.type === 'textTriangle') {
+            newBody = addTextTriangle(
+                engine.world,
+                object.x,
+                object.y,
+                object.size,
                 object.title,
                 object.content
             );
@@ -389,6 +714,20 @@ document.addEventListener('DOMContentLoaded', () => {
         console.log('Room cleared - removed all objects');
     });
 
+    socket.on('setAutoExpand', (enabled) => {
+        autoExpandingEnabled = enabled;
+    });
+
+    socket.on('autoExpandUpdated', (enabled) => {
+        autoExpandingEnabled = enabled;
+        console.log(`Auto-expansion ${enabled ? 'enabled' : 'disabled'}`);
+
+        // Force an immediate check when enabled
+        if (enabled) {
+            checkCanvasExpansion();
+        }
+    });
+
     // Also update on resize
     const sendDimensions = () => {
         socket.emit('canvasDimensions', {
@@ -411,4 +750,5 @@ document.addEventListener('DOMContentLoaded', () => {
         });
         console.log(1);
     }, 2000);*/
+
 });

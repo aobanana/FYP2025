@@ -20,6 +20,12 @@ if (!fs.existsSync(DATA_FILE)) {
     fs.writeFileSync(DATA_FILE, JSON.stringify({ objects: [] }, null, 2));
 }
 
+const roomSettings = {
+    100: { // Using roomId as key
+        autoExpandingEnabled: true
+    }
+};
+
 // Middleware
 app.set('view engine', 'ejs');
 app.set('views', path.join(__dirname, 'views'));
@@ -51,7 +57,7 @@ app.get('/api/room/:roomId', (req, res) => {
 app.post('/api/room/:roomId/clear', (req, res) => {
     const roomId = req.params.roomId;
     const emptyData = { objects: [] };
-    
+
     try {
         fs.writeFileSync(DATA_FILE, JSON.stringify(emptyData, null, 2));
         // Broadcast clear event to all clients
@@ -77,7 +83,7 @@ io.on('connection', (socket) => {
         const data = getRoomData(roomId);
         data.objects.push(object);
         saveRoomData(roomId, data);
-        
+
         // Broadcast to all clients in the room
         io.to(roomId.toString()).emit('newObject', object);
     });
@@ -86,12 +92,13 @@ io.on('connection', (socket) => {
         console.log('User disconnected');
     });
 
-    // Add periodic saving
-    setInterval(() => {
-        rooms.forEach((data, roomId) => {
-            saveRoomData(roomId, data);
-        });
-    }, 30000); // Save every 30 seconds
+    socket.on('setAutoExpand', ({ roomId, enabled }) => {
+        if (roomSettings[roomId]) {
+            roomSettings[roomId].autoExpandingEnabled = enabled;
+            io.to(roomId.toString()).emit('autoExpandUpdated', enabled);
+        }
+    });
+
 });
 
 // Helper functions
