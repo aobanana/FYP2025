@@ -91,7 +91,8 @@ document.addEventListener('DOMContentLoaded', () => {
             width: viewport.width,
             height: viewport.height,
             wireframes: false,
-            background: '#f4f4f4',
+            //background: '#f4f4f4',
+            background: 'transparent',
             showAngleIndicator: false  // Add this for cleaner rendering
         }
     });
@@ -178,7 +179,7 @@ document.addEventListener('DOMContentLoaded', () => {
                     // Calculate total text block height
 
                     // Calculate wrapped lines for content
-                    const maxWidth = body.textData.width - 20;
+                    const maxWidth = body.textData.width - 100;//wrap text 70
                     const lineHeight = 18;
                     const contentLines = [];
                     const words = body.textData.content.split(' ');
@@ -199,7 +200,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
                     const contentHeight = contentLines.length * lineHeight;
                     const titleHeight = 20;
-                    const separatorHeight = 10;
+                    const separatorHeight = 35;
                     const totalTextHeight = titleHeight + separatorHeight + contentHeight;
 
                     // Starting Y position for vertical centering
@@ -211,10 +212,10 @@ document.addEventListener('DOMContentLoaded', () => {
                     ctx.textAlign = 'center';
                     ctx.textBaseline = 'top';
                     wrapText(ctx, body.textData.content, 0, startY,
-                        body.textData.width - 20, lineHeight);
+                        body.textData.width - 70, lineHeight);
 
                     // Draw separator line (1px horizontal line)
-                    const lineY = startY + contentHeight + 10;
+                    const lineY = startY + contentHeight + 20;
                     ctx.strokeStyle = '#ffffff';
                     ctx.lineWidth = 0.5;
                     ctx.beginPath();
@@ -237,36 +238,6 @@ document.addEventListener('DOMContentLoaded', () => {
         World.add(world, body);
         return body;
     };
-
-    // Helper function to create canvas texture with text
-    /*function createTextTexture(width, height, title, content) {
-        const canvas = document.createElement('canvas');
-        canvas.width = width;
-        canvas.height = height;
-        const ctx = canvas.getContext('2d');
-        
-        // Draw rectangle background
-        ctx.fillStyle = '#ffffff';
-        ctx.strokeStyle = '#333333';
-        ctx.lineWidth = 2;
-        ctx.beginPath();
-        ctx.roundRect(0, 0, width, height, 10);
-        ctx.fill();
-        ctx.stroke();
-        
-        // Draw title
-        ctx.fillStyle = '#000000';
-        ctx.font = 'bold 16px Arial';
-        ctx.textAlign = 'center';
-        ctx.fillText(title, width/2, 30);
-        
-        // Draw content
-        ctx.fillStyle = '#333333';
-        ctx.font = '14px Arial';
-        wrapText(ctx, content, width/2, 50, width - 20, 20);
-        
-        return canvas;
-    }*/
 
     // Helper to wrap text
     function wrapText(ctx, text, x, y, maxWidth, lineHeight) {
@@ -322,24 +293,63 @@ document.addEventListener('DOMContentLoaded', () => {
                     const pos = body.position;
                     const angle = body.angle;
 
+                    // Calculate text metrics
                     // Transform to body's coordinate system
                     ctx.translate(pos.x, pos.y);
                     ctx.rotate(angle);
 
-                    // Draw text
+                    // Calculate text metrics
+                    const maxWidth = (body.textData.radius - 20) * 1.8; // Slightly smaller than circle
+                    const lineHeight = 16;
+                    ctx.font = '14px "Nunito Sans"';
+
+                    // Split content into lines
+                    const contentLines = [];
+                    const words = body.textData.content.split(' ');
+                    let currentLine = words[0] || '';
+
+                    for (let i = 1; i < words.length; i++) {
+                        const word = words[i];
+                        const testLine = currentLine + ' ' + word;
+                        const metrics = ctx.measureText(testLine);
+                        if (metrics.width > maxWidth && currentLine) {
+                            contentLines.push(currentLine);
+                            currentLine = word;
+                        } else {
+                            currentLine = testLine;
+                        }
+                    }
+                    if (currentLine) contentLines.push(currentLine);
+
+                    // Calculate total height of text block
+                    const contentHeight = contentLines.length * lineHeight;
+                    const separatorHeight = 10;
+                    const titleHeight = 20;
+                    const totalHeight = contentHeight + separatorHeight + titleHeight;
+                    const startY = -totalHeight / 2;
+
+                    // Draw content lines (centered)
                     ctx.fillStyle = '#ffffff';
-                    ctx.font = 'bold 14px Arial';
                     ctx.textAlign = 'center';
-                    ctx.textBaseline = 'middle';
+                    ctx.textBaseline = 'top';
 
-                    // Draw title at top of circle
-                    ctx.fillText(body.textData.title, 0, -body.textData.radius / 2);
+                    contentLines.forEach((line, i) => {
+                        ctx.fillText(line, 0, startY + (i * lineHeight));
+                    });
 
-                    // Draw content in center
+                    // Draw separator line (centered, short)
+                    const lineY = startY + contentHeight + 5;
+                    ctx.strokeStyle = '#ffffff';
+                    ctx.lineWidth = 0.5;
+                    ctx.beginPath();
+                    ctx.moveTo(-5, lineY); // Short 30px line
+                    ctx.lineTo(5, lineY);
+                    ctx.stroke();
+
+                    // Draw title (centered below separator)
                     ctx.fillStyle = '#ffffff';
-                    ctx.font = '12px Arial';
-                    wrapTextInCircle(ctx, body.textData.content, 0, 0,
-                        body.textData.radius - 10, 16);
+                    ctx.font = 'bold 12px "Nunito Sans"';
+                    ctx.fillText(body.textData.title, 0, lineY + 8);
 
                     ctx.restore();
                 }

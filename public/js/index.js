@@ -32,12 +32,12 @@ document.addEventListener('DOMContentLoaded', () => {
 
         // Apply character limits
         const title = titleInput.value.slice(0, 20);  // Max 20 chars
-        let content = contentInput.value.slice(0, 60);  // Max 60 chars
+        let content = contentInput.value.slice(0, 100);  // Max 100 chars
         content = content.replace(/(\r\n|\n|\r)/gm, " ");
-        content = content.toUpperCase();
+        content = content.toUpperCase();console.log(content);
 
         let shapeType = Math.floor(Math.random() * 3);
-        shapeType = 1;// test use
+        shapeType = 3;// test use
 
         switch (shapeType) {
             case 1:

@@ -1,0 +1,14 @@
+body {
+    height: 100svh;
+    background: url('../images/Website-Desktop.png') center/cover;
+}
+
+#canvas-container {
+    background: transparent;
+    position: relative;
+}
+
+#canvas-container canvas {
+    background: transparent;
+    display: block;
+}

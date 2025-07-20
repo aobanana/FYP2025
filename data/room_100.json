@@ -1,3 +1,38 @@
 {
-  "objects": []
+  "objects": [
+    {
+      "id": "1752978242685",
+      "type": "textCircle",
+      "x": 400,
+      "y": 0,
+      "radius": 120,
+      "title": "What’s a sense of be",
+      "content": "WHAT’S A SENSE OF BEAUTY YOU’VE NOTICED RECENTLY?",
+      "options": {
+        "restitution": 0.5,
+        "render": {
+          "fillStyle": "#ffffff",
+          "strokeStyle": "#333333",
+          "lineWidth": 2
+        }
+      }
+    },
+    {
+      "id": "1752978594709",
+      "type": "textCircle",
+      "x": 400,
+      "y": 0,
+      "radius": 120,
+      "title": "What’s a sense of be",
+      "content": "WHAT’S A SENSE OF BEAUTY YOU’VE NOTICED RECENTLY? WHAT’S A SENSE OF BEAUTY YOU’VE NOTICED RECENTLY?",
+      "options": {
+        "restitution": 0.5,
+        "render": {
+          "fillStyle": "#ffffff",
+          "strokeStyle": "#333333",
+          "lineWidth": 2
+        }
+      }
+    }
+  ]
 }
