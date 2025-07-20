@@ -13,7 +13,7 @@ document.addEventListener('DOMContentLoaded', () => {
         const bodies = Composite.allBodies(engine.world);
         const dynamicBodies = bodies.filter(body => !body.isStatic);
 
-        let extra = (dynamicBodies.length - 100 < 0)?0:dynamicBodies.length - CANVAS_BASE;
+        let extra = (dynamicBodies.length - 100 < 0) ? 0 : dynamicBodies.length - CANVAS_BASE;
         let level = Math.floor(extra / MAX_OBJECTS_BEFORE_EXPAND);
         //console.log(dynamicBodies.length  + ":" +  level + ":" + expandCanvasHeightCount);
 
@@ -175,19 +175,59 @@ document.addEventListener('DOMContentLoaded', () => {
                     ctx.translate(pos.x, pos.y);
                     ctx.rotate(angle);
 
-                    // Draw text
-                    ctx.fillStyle = '#ffffff';
-                    ctx.font = 'italic 12px "Nunito Sans"';
-                    ctx.textAlign = 'center';
-                    ctx.textBaseline = 'top';
-                    ctx.fillText(body.textData.title, 0, -body.textData.height / 2 + 20);
-                    /*wrapText(ctx, body.textData.title, 0, -body.textData.height / 2 + 0,
-                        body.textData.width - 20, 18);*/
+                    // Calculate total text block height
 
+                    // Calculate wrapped lines for content
+                    const maxWidth = body.textData.width - 20;
+                    const lineHeight = 18;
+                    const contentLines = [];
+                    const words = body.textData.content.split(' ');
+                    let currentLine = words[0] || '';
+
+                    for (let i = 1; i < words.length; i++) {
+                        const word = words[i];
+                        const testLine = currentLine + ' ' + word;
+                        const metrics = ctx.measureText(testLine);
+                        if (metrics.width > maxWidth) {
+                            contentLines.push(currentLine);
+                            currentLine = word;
+                        } else {
+                            currentLine = testLine;
+                        }
+                    }
+                    contentLines.push(currentLine);
+
+                    const contentHeight = contentLines.length * lineHeight;
+                    const titleHeight = 20;
+                    const separatorHeight = 10;
+                    const totalTextHeight = titleHeight + separatorHeight + contentHeight;
+
+                    // Starting Y position for vertical centering
+                    const startY = -totalTextHeight / 2;
+
+                    // Draw content (top section)
                     ctx.fillStyle = '#ffffff';
                     ctx.font = '14px "Nunito Sans"';
-                    wrapText(ctx, body.textData.content, 0, -body.textData.height / 2 + 50,
-                        body.textData.width - 20, 18);
+                    ctx.textAlign = 'center';
+                    ctx.textBaseline = 'top';
+                    wrapText(ctx, body.textData.content, 0, startY,
+                        body.textData.width - 20, lineHeight);
+
+                    // Draw separator line (1px horizontal line)
+                    const lineY = startY + contentHeight + 10;
+                    ctx.strokeStyle = '#ffffff';
+                    ctx.lineWidth = 0.5;
+                    ctx.beginPath();
+                    ctx.moveTo(-5, lineY);
+                    ctx.lineTo(5, lineY);
+                    ctx.stroke();
+
+                    // Draw title (bottom section)
+                    ctx.fillStyle = '#ffffff';
+                    ctx.font = '12px "Nunito Sans"';
+                    ctx.textAlign = 'center';
+                    ctx.textBaseline = 'top';
+                    ctx.fillText(body.textData.title, 0, lineY + 10);
 
                     ctx.restore();
                 }
