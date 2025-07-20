@@ -1,7 +1,95 @@
 {
   "objects": [
     {
-      "id": "1752978242685",
+      "id": "1753006286677",
+      "type": "textRectangle",
+      "x": 400,
+      "y": 0,
+      "width": 240,
+      "height": 240,
+      "title": "What’s a sense of be",
+      "content": "WHAT’S A SENSE OF BEAUTY YOU’VE NOTICED RECENTLY?",
+      "options": {
+        "restitution": 0.5,
+        "render": {
+          "fillStyle": "#ffffff",
+          "strokeStyle": "#333333",
+          "lineWidth": 2
+        }
+      }
+    },
+    {
+      "id": "1753006292396",
+      "type": "textTriangle",
+      "x": 400,
+      "y": 0,
+      "size": 200,
+      "title": "What’s a sense of be",
+      "content": "WHAT’S A SENSE OF BEAUTY YOU’VE NOTICED RECENTLY?",
+      "options": {
+        "restitution": 0.5,
+        "render": {
+          "fillStyle": "#ffffff",
+          "strokeStyle": "#333333",
+          "lineWidth": 2
+        }
+      }
+    },
+    {
+      "id": "1753006294868",
+      "type": "textTriangle",
+      "x": 400,
+      "y": 0,
+      "size": 200,
+      "title": "What’s a sense of be",
+      "content": "WHAT’S A SENSE OF BEAUTY YOU’VE NOTICED RECENTLY?",
+      "options": {
+        "restitution": 0.5,
+        "render": {
+          "fillStyle": "#ffffff",
+          "strokeStyle": "#333333",
+          "lineWidth": 2
+        }
+      }
+    },
+    {
+      "id": "1753006297396",
+      "type": "textRectangle",
+      "x": 400,
+      "y": 0,
+      "width": 240,
+      "height": 240,
+      "title": "What’s a sense of be",
+      "content": "WHAT’S A SENSE OF BEAUTY YOU’VE NOTICED RECENTLY?",
+      "options": {
+        "restitution": 0.5,
+        "render": {
+          "fillStyle": "#ffffff",
+          "strokeStyle": "#333333",
+          "lineWidth": 2
+        }
+      }
+    },
+    {
+      "id": "1753006299557",
+      "type": "textRectangle",
+      "x": 400,
+      "y": 0,
+      "width": 240,
+      "height": 240,
+      "title": "What’s a sense of be",
+      "content": "WHAT’S A SENSE OF BEAUTY YOU’VE NOTICED RECENTLY?",
+      "options": {
+        "restitution": 0.5,
+        "render": {
+          "fillStyle": "#ffffff",
+          "strokeStyle": "#333333",
+          "lineWidth": 2
+        }
+      }
+    },
+    {
+      "id": "1753006301708",
       "type": "textCircle",
       "x": 400,
       "y": 0,
@@ -18,13 +106,152 @@
       }
     },
     {
-      "id": "1752978594709",
+      "id": "1753006304308",
+      "type": "textRectangle",
+      "x": 400,
+      "y": 0,
+      "width": 240,
+      "height": 240,
+      "title": "What’s a sense of be",
+      "content": "WHAT’S A SENSE OF BEAUTY YOU’VE NOTICED RECENTLY?",
+      "options": {
+        "restitution": 0.5,
+        "render": {
+          "fillStyle": "#ffffff",
+          "strokeStyle": "#333333",
+          "lineWidth": 2
+        }
+      }
+    },
+    {
+      "id": "1753006321004",
+      "type": "textTriangle",
+      "x": 400,
+      "y": 0,
+      "size": 200,
+      "title": "What’s a sense of be",
+      "content": "WHAT’S A SENSE OF BEAUTY YOU’VE NOTICED RECENTLY?",
+      "options": {
+        "restitution": 0.5,
+        "render": {
+          "fillStyle": "#ffffff",
+          "strokeStyle": "#333333",
+          "lineWidth": 2
+        }
+      }
+    },
+    {
+      "id": "1753006324245",
+      "type": "textRectangle",
+      "x": 400,
+      "y": 0,
+      "width": 240,
+      "height": 240,
+      "title": "What’s a sense of be",
+      "content": "WHAT’S A SENSE OF BEAUTY YOU’VE NOTICED RECENTLY?",
+      "options": {
+        "restitution": 0.5,
+        "render": {
+          "fillStyle": "#ffffff",
+          "strokeStyle": "#333333",
+          "lineWidth": 2
+        }
+      }
+    },
+    {
+      "id": "1753006326764",
+      "type": "textRectangle",
+      "x": 400,
+      "y": 0,
+      "width": 240,
+      "height": 240,
+      "title": "What’s a sense of be",
+      "content": "WHAT’S A SENSE OF BEAUTY YOU’VE NOTICED RECENTLY?",
+      "options": {
+        "restitution": 0.5,
+        "render": {
+          "fillStyle": "#ffffff",
+          "strokeStyle": "#333333",
+          "lineWidth": 2
+        }
+      }
+    },
+    {
+      "id": "1753006329060",
       "type": "textCircle",
       "x": 400,
       "y": 0,
       "radius": 120,
       "title": "What’s a sense of be",
-      "content": "WHAT’S A SENSE OF BEAUTY YOU’VE NOTICED RECENTLY? WHAT’S A SENSE OF BEAUTY YOU’VE NOTICED RECENTLY?",
+      "content": "WHAT’S A SENSE OF BEAUTY YOU’VE NOTICED RECENTLY?",
+      "options": {
+        "restitution": 0.5,
+        "render": {
+          "fillStyle": "#ffffff",
+          "strokeStyle": "#333333",
+          "lineWidth": 2
+        }
+      }
+    },
+    {
+      "id": "1753006331988",
+      "type": "textTriangle",
+      "x": 400,
+      "y": 0,
+      "size": 200,
+      "title": "What’s a sense of be",
+      "content": "WHAT’S A SENSE OF BEAUTY YOU’VE NOTICED RECENTLY?",
+      "options": {
+        "restitution": 0.5,
+        "render": {
+          "fillStyle": "#ffffff",
+          "strokeStyle": "#333333",
+          "lineWidth": 2
+        }
+      }
+    },
+    {
+      "id": "1753006336492",
+      "type": "textTriangle",
+      "x": 400,
+      "y": 0,
+      "size": 200,
+      "title": "What’s a sense of be",
+      "content": "WHAT’S A SENSE OF BEAUTY YOU’VE NOTICED RECENTLY?",
+      "options": {
+        "restitution": 0.5,
+        "render": {
+          "fillStyle": "#ffffff",
+          "strokeStyle": "#333333",
+          "lineWidth": 2
+        }
+      }
+    },
+    {
+      "id": "1753006339540",
+      "type": "textCircle",
+      "x": 400,
+      "y": 0,
+      "radius": 120,
+      "title": "What’s a sense of be",
+      "content": "WHAT’S A SENSE OF BEAUTY YOU’VE NOTICED RECENTLY?",
+      "options": {
+        "restitution": 0.5,
+        "render": {
+          "fillStyle": "#ffffff",
+          "strokeStyle": "#333333",
+          "lineWidth": 2
+        }
+      }
+    },
+    {
+      "id": "1753006342212",
+      "type": "textTriangle",
+      "x": 400,
+      "y": 0,
+      "size": 200,
+      "title": "What’s a sense of be",
+      "content": "WHAT’S A SENSE OF BEAUTY YOU’VE NOTICED RECENTLY?",
       "options": {
         "restitution": 0.5,
         "render": {

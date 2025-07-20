@@ -37,7 +37,7 @@ document.addEventListener('DOMContentLoaded', () => {
         content = content.toUpperCase();console.log(content);
 
         let shapeType = Math.floor(Math.random() * 3);
-        shapeType = 3;// test use
+        //shapeType = 2;// test use
 
         switch (shapeType) {
             case 1:

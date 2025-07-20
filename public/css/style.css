@@ -43,22 +43,6 @@ button:hover {
     /*background-color: #45a049;*/
 }
 
-footer{
-    text-align: center;
-    font-size: 10px;
-    color: white;
-    padding: 20px 0;
-}
-
-#canvas-container {
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100vw;
-    height: 100vh;
-    z-index: 1;
-}
-
 /*.text-rectangle {
     background-color: rgba(255, 255, 255, 0.8);
     border: 2px solid #333;

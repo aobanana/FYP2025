@@ -1,7 +1,7 @@
 document.addEventListener('DOMContentLoaded', () => {
     // Add these near the top of control.js
-    const MAX_OBJECTS_BEFORE_EXPAND = 15; // Adjust as needed
-    const CANVAS_BASE = 100;
+    const MAX_OBJECTS_BEFORE_EXPAND = 10; // Adjust as needed
+    const CANVAS_BASE = 20;
     const CANVAS_EXPANSION_STEP = 200; // Pixels to expand by
     let autoExpandingEnabled = true;
     let expandCanvasHeightCount = 0;
@@ -13,7 +13,7 @@ document.addEventListener('DOMContentLoaded', () => {
         const bodies = Composite.allBodies(engine.world);
         const dynamicBodies = bodies.filter(body => !body.isStatic);
 
-        let extra = (dynamicBodies.length - 100 < 0) ? 0 : dynamicBodies.length - CANVAS_BASE;
+        let extra = (dynamicBodies.length - CANVAS_BASE < 0) ? 0 : dynamicBodies.length - CANVAS_BASE;
         let level = Math.floor(extra / MAX_OBJECTS_BEFORE_EXPAND);
         //console.log(dynamicBodies.length  + ":" +  level + ":" + expandCanvasHeightCount);
 
@@ -88,8 +88,8 @@ document.addEventListener('DOMContentLoaded', () => {
         element: document.getElementById('canvas-container'),
         engine: engine,
         options: {
-            width: viewport.width,
-            height: viewport.height,
+            width: viewport.width - 64,
+            height: viewport.height - 80,
             wireframes: false,
             //background: '#f4f4f4',
             background: 'transparent',
@@ -151,119 +151,114 @@ document.addEventListener('DOMContentLoaded', () => {
             chamfer: { radius: 0 },
             render: {
                 fillStyle: '#000000',
-                //strokeStyle: '#333333',
-                //lineWidth: 2
+                strokeStyle: '#ffffff', // White border
+                lineWidth: 1          // 1px border
             }
         });
 
         // Store text data with the body
         body.textData = { title, content, width, height };
 
-        // Add custom rendering
-        Events.on(render, 'afterRender', function () {
-            const ctx = render.context;
-            const bodies = Composite.allBodies(engine.world);
+        // Add custom rendering - only once per body type
+        if (!addTextRectangle.renderingAdded) {
+            addTextRectangle.renderingAdded = true;
 
-            bodies.forEach(body => {
-                if (body.textData) {
-                    ctx.save();
+            Events.on(render, 'afterRender', function () {
+                const ctx = render.context;
+                const bodies = Composite.allBodies(engine.world);
 
-                    // Get body position and angle
-                    const pos = body.position;
-                    const angle = body.angle;
-
-                    // Transform to body's coordinate system
-                    ctx.translate(pos.x, pos.y);
-                    ctx.rotate(angle);
-
-                    // Calculate total text block height
-
-                    // Calculate wrapped lines for content
-                    const maxWidth = body.textData.width - 100;//wrap text 70
-                    const lineHeight = 18;
-                    const contentLines = [];
-                    const words = body.textData.content.split(' ');
-                    let currentLine = words[0] || '';
-
-                    for (let i = 1; i < words.length; i++) {
-                        const word = words[i];
-                        const testLine = currentLine + ' ' + word;
-                        const metrics = ctx.measureText(testLine);
-                        if (metrics.width > maxWidth) {
-                            contentLines.push(currentLine);
-                            currentLine = word;
-                        } else {
-                            currentLine = testLine;
-                        }
+                for (let i = 0; i < bodies.length; i++) {
+                    const body = bodies[i];
+                    if (body.textData && body.textData.width) { // Check for rectangle specifically
+                        renderTextRectangle(ctx, body);
                     }
-                    contentLines.push(currentLine);
-
-                    const contentHeight = contentLines.length * lineHeight;
-                    const titleHeight = 20;
-                    const separatorHeight = 35;
-                    const totalTextHeight = titleHeight + separatorHeight + contentHeight;
-
-                    // Starting Y position for vertical centering
-                    const startY = -totalTextHeight / 2;
-
-                    // Draw content (top section)
-                    ctx.fillStyle = '#ffffff';
-                    ctx.font = '14px "Nunito Sans"';
-                    ctx.textAlign = 'center';
-                    ctx.textBaseline = 'top';
-                    wrapText(ctx, body.textData.content, 0, startY,
-                        body.textData.width - 70, lineHeight);
-
-                    // Draw separator line (1px horizontal line)
-                    const lineY = startY + contentHeight + 20;
-                    ctx.strokeStyle = '#ffffff';
-                    ctx.lineWidth = 0.5;
-                    ctx.beginPath();
-                    ctx.moveTo(-5, lineY);
-                    ctx.lineTo(5, lineY);
-                    ctx.stroke();
-
-                    // Draw title (bottom section)
-                    ctx.fillStyle = '#ffffff';
-                    ctx.font = '12px "Nunito Sans"';
-                    ctx.textAlign = 'center';
-                    ctx.textBaseline = 'top';
-                    ctx.fillText(body.textData.title, 0, lineY + 10);
-
-                    ctx.restore();
                 }
             });
-        });
+        }
 
         World.add(world, body);
         return body;
     };
 
-    // Helper to wrap text
-    function wrapText(ctx, text, x, y, maxWidth, lineHeight) {
-        const words = text.split(' ');
-        let line = '';
-        let currentY = y;
+    // Separate rendering function for better organization and potential reuse
+    function renderTextRectangle(ctx, body) {
+        ctx.save();
 
-        for (let n = 0; n < words.length; n++) {
-            const testLine = line + words[n] + ' ';
+        // Get body position and angle
+        const pos = body.position;
+        const angle = body.angle;
+
+        // Transform to body's coordinate system
+        ctx.translate(pos.x, pos.y);
+        ctx.rotate(angle);
+
+        // Calculate text metrics
+        const maxWidth = body.textData.width - 100;
+        const lineHeight = 18;
+        const padding = 35;
+
+        // Calculate wrapped lines for content
+        const contentLines = wrapTextToLines(ctx, body.textData.content, maxWidth, '14px "Nunito Sans"');
+        const contentHeight = contentLines.length * lineHeight;
+        const titleHeight = 20;
+        const separatorHeight = 35;
+        const totalTextHeight = titleHeight + separatorHeight + contentHeight;
+
+        // Starting Y position for vertical centering
+        const startY = -totalTextHeight / 2;
+
+        // Set common text properties
+        ctx.fillStyle = '#ffffff';
+        ctx.textAlign = 'center';
+        ctx.textBaseline = 'top';
+
+        // Draw content (top section)
+        ctx.font = '14px "Nunito Sans"';
+        for (let i = 0; i < contentLines.length; i++) {
+            ctx.fillText(contentLines[i], 0, startY + (i * lineHeight));
+        }
+
+        // Draw separator line (1px horizontal line)
+        const lineY = startY + contentHeight + 20;
+        ctx.strokeStyle = '#ffffff';
+        ctx.lineWidth = 0.5;
+        ctx.beginPath();
+        ctx.moveTo(-5, lineY); // Make separator proportional to width
+        ctx.lineTo(5, lineY);
+        ctx.stroke();
+
+        // Draw title (bottom section)
+        ctx.font = '12px "Nunito Sans"';
+        ctx.fillText(body.textData.title, 0, lineY + 10);
+
+        ctx.restore();
+    }
+
+    // Helper function to wrap text into lines
+    function wrapTextToLines(ctx, text, maxWidth, font) {
+        ctx.font = font;
+        const words = text.split(' ');
+        const lines = [];
+        let currentLine = words[0] || '';
+
+        for (let i = 1; i < words.length; i++) {
+            const word = words[i];
+            const testLine = currentLine + ' ' + word;
             const metrics = ctx.measureText(testLine);
 
-            if (metrics.width > maxWidth && n > 0) {
-                ctx.fillText(line, x, currentY);
-                line = words[n] + ' ';
-                currentY += lineHeight;
-
-                // Stop if we've reached the bottom of the rectangle
-                if (currentY > y + 100) {
-                    ctx.fillText('...', x, currentY);
-                    break;
-                }
+            if (metrics.width > maxWidth && currentLine) {
+                lines.push(currentLine);
+                currentLine = word;
             } else {
-                line = testLine;
+                currentLine = testLine;
             }
         }
-        ctx.fillText(line, x, currentY);
+
+        if (currentLine) {
+            lines.push(currentLine);
+        }
+
+        return lines;
     }
 
     // Add this function to control.js (alongside addTextRectangle)
@@ -272,7 +267,6 @@ document.addEventListener('DOMContentLoaded', () => {
         const body = Bodies.circle(x, y, radius, {
             render: {
                 fillStyle: '#000000',
-                //strokeStyle: '#333333',
                 lineWidth: 2
             }
         });
@@ -280,115 +274,79 @@ document.addEventListener('DOMContentLoaded', () => {
         // Store text data with the body
         body.textData = { title, content, radius };
 
-        // Add custom rendering
-        Events.on(render, 'afterRender', function () {
-            const ctx = render.context;
-            const bodies = Composite.allBodies(engine.world);
+        // Add custom rendering - only once per body type
+        if (!addTextCircle.renderingAdded) {
+            addTextCircle.renderingAdded = true;
 
-            bodies.forEach(body => {
-                if (body.textData) {
-                    ctx.save();
+            Events.on(render, 'afterRender', function () {
+                const ctx = render.context;
+                const bodies = Composite.allBodies(engine.world);
 
-                    // Get body position and angle
-                    const pos = body.position;
-                    const angle = body.angle;
-
-                    // Calculate text metrics
-                    // Transform to body's coordinate system
-                    ctx.translate(pos.x, pos.y);
-                    ctx.rotate(angle);
-
-                    // Calculate text metrics
-                    const maxWidth = (body.textData.radius - 20) * 1.8; // Slightly smaller than circle
-                    const lineHeight = 16;
-                    ctx.font = '14px "Nunito Sans"';
-
-                    // Split content into lines
-                    const contentLines = [];
-                    const words = body.textData.content.split(' ');
-                    let currentLine = words[0] || '';
-
-                    for (let i = 1; i < words.length; i++) {
-                        const word = words[i];
-                        const testLine = currentLine + ' ' + word;
-                        const metrics = ctx.measureText(testLine);
-                        if (metrics.width > maxWidth && currentLine) {
-                            contentLines.push(currentLine);
-                            currentLine = word;
-                        } else {
-                            currentLine = testLine;
-                        }
+                for (let i = 0; i < bodies.length; i++) {
+                    const body = bodies[i];
+                    if (body.textData && body.textData.radius) { // Check for circle specifically
+                        renderTextCircle(ctx, body);
                     }
-                    if (currentLine) contentLines.push(currentLine);
-
-                    // Calculate total height of text block
-                    const contentHeight = contentLines.length * lineHeight;
-                    const separatorHeight = 10;
-                    const titleHeight = 20;
-                    const totalHeight = contentHeight + separatorHeight + titleHeight;
-                    const startY = -totalHeight / 2;
-
-                    // Draw content lines (centered)
-                    ctx.fillStyle = '#ffffff';
-                    ctx.textAlign = 'center';
-                    ctx.textBaseline = 'top';
-
-                    contentLines.forEach((line, i) => {
-                        ctx.fillText(line, 0, startY + (i * lineHeight));
-                    });
-
-                    // Draw separator line (centered, short)
-                    const lineY = startY + contentHeight + 5;
-                    ctx.strokeStyle = '#ffffff';
-                    ctx.lineWidth = 0.5;
-                    ctx.beginPath();
-                    ctx.moveTo(-5, lineY); // Short 30px line
-                    ctx.lineTo(5, lineY);
-                    ctx.stroke();
-
-                    // Draw title (centered below separator)
-                    ctx.fillStyle = '#ffffff';
-                    ctx.font = 'bold 12px "Nunito Sans"';
-                    ctx.fillText(body.textData.title, 0, lineY + 8);
-
-                    ctx.restore();
                 }
             });
-        });
+        }
 
         World.add(world, body);
         return body;
     };
 
-    // Helper to wrap text inside a circle
-    function wrapTextInCircle(ctx, text, x, y, maxRadius, lineHeight) {
-        const words = text.split(' ');
-        let lines = [];
-        let currentLine = '';
+    // Separate rendering function for better organization and potential reuse
+    function renderTextCircle(ctx, body) {
+        ctx.save();
 
-        // First break text into lines that fit horizontally
-        for (let n = 0; n < words.length; n++) {
-            const testLine = currentLine + words[n] + ' ';
-            const metrics = ctx.measureText(testLine);
+        // Get body position and angle
+        const pos = body.position;
+        const angle = body.angle;
 
-            if (metrics.width > maxRadius * 1.8 && currentLine !== '') {
-                lines.push(currentLine);
-                currentLine = words[n] + ' ';
-            } else {
-                currentLine = testLine;
-            }
+        // Transform to body's coordinate system
+        ctx.translate(pos.x, pos.y);
+        ctx.rotate(angle);
+
+        // Calculate text metrics
+        const maxWidth = (body.textData.radius - 20) * 1.8; // Slightly smaller than circle
+        const lineHeight = 18;
+
+        // Calculate wrapped lines for content
+        const contentLines = wrapTextToLines(ctx, body.textData.content, maxWidth, '14px "Nunito Sans"');
+        const contentHeight = contentLines.length * lineHeight;
+        const separatorHeight = 10;
+        const titleHeight = 20;
+        const totalHeight = contentHeight + separatorHeight + titleHeight;
+
+        // Starting Y position for vertical centering
+        const startY = -totalHeight / 2;
+
+        // Set common text properties
+        ctx.fillStyle = '#ffffff';
+        ctx.textAlign = 'center';
+        ctx.textBaseline = 'top';
+
+        // Draw content lines (centered)
+        ctx.font = '14px "Nunito Sans"';
+        for (let i = 0; i < contentLines.length; i++) {
+            ctx.fillText(contentLines[i], 0, startY + (i * lineHeight));
         }
-        lines.push(currentLine);
 
-        // Then adjust vertical placement
-        const totalHeight = lines.length * lineHeight;
-        let currentY = y - totalHeight / 2 + lineHeight;
+        // Draw separator line (centered, short)
+        const lineY = startY + contentHeight + 5;
+        ctx.strokeStyle = '#ffffff';
+        ctx.lineWidth = 0.5;
+        ctx.beginPath();
+        ctx.moveTo(-5, lineY); // Make separator proportional to radius
+        ctx.lineTo(5, lineY);
+        ctx.stroke();
 
-        // Draw each line centered
-        lines.forEach(line => {
-            ctx.fillText(line.trim(), x, currentY);
-            currentY += lineHeight;
-        });
+        // Draw title (centered below separator)
+        ctx.fillStyle = '#ffffff';
+        ctx.font = 'bold 12px "Nunito Sans"';
+        ctx.fillText(body.textData.title, 0, lineY + 8);
+
+        ctx.restore();
     }
 
     const addTextTriangle = (world, x, y, size, title, content) => {
@@ -404,7 +362,6 @@ document.addEventListener('DOMContentLoaded', () => {
             chamfer: { radius: 5 },
             render: {
                 fillStyle: '#000000',
-                //strokeStyle: '#333333',
                 lineWidth: 2
             }
         }, true);
@@ -412,63 +369,80 @@ document.addEventListener('DOMContentLoaded', () => {
         // Store text data with the body
         body.textData = { title, content, size };
 
-        // Add custom rendering
-        Events.on(render, 'afterRender', function () {
-            const ctx = render.context;
-            const bodies = Composite.allBodies(engine.world);
+        // Add custom rendering - only once per body type
+        if (!addTextTriangle.renderingAdded) {
+            addTextTriangle.renderingAdded = true;
 
-            bodies.forEach(body => {
-                if (body.textData && body.textData.size) { // Check for triangle
-                    ctx.save();
-                    const pos = body.position;
-                    const angle = body.angle;
+            Events.on(render, 'afterRender', function () {
+                const ctx = render.context;
+                const bodies = Composite.allBodies(engine.world);
 
-                    // Transform to body's coordinate system
-                    ctx.translate(pos.x, pos.y);
-                    ctx.rotate(angle);
-
-                    // Draw title at top
-                    ctx.fillStyle = '#ffffff';
-                    ctx.font = 'bold 12px Arial';
-                    ctx.textAlign = 'center';
-                    ctx.fillText(body.textData.title, 0, -body.textData.size + 20);
-
-                    // Draw content in center
-                    ctx.fillStyle = '#ffffff';
-                    ctx.font = '10px Arial';
-                    wrapTextInTriangle(ctx, body.textData.content, 0, 0, body.textData.size - 15, 12);
-
-                    ctx.restore();
+                for (let i = 0; i < bodies.length; i++) {
+                    const body = bodies[i];
+                    if (body.textData && body.textData.size) { // Check for triangle specifically
+                        renderTextTriangle(ctx, body);
+                    }
                 }
             });
-        });
+        }
 
         World.add(world, body);
         return body;
     };
 
-    // Helper to wrap text inside a triangle
-    function wrapTextInTriangle(ctx, text, x, y, maxWidth, lineHeight) {
-        const words = text.split(' ');
-        let line = '';
-        let currentY = y - maxWidth / 3;
+    // Separate rendering function for better organization and potential reuse
+    function renderTextTriangle(ctx, body) {
+        ctx.save();
 
-        for (let n = 0; n < words.length; n++) {
-            const testLine = line + words[n] + ' ';
-            const metrics = ctx.measureText(testLine);
+        // Get body position and angle
+        const pos = body.position;
+        const angle = body.angle;
 
-            if (metrics.width > maxWidth && n > 0) {
-                ctx.fillText(line, x, currentY);
-                line = words[n] + ' ';
-                currentY += lineHeight;
-            } else {
-                line = testLine;
-            }
+        // Transform to body's coordinate system
+        ctx.translate(pos.x, pos.y);
+        ctx.rotate(angle);
+
+        // Calculate text metrics
+        //const maxWidth = body.textData.size * 1.6; // Adjusted for triangle shape
+        const maxWidth = body.textData.size * 0.8; // Adjusted for triangle shape
+        const lineHeight = 16;
+
+        // Calculate wrapped lines for content
+        const contentLines = wrapTextToLines(ctx, body.textData.content, maxWidth, '14px "Nunito Sans"');
+        const contentHeight = contentLines.length * lineHeight;
+        const separatorHeight = 10;
+        const titleHeight = 16;
+        const totalHeight = contentHeight + separatorHeight + titleHeight;
+
+        // Starting Y position for vertical centering
+        const startY = -totalHeight / 2;
+
+        // Set common text properties
+        ctx.fillStyle = '#ffffff';
+        ctx.textAlign = 'center';
+        ctx.textBaseline = 'top';
+
+        // Draw content lines (centered)
+        ctx.font = '14px "Nunito Sans"';
+        for (let i = 0; i < contentLines.length; i++) {
+            ctx.fillText(contentLines[i], 0, startY + (i * lineHeight));
         }
-        ctx.fillText(line, x, currentY);
+
+        // Draw separator line (centered, proportional to triangle size)
+        const lineY = startY + contentHeight + 5;
+        ctx.strokeStyle = '#ffffff';
+        ctx.lineWidth = 0.5;
+        ctx.beginPath();
+        ctx.moveTo(-5, lineY);
+        ctx.lineTo(5, lineY);
+        ctx.stroke();
+
+        // Draw title (centered below separator)
+        ctx.font = 'bold 12px "Nunito Sans"';
+        ctx.fillText(body.textData.title, 0, lineY + 8);
+
+        ctx.restore();
     }
-
-
 
     // Add this function to create quarter donut shapes
     const addQuarterDonut = (world, x, y, innerRadius, outerRadius, options) => {

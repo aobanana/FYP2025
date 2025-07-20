@@ -58,14 +58,14 @@ section {
 }
 
 .char-counter {
-  position: absolute;
-  right: 10px;
-  bottom: 10px;
-  font-size: 12px;
-  color: #666;
-  background: rgba(255,255,255,0.8);
-  padding: 2px 5px;
-  border-radius: 3px;
+    position: absolute;
+    right: 10px;
+    bottom: 10px;
+    font-size: 12px;
+    color: #666;
+    background: rgba(255, 255, 255, 0.8);
+    padding: 2px 5px;
+    border-radius: 3px;
 }
 
 label {
@@ -88,7 +88,8 @@ textarea {
 button[type="submit"] {
     align-self: center;
 }
-button[type="submit"][disabled]{
+
+button[type="submit"][disabled] {
     background-color: rgba(155, 156, 158, 0.1);
     color: #686B6E;
     border: 1px solid #686B6E;
@@ -114,7 +115,22 @@ button[type="submit"][disabled]{
     text-align: center;
     height: 100%;
 }
-#textObjectForm > div{margin: auto;}
 
-h2{font-size: 28px;}
-p{font-size: 14px;}
+#textObjectForm>div {
+    margin: auto;
+}
+
+h2 {
+    font-size: 28px;
+}
+
+p {
+    font-size: 14px;
+}
+
+footer {
+    text-align: center;
+    font-size: 10px;
+    color: white;
+    padding: 20px 0;
+}

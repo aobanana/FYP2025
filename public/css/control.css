@@ -1,14 +1,51 @@
 body {
-    height: 100svh;
+    overflow-y: auto;
     background: url('../images/Website-Desktop.png') center/cover;
 }
 
+header {
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: 100%;
+    box-sizing: border-box;
+    padding: 32px;
+    display: flex;
+    justify-content: space-between;
+}
+
+.body{}
+.body__logo{position: absolute;left: 50%;top:150px;transform: translateX(-50%);}
+
 #canvas-container {
     background: transparent;
-    position: relative;
+    top: 0;
+    left: 0;
+    width: calc(100vw - 64px);
+    /*height: 100vh;*/
+    min-height: calc( 100svh - 150px - 80px);
+    z-index: 1;
+    margin: 0 32px;
+    box-sizing: border-box;
+    border-bottom: 1px solid black;
 }
 
 #canvas-container canvas {
     background: transparent;
     display: block;
+}
+
+footer {
+    display: flex;
+    justify-content: space-between;
+    padding: 32px;
+    font-size: 12px;
+}
+
+.footer__left {
+    display: flex;
+}
+
+.footer__left img {
+    margin-right: 5px;
 }
