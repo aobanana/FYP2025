@@ -52,15 +52,20 @@ section {
 
 #btnStart {}
 
-.form-container {
-    margin: 20px;
-    padding: 20px;
-    background: #f5f5f5;
-    border-radius: 8px;
-}
-
 .form-group {
     margin-bottom: 15px;
+    position: relative;
+}
+
+.char-counter {
+  position: absolute;
+  right: 10px;
+  bottom: 10px;
+  font-size: 12px;
+  color: #666;
+  background: rgba(255,255,255,0.8);
+  padding: 2px 5px;
+  border-radius: 3px;
 }
 
 label {
@@ -71,6 +76,8 @@ label {
 
 input,
 textarea {
+    font-family: "Nunito Sans", sans-serif;
+    font-size: 15px;
     width: 100%;
     padding: 8px;
     border: 1px solid #ddd;
@@ -79,12 +86,12 @@ textarea {
 }
 
 button[type="submit"] {
-    background-color: #4CAF50;
-    color: white;
-    padding: 10px 15px;
-    border: none;
-    border-radius: 4px;
-    cursor: pointer;
+    align-self: center;
+}
+button[type="submit"][disabled]{
+    background-color: rgba(155, 156, 158, 0.1);
+    color: #686B6E;
+    border: 1px solid #686B6E;
 }
 
 .controls {
@@ -98,3 +105,16 @@ button[type="submit"] {
     padding: 10px;
     border-radius: 5px;
 }
+
+#textObjectForm {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    justify-items: center;
+    text-align: center;
+    height: 100%;
+}
+#textObjectForm > div{margin: auto;}
+
+h2{font-size: 28px;}
+p{font-size: 14px;}

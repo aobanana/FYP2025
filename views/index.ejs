@@ -16,7 +16,7 @@
         <header>
             <img src="images/General Icons.svg" alt="">
             <img src="images/Logomark.svg" alt="">
-            <span>&nbsp;</span>
+            <div style="width: 28px;">&nbsp;&nbsp;</div>
         </header>
         <!--h1>Control Panel - Room <%= roomId %></h1-->
         
@@ -29,19 +29,35 @@
                     <button id="btnStart">GET STARTED</button>
                 </div>
             </div>
-            <div style="_display: none;" class="body__2 form-container">
-                <h2>Add Text Object</h2>
+            <div style="_display: none;" class="body__2">
                 <form id="textObjectForm">
-                    <div class="form-group">
-                        <label for="title">Title:</label>
-                        <input type="text" id="title" name="title" required>
+                    <div>
+                        <h2>What’s a sense of 
+                            <br>beauty you’ve noticed 
+                            <br>recently?</h2>
+                        <div class="form-group">
+                            <!--label for="title">Title:</label-->
+                            <input type="text" id="title" name="title" placeholder="Your name" maxlength="20" required>
+                            <span class="char-counter"><span id="title-count">0</span>/20</span>
+                        </div>
+                        <div class="form-group">
+                            <!--label for="content">Content:</label-->
+                            <textarea id="content" name="content" rows="7" placeholder="Write your beauty quote..." maxlength="100" required></textarea>
+                            <span class="char-counter"><span id="content-count">0</span>/100</span>
+                        </div>
+                        <p>Your words will become part of a live archive. 
+                            <br>You’ll also receive your own beauty quote wallpaper.</p>
                     </div>
-                    <div class="form-group">
-                        <label for="content">Content:</label>
-                        <textarea id="content" name="content" rows="3" required></textarea>
-                    </div>
-                    <button type="submit">Add Text Box</button>
+                    <button type="submit" id="submit-btn" disabled>SUBMIT</button>
                 </form>
+            </div>
+            <div style="_display: none;" class="body__3">
+                 
+                <h2>Thank you for sharing.</h2>
+                <p>Your words are now part of the live archive.
+                    <br>Carry your beauty with you — 
+                    <br>download as a wallpaper.</p>
+
             </div>
         </div>
 

@@ -27,10 +27,15 @@ document.addEventListener('DOMContentLoaded', () => {
     document.getElementById('textObjectForm').addEventListener('submit', (e) => {
         e.preventDefault();
 
-        const title = document.getElementById('title').value;
-        const content = document.getElementById('content').value;
+        const titleInput = document.getElementById('title');
+        const contentInput = document.getElementById('content');
 
-        const shapeType = Math.floor(Math.random() * 3);
+        // Apply character limits
+        const title = titleInput.value.slice(0, 20);  // Max 20 chars
+        const content = contentInput.value.slice(0, 60);  // Max 60 chars
+
+        let shapeType = Math.floor(Math.random() * 3);
+        shapeType = 2;// test use
 
         switch (shapeType) {
             case 1:
@@ -39,8 +44,8 @@ document.addEventListener('DOMContentLoaded', () => {
                     type: 'textRectangle',
                     x: canvasWidth / 2,
                     y: 0,
-                    width: 200,
-                    height: 150,
+                    width: 240,
+                    height: 240,
                     title: title,
                     content: content,
                     options: {
@@ -58,7 +63,7 @@ document.addEventListener('DOMContentLoaded', () => {
                     type: 'textTriangle',
                     x: canvasWidth / 2,
                     y: 0,
-                    size: 80,
+                    size: 200,
                     title: title,
                     content: content,
                     options: {
@@ -75,7 +80,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 type: 'textCircle',
                 x: canvasWidth / 2,
                 y: 0,
-                radius: 60,
+                radius: 120,
                 title: title,
                 content: content,
                 options: {
@@ -100,8 +105,8 @@ document.addEventListener('DOMContentLoaded', () => {
             type: 'rectangle',
             x: canvasWidth / 2,  // Dynamic center based on current canvas width
             y: 0,                // Top of the canvas
-            width: 80,
-            height: 80,
+            width: 240,
+            height: 240,
             options: {
                 restitution: 0.8,
                 render: {
@@ -119,7 +124,7 @@ document.addEventListener('DOMContentLoaded', () => {
             type: 'circle',
             x: canvasWidth / 2,  // Dynamic center based on current canvas width
             y: 0,                // Top of the canvas
-            radius: 40,
+            radius: 120,
             options: {
                 restitution: 0.8,
                 render: {

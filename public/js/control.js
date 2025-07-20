@@ -147,7 +147,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const addTextRectangle = (world, x, y, width, height, title, content) => {
         // Create the physical rectangle body
         const body = Bodies.rectangle(x, y, width, height, {
-            chamfer: { radius: 10 },
+            chamfer: { radius: 0 },
             render: {
                 fillStyle: '#000000',
                 //strokeStyle: '#333333',
@@ -177,7 +177,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
                     // Draw text
                     ctx.fillStyle = '#ffffff';
-                    ctx.font = 'bold 16px Arial';
+                    ctx.font = 'italic 12px "Nunito Sans"';
                     ctx.textAlign = 'center';
                     ctx.textBaseline = 'top';
                     ctx.fillText(body.textData.title, 0, -body.textData.height / 2 + 20);
@@ -185,7 +185,7 @@ document.addEventListener('DOMContentLoaded', () => {
                         body.textData.width - 20, 18);*/
 
                     ctx.fillStyle = '#ffffff';
-                    ctx.font = '14px Arial';
+                    ctx.font = '14px "Nunito Sans"';
                     wrapText(ctx, body.textData.content, 0, -body.textData.height / 2 + 50,
                         body.textData.width - 20, 18);
 
@@ -260,8 +260,8 @@ document.addEventListener('DOMContentLoaded', () => {
         // Create the physical circle body
         const body = Bodies.circle(x, y, radius, {
             render: {
-                fillStyle: '#ffffff',
-                strokeStyle: '#333333',
+                fillStyle: '#000000',
+                //strokeStyle: '#333333',
                 lineWidth: 2
             }
         });
@@ -287,7 +287,7 @@ document.addEventListener('DOMContentLoaded', () => {
                     ctx.rotate(angle);
 
                     // Draw text
-                    ctx.fillStyle = '#000000';
+                    ctx.fillStyle = '#ffffff';
                     ctx.font = 'bold 14px Arial';
                     ctx.textAlign = 'center';
                     ctx.textBaseline = 'middle';
@@ -296,7 +296,7 @@ document.addEventListener('DOMContentLoaded', () => {
                     ctx.fillText(body.textData.title, 0, -body.textData.radius / 2);
 
                     // Draw content in center
-                    ctx.fillStyle = '#333333';
+                    ctx.fillStyle = '#ffffff';
                     ctx.font = '12px Arial';
                     wrapTextInCircle(ctx, body.textData.content, 0, 0,
                         body.textData.radius - 10, 16);
@@ -353,8 +353,8 @@ document.addEventListener('DOMContentLoaded', () => {
         const body = Bodies.fromVertices(x, y, [triangleVertices], {
             chamfer: { radius: 5 },
             render: {
-                fillStyle: '#ffffff',
-                strokeStyle: '#333333',
+                fillStyle: '#000000',
+                //strokeStyle: '#333333',
                 lineWidth: 2
             }
         }, true);
@@ -378,13 +378,13 @@ document.addEventListener('DOMContentLoaded', () => {
                     ctx.rotate(angle);
 
                     // Draw title at top
-                    ctx.fillStyle = '#000000';
+                    ctx.fillStyle = '#ffffff';
                     ctx.font = 'bold 12px Arial';
                     ctx.textAlign = 'center';
                     ctx.fillText(body.textData.title, 0, -body.textData.size + 20);
 
                     // Draw content in center
-                    ctx.fillStyle = '#333333';
+                    ctx.fillStyle = '#ffffff';
                     ctx.font = '10px Arial';
                     wrapTextInTriangle(ctx, body.textData.content, 0, 0, body.textData.size - 15, 12);
 
