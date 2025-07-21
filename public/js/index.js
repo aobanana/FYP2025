@@ -34,7 +34,7 @@ document.addEventListener('DOMContentLoaded', () => {
         const title = titleInput.value.slice(0, 20);  // Max 20 chars
         let content = contentInput.value.slice(0, 100);  // Max 100 chars
         content = content.replace(/(\r\n|\n|\r)/gm, " ");
-        content = content.toUpperCase();console.log(content);
+        content = content.toUpperCase();//console.log(content);
 
         localStorage.setItem("title", title);
         localStorage.setItem("content", content);
@@ -101,6 +101,13 @@ document.addEventListener('DOMContentLoaded', () => {
 
         socket.emit('addObject', { roomId, object: textObject });
         e.target.reset();
+
+        if (typeof window.generateFn === 'function') {
+            window.generateFn();
+            gsap.to(".body__2", { autoAlpha: 0, duration: 1 });
+            gsap.to(".body__3", { autoAlpha: 1, duration: 1, delay: 0.8 });
+            window.currentStage = 2;
+        }
     });
 
     // Button event listeners

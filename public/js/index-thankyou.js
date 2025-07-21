@@ -65,9 +65,7 @@ document.addEventListener('DOMContentLoaded', function () {
         'images/Wallpaper/Unssen-50.jpg'
     ];
 
-    bgImage.src = 'images/Quote-Template-Background.jpg';
-
-    generate();// test use
+    //generate();// test use
 
     function generate() {
         const title = localStorage.getItem("title",);
@@ -125,12 +123,15 @@ document.addEventListener('DOMContentLoaded', function () {
             subtitleLines.forEach((line, index) => {
                 ctx.fillText(line, leftMargin, contentStartY + (index * lineSpacing));
             });
-
-            
-
-            
         });
     }
+
+    function generateFn(){
+        ctx.clearRect(0, 0, canvas.width, canvas.height);
+        bgImage.src = 'images/Quote-Template-Background.jpg';
+        generate();
+    }
+    window.generateFn = generateFn;
 
     // Helper function to wrap text into lines
     function wrapText(ctx, text, maxWidth, font) {
@@ -169,7 +170,7 @@ document.addEventListener('DOMContentLoaded', function () {
     });
 
     refreshButton.addEventListener('click', function () {
-        generate();
+        generateFn();
     });
 
     // Save button functionality

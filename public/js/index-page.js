@@ -1,13 +1,79 @@
 document.addEventListener('DOMContentLoaded', () => {
+    let pageProcessing = false;
+    window.currentStage = 0;
+
     //gsap.to(".body__1", { autoAlpha: 0, duration: 0 });
     gsap.to(".body__2", { autoAlpha: 0, duration: 0 });
     gsap.to(".body__3", { autoAlpha: 0, duration: 0 });
     gsap.to(".body__4", { autoAlpha: 0, duration: 0 });
+    gsap.to("#backButton", { autoAlpha: 0, duration: 0 });
+    gsap.to("#closeButton", { autoAlpha: 0, duration: 0 });
 
     document.getElementById('btnStart').addEventListener('click', () => {
+        if (pageProcessing) return;
+        pageProcessing = true;
+        window.currentStage = 1;
         //let a = document.querySelector('body__1');
         gsap.to(".body__1", { autoAlpha: 0, duration: 1 });
-        gsap.to(".body__2", { autoAlpha: 1, duration: 1, delay: 0.8 });
+        gsap.to("#aboutButton", { autoAlpha: 0, duration: 1 });
+        gsap.to("#backButton", { autoAlpha: 1, duration: 1, delay: 0.8 });
+        gsap.to(".body__2", {
+            autoAlpha: 1, duration: 1, delay: 0.8, onComplete: () => {
+                pageProcessing = false;
+            }
+        });
+    });
+
+    document.getElementById('aboutButton').addEventListener('click', () => {
+        if (pageProcessing) return;
+        pageProcessing = true;
+        //let a = document.querySelector('body__1');
+        gsap.to(".body__1", { autoAlpha: 0, duration: 1 });
+        gsap.to("#aboutButton", { autoAlpha: 0, duration: 1 });
+        gsap.to(".body__4", { autoAlpha: 1, duration: 1, delay: 0.8 });
+        gsap.to("#closeButton", {
+            autoAlpha: 1, duration: 1, delay: 0.8, onComplete: () => {
+                pageProcessing = false;
+            }
+        });
+    });
+
+    document.getElementById('backButton').addEventListener('click', () => {
+        if (pageProcessing) return;
+        pageProcessing = true;
+        if (window.currentStage == 1) {
+            gsap.to(".body__2", { autoAlpha: 0, duration: 1 });
+            gsap.to("#backButton", { autoAlpha: 0, duration: 1 });
+            gsap.to(".body__1", { autoAlpha: 1, duration: 1, delay: 0.8 });
+            gsap.to("#aboutButton", {
+                autoAlpha: 1, duration: 1, delay: 0.8, onComplete: () => {
+                    pageProcessing = false;
+                    window.currentStage = 0;
+                }
+            });
+        } else if (window.currentStage == 2) {
+            gsap.to(".body__3", { autoAlpha: 0, duration: 1 });
+            gsap.to(".body__2", {
+                autoAlpha: 1, duration: 1, delay: 0.8, onComplete: () => {
+                    pageProcessing = false;
+                    window.currentStage = 1;
+                }
+            });
+        }
+    });
+
+    document.getElementById('closeButton').addEventListener('click', () => {
+        if (pageProcessing) return;
+        pageProcessing = true;
+        //let a = document.querySelector('body__1');
+        gsap.to(".body__4", { autoAlpha: 0, duration: 1 });
+        gsap.to("#closeButton", { autoAlpha: 0, duration: 1 });
+        gsap.to(".body__1", { autoAlpha: 1, duration: 1, delay: 0.8 });
+        gsap.to("#aboutButton", {
+            autoAlpha: 1, duration: 1, delay: 0.8, onComplete: () => {
+                pageProcessing = false;
+            }
+        });
     });
 
 

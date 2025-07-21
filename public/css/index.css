@@ -61,8 +61,10 @@ section {
 }
 
 .body__3__1 canvas {
-    width: 82px;/*width: 300px;*/
-    height: 178px;/*height: auto;*/
+    width: 82px;
+    /*width: 300px;*/
+    height: 178px;
+    /*height: auto;*/
 }
 
 .body__3__2 {
@@ -84,7 +86,18 @@ section {
     margin: 0 5px;
 }
 
-#btnStart {}
+.body__4 {
+    padding: 0 16px;
+    text-align: center;
+    box-sizing: border-box;
+}
+
+#backButton,
+#closeButton {
+    position: absolute;
+    left: 0;
+    top: 0;
+}
 
 .form-group {
     margin-bottom: 15px;
@@ -165,8 +178,14 @@ h2 {
     font-size: 28px;
 }
 
+h3 {
+    font-size: 20px;
+    text-align: center;
+}
+
 p {
     font-size: 14px;
+    line-height: 1.5;
 }
 
 footer {
