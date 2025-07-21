@@ -1,7 +1,7 @@
 document.addEventListener('DOMContentLoaded', () => {
-    gsap.to(".body__1", { autoAlpha: 0, duration: 0 });
+    //gsap.to(".body__1", { autoAlpha: 0, duration: 0 });
     gsap.to(".body__2", { autoAlpha: 0, duration: 0 });
-    //gsap.to(".body__3", { autoAlpha: 0, duration: 0 });
+    gsap.to(".body__3", { autoAlpha: 0, duration: 0 });
     gsap.to(".body__4", { autoAlpha: 0, duration: 0 });
 
     document.getElementById('btnStart').addEventListener('click', () => {

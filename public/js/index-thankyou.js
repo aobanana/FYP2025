@@ -84,28 +84,29 @@ document.addEventListener('DOMContentLoaded', function () {
             const leftMargin = 42; // Left margin for all text
             const bottomPadding = 180; // Space from bottom
             const titleHeight = 30; // Title text height
-            const separatorHeight = 20; // Space for separator line
-            const lineSpacing = 25; // Space between content lines
+            const separatorHeight = 60; // Space for separator line
+            const lineSpacing = 52; // Space between content lines
             const contentTopMargin = 20; // Space above content
 
             // Process content into lines
-            const subtitleLines = wrapText(ctx, content, canvas.width * 0.8, '18px "Nunito Sans"');
+            //const subtitleLines = wrapText(ctx, content, canvas.width * 0.8, 'bold 44px "Nunito Sans"');
+            const subtitleLines = wrapText(ctx, content, 482, 'bold 44px "Nunito Sans"');
             const contentHeight = subtitleLines.length * lineSpacing;
-            
+
             // Calculate positions (working from bottom up)
             const contentBottomY = canvas.height - bottomPadding;
-            const contentStartY = contentBottomY - contentHeight;
-            const lineY = contentStartY - contentTopMargin;
-            const titleY = lineY - separatorHeight;
+            //const titleY = lineY - separatorHeight;
+            const titleY = contentBottomY - titleHeight;
+            //const lineY = contentStartY - contentTopMargin;
+            const lineY = titleY - separatorHeight;
+            //const contentStartY = contentBottomY - contentHeight;
+            const contentStartY = lineY - contentHeight;
 
-            // Draw content lines (bottom element) - left aligned
+            // Draw title (top element) - left aligned
             ctx.fillStyle = '#ffffff';
-            ctx.font = '18px "Nunito Sans"';
+            ctx.font = 'italic 28px "Nunito Sans"';
             ctx.textAlign = 'left';
-            
-            subtitleLines.forEach((line, index) => {
-                ctx.fillText(line, leftMargin, contentStartY + (index * lineSpacing));
-            });
+            ctx.fillText(title, leftMargin, titleY);
 
             // Draw separator line (middle element) - left aligned
             ctx.strokeStyle = '#ffffff';
@@ -113,14 +114,21 @@ document.addEventListener('DOMContentLoaded', function () {
             ctx.beginPath();
             ctx.moveTo(leftMargin, lineY);
             ctx.moveTo(leftMargin, lineY);
-            ctx.lineTo(leftMargin + 200, lineY); // 200px wide line
+            ctx.lineTo(leftMargin + 50, lineY); // 200px wide line
             ctx.stroke();
 
-            // Draw title (top element) - left aligned
+            // Draw content lines (bottom element) - left aligned
             ctx.fillStyle = '#ffffff';
-            ctx.font = 'bold 24px "Nunito Sans"';
+            ctx.font = 'bold 44px "Nunito Sans"';
             ctx.textAlign = 'left';
-            ctx.fillText(title, leftMargin, titleY);
+            
+            subtitleLines.forEach((line, index) => {
+                ctx.fillText(line, leftMargin, contentStartY + (index * lineSpacing));
+            });
+
+            
+
+            
         });
     }
 
