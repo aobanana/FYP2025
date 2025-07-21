@@ -1,0 +1,8 @@
+[build]
+  command = "npm install"
+  publish = "public"
+
+[dev]
+  framework = "#custom"  # Tells Netlify this is a custom setup
+  targetPort = 3000      # Your Express server's port
+  command = "node server.js"
