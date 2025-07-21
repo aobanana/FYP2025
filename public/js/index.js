@@ -23,6 +23,23 @@ document.addEventListener('DOMContentLoaded', () => {
             `Auto-Expand: ${enabled ? 'ON' : 'OFF'}`;
     });
 
+    // Connect to the management socket
+    const managementSocket = io('/management');
+
+    // Join the management room
+    managementSocket.emit('joinManagement', roomId);
+
+    // Listen for object removal events
+    managementSocket.on('objectRemoved', (data) => {
+        // Refresh the object list
+        fetchObjects();
+    });
+
+    // Listen for new object additions if you want real-time updates
+    managementSocket.on('objectAdded', () => {
+        fetchObjects();
+    });
+
     // Form submission handler
     document.getElementById('textObjectForm').addEventListener('submit', (e) => {
         e.preventDefault();
@@ -107,6 +124,12 @@ document.addEventListener('DOMContentLoaded', () => {
             gsap.to(".body__2", { autoAlpha: 0, duration: 1 });
             gsap.to(".body__3", { autoAlpha: 1, duration: 1, delay: 0.8 });
             window.currentStage = 2;
+
+            let r = Math.floor(Math.random() * 2);
+            switch (r) {
+                case 1: document.getElementById('addBox').click(); break;
+                default: document.getElementById('addCircle').click();
+            }
         }
     });
 
