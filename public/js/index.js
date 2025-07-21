@@ -36,6 +36,9 @@ document.addEventListener('DOMContentLoaded', () => {
         content = content.replace(/(\r\n|\n|\r)/gm, " ");
         content = content.toUpperCase();console.log(content);
 
+        localStorage.setItem("title", title);
+        localStorage.setItem("content", content);
+
         let shapeType = Math.floor(Math.random() * 3);
         //shapeType = 2;// test use
 

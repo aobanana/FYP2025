@@ -1,6 +1,8 @@
 document.addEventListener('DOMContentLoaded', function () {
     const canvas = document.getElementById('thankYouCanvas');
     const ctx = canvas.getContext('2d');
+    const randomButton = document.getElementById('randomButton');
+    const refreshButton = document.getElementById('refreshButton');
     const saveButton = document.getElementById('saveButton');
 
     // Set canvas size
@@ -9,53 +11,164 @@ document.addEventListener('DOMContentLoaded', function () {
 
     // Load images
     const bgImage = new Image();
-    const layoutImage = new Image();
+    // Image paths
+    const bgImages = [
+        'images/Wallpaper/Unssen-01.jpg',
+        'images/Wallpaper/Unssen-02.jpg',
+        'images/Wallpaper/Unssen-03.jpg',
+        'images/Wallpaper/Unssen-04.jpg',
+        'images/Wallpaper/Unssen-05.jpg',
+        'images/Wallpaper/Unssen-06.jpg',
+        'images/Wallpaper/Unssen-07.jpg',
+        'images/Wallpaper/Unssen-08.jpg',
+        'images/Wallpaper/Unssen-09.jpg',
+        'images/Wallpaper/Unssen-10.jpg',
+        'images/Wallpaper/Unssen-11.jpg',
+        'images/Wallpaper/Unssen-12.jpg',
+        'images/Wallpaper/Unssen-13.jpg',
+        'images/Wallpaper/Unssen-14.jpg',
+        'images/Wallpaper/Unssen-15.jpg',
+        'images/Wallpaper/Unssen-16.jpg',
+        'images/Wallpaper/Unssen-17.jpg',
+        'images/Wallpaper/Unssen-18.jpg',
+        'images/Wallpaper/Unssen-19.jpg',
+        'images/Wallpaper/Unssen-20.jpg',
+        'images/Wallpaper/Unssen-21.jpg',
+        'images/Wallpaper/Unssen-22.jpg',
+        'images/Wallpaper/Unssen-23.jpg',
+        'images/Wallpaper/Unssen-24.jpg',
+        'images/Wallpaper/Unssen-25.jpg',
+        'images/Wallpaper/Unssen-26.jpg',
+        'images/Wallpaper/Unssen-27.jpg',
+        'images/Wallpaper/Unssen-28.jpg',
+        'images/Wallpaper/Unssen-29.jpg',
+        'images/Wallpaper/Unssen-30.jpg',
+        'images/Wallpaper/Unssen-31.jpg',
+        'images/Wallpaper/Unssen-32.jpg',
+        'images/Wallpaper/Unssen-33.jpg',
+        'images/Wallpaper/Unssen-34.jpg',
+        'images/Wallpaper/Unssen-35.jpg',
+        'images/Wallpaper/Unssen-36.jpg',
+        'images/Wallpaper/Unssen-37.jpg',
+        'images/Wallpaper/Unssen-38.jpg',
+        'images/Wallpaper/Unssen-39.jpg',
+        'images/Wallpaper/Unssen-40.jpg',
+        'images/Wallpaper/Unssen-41.jpg',
+        'images/Wallpaper/Unssen-42.jpg',
+        'images/Wallpaper/Unssen-43.jpg',
+        'images/Wallpaper/Unssen-44.jpg',
+        'images/Wallpaper/Unssen-45.jpg',
+        'images/Wallpaper/Unssen-46.jpg',
+        'images/Wallpaper/Unssen-47.jpg',
+        'images/Wallpaper/Unssen-48.jpg',
+        'images/Wallpaper/Unssen-49.jpg',
+        'images/Wallpaper/Unssen-50.jpg'
+    ];
 
-    bgImage.src = 'images/bg.jpg';
-    layoutImage.src = 'images/layout.jpg';
+    bgImage.src = 'images/Quote-Template-Background.jpg';
 
-    // When both images are loaded
-    Promise.all([
-        new Promise(resolve => { bgImage.onload = resolve; }),
-        new Promise(resolve => { layoutImage.onload = resolve; })
-    ]).then(() => {
-        // Draw background image
-        ctx.drawImage(bgImage, 0, 0, canvas.width, canvas.height);
+    generate();// test use
 
-        // Draw layout image (content)
-        const contentWidth = canvas.width * 0.8;
-        const contentHeight = canvas.height * 0.6;
-        const contentX = (canvas.width - contentWidth) / 2;
-        const contentY = (canvas.height - contentHeight) / 2;
+    function generate() {
+        const title = localStorage.getItem("title",);
+        const content = localStorage.getItem("content",);
 
-        ctx.drawImage(layoutImage, contentX, contentY, contentWidth, contentHeight);
+        // When both images are loaded
+        Promise.all([
+            new Promise(resolve => { bgImage.onload = resolve; }),
+        ]).then(() => {
+            // Draw background image
+            ctx.drawImage(bgImage, 0, 0, canvas.width, canvas.height);
 
-        // Add text from content and title
-        ctx.fillStyle = '#ffffff';
-        ctx.font = '24px "Nunito Sans"';
-        ctx.textAlign = 'center';
+            // Calculate positions from bottom
+            const leftMargin = 42; // Left margin for all text
+            const bottomPadding = 180; // Space from bottom
+            const titleHeight = 30; // Title text height
+            const separatorHeight = 20; // Space for separator line
+            const lineSpacing = 25; // Space between content lines
+            const contentTopMargin = 20; // Space above content
 
-        // Title text
-        ctx.fillText('Between What\'s Seen & Unseen', canvas.width / 2, 80);
+            // Process content into lines
+            const subtitleLines = wrapText(ctx, content, canvas.width * 0.8, '18px "Nunito Sans"');
+            const contentHeight = subtitleLines.length * lineSpacing;
+            
+            // Calculate positions (working from bottom up)
+            const contentBottomY = canvas.height - bottomPadding;
+            const contentStartY = contentBottomY - contentHeight;
+            const lineY = contentStartY - contentTopMargin;
+            const titleY = lineY - separatorHeight;
 
-        // Subtitle text
-        ctx.font = '18px "Nunito Sans"';
-        ctx.fillText('SENSO LAB', canvas.width / 2, 120);
+            // Draw content lines (bottom element) - left aligned
+            ctx.fillStyle = '#ffffff';
+            ctx.font = '18px "Nunito Sans"';
+            ctx.textAlign = 'left';
+            
+            subtitleLines.forEach((line, index) => {
+                ctx.fillText(line, leftMargin, contentStartY + (index * lineSpacing));
+            });
 
-        // Add decorative elements if needed
-        ctx.strokeStyle = '#ffffff';
-        ctx.lineWidth = 2;
-        ctx.beginPath();
-        ctx.moveTo(canvas.width / 2 - 100, 140);
-        ctx.lineTo(canvas.width / 2 + 100, 140);
-        ctx.stroke();
+            // Draw separator line (middle element) - left aligned
+            ctx.strokeStyle = '#ffffff';
+            ctx.lineWidth = 2;
+            ctx.beginPath();
+            ctx.moveTo(leftMargin, lineY);
+            ctx.moveTo(leftMargin, lineY);
+            ctx.lineTo(leftMargin + 200, lineY); // 200px wide line
+            ctx.stroke();
+
+            // Draw title (top element) - left aligned
+            ctx.fillStyle = '#ffffff';
+            ctx.font = 'bold 24px "Nunito Sans"';
+            ctx.textAlign = 'left';
+            ctx.fillText(title, leftMargin, titleY);
+        });
+    }
+
+    // Helper function to wrap text into lines
+    function wrapText(ctx, text, maxWidth, font) {
+        ctx.font = font;
+        const words = text.split(' ');
+        const lines = [];
+        let currentLine = words[0] || '';
+
+        for (let i = 1; i < words.length; i++) {
+            const word = words[i];
+            const testLine = currentLine + ' ' + word;
+            const metrics = ctx.measureText(testLine);
+
+            if (metrics.width > maxWidth && currentLine) {
+                lines.push(currentLine);
+                currentLine = word;
+            } else {
+                currentLine = testLine;
+            }
+        }
+
+        if (currentLine) {
+            lines.push(currentLine);
+        }
+
+        return lines;
+    }
+
+    randomButton.addEventListener('click', function () {
+        ctx.clearRect(0, 0, canvas.width, canvas.height);
+        const bgImage = new Image();
+        bgImage.src = bgImages[Math.floor(Math.random() * 50)];
+        bgImage.onload = function () {
+            ctx.drawImage(bgImage, 0, 0, canvas.width, canvas.height);
+        }
+    });
+
+    refreshButton.addEventListener('click', function () {
+        generate();
     });
 
     // Save button functionality
     saveButton.addEventListener('click', function () {
         // Create a temporary link
         const link = document.createElement('a');
-        link.download = 'thank-you-image.png';
+        link.download = 'SENSO.png';
         link.href = canvas.toDataURL('image/png');
         document.body.appendChild(link);
         link.click();

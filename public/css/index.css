@@ -61,8 +61,8 @@ section {
 }
 
 .body__3__1 canvas {
-    width: 82px;
-    height: 178px;
+    width: 82px;width: 300px;
+    height: 178px;height: auto;
 }
 
 .body__3__2 {
