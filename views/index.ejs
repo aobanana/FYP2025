@@ -20,7 +20,11 @@
                 <img id="closeButton" src="images/btn-close.svg" alt="">
             </div>
             <img src="images/Logomark.svg" alt="">
-            <div style="width: 28px;">&nbsp;&nbsp;</div>
+            <div style="width: 28px;">
+                <!--button id="toggleMusic">Play Music</button-->
+                <input type="range" id="volumeControl" min="0" max="1" step="0.1" value="0.5" hidden>
+                <div id="toggleMusic"><div class="bar"></div><div class="bar"></div><div class="bar"></div><div class="bar"></div><div class="bar"></div><div class="bar"></div><div class="bar"></div></div>
+            </div>
         </header>
         <!--h1>Control Panel - Room <%= roomId %></h1-->
         
@@ -91,10 +95,16 @@
         </footer>
     </section>
 
+    <audio id="bgMusic" loop>
+  <source src="/audio/bg-music.mp3" type="audio/mpeg">
+  Your browser does not support the audio element.
+</audio>
+
     <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/4.0.1/socket.io.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/gsap@3.13.0/dist/gsap.min.js"></script>
     <script src="/js/index.js"></script>
     <script src="/js/index-page.js"></script>
     <script src="/js/index-thankyou.js"></script>
+    <script src="/js/index-audio.js"></script>
 </body>
 </html>
