@@ -7,7 +7,7 @@
     <link rel="stylesheet" href="/css/style.css">
     <style>
         .clear-container {
-            max-width: 600px;
+            max-width: 800px;
             margin: 50px auto;
             padding: 20px;
             text-align: center;
@@ -23,7 +23,7 @@
             border: none;
             border-radius: 4px;
             cursor: pointer;
-            margin-top: 20px;
+            margin: 20px 0;
         }
         .clear-btn:hover {
             background-color: #d32f2f;
@@ -41,21 +41,141 @@
             background-color: #f44336;
             color: white;
         }
+        .objects-list {
+            margin: 20px 0;
+            text-align: left;
+            max-height: 400px;
+            overflow-y: auto;
+        }
+        .object-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 10px;
+            border-bottom: 1px solid #eee;
+        }
+        .object-info {
+            flex: 1;
+        }
+        .remove-btn {
+            padding: 5px 10px;
+            background-color: #ff9800;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+        .remove-btn:hover {
+            background-color: #f57c00;
+        }
+        .object-type {
+            font-weight: bold;
+            color: #2196F3;
+        }
+        .object-id {
+            font-family: monospace;
+            color: #666;
+            font-size: 0.9em;
+        }
     </style>
 </head>
 <body>
     <div class="clear-container">
-        <h1>Clear Room <%= roomId %></h1>
-        <p>This will permanently remove all objects from the room.</p>
-        <button id="clearBtn" class="clear-btn">Clear All Objects</button>
+        <h1>Manage Room <%= roomId %></h1>
+        
+        <h2>Objects in Room</h2>
+        <div id="objectsList" class="objects-list">
+            <!-- Objects will be loaded here -->
+            <p>Loading objects...</p>
+        </div>
+        
+        <div>
+            <button id="clearBtn" class="clear-btn">Clear All Objects</button>
+        </div>
+        
         <div id="statusMessage" class="status" style="display: none;"></div>
     </div>
 
     <script>
+        const roomId = <%= roomId %>;
+        
+        // Load objects when page loads
+        document.addEventListener('DOMContentLoaded', () => {
+            fetchObjects();
+        });
+        
+        // Function to fetch and display objects
+        function fetchObjects() {
+            fetch(`/api/room/${roomId}/objects`)
+                .then(response => response.json())
+                .then(objects => {
+                    const objectsList = document.getElementById('objectsList');
+                    
+                    if (objects.length === 0) {
+                        objectsList.innerHTML = '<p>No objects in this room.</p>';
+                        return;
+                    }
+                    
+                    objectsList.innerHTML = '';
+                    
+                    objects.forEach(obj => {
+                        const objectItem = document.createElement('div');
+                        objectItem.className = 'object-item';
+                        
+                        objectItem.innerHTML = `
+                            <div class="object-info">
+                                <span class="object-type">${obj.type}</span>
+                                <span class="object-id">ID: ${obj.id}</span>
+                                ${obj.title ? `<div>Title: ${obj.title}</div>` : ''}
+                            </div>
+                            <button class="remove-btn" data-id="${obj.id}">Remove</button>
+                        `;
+                        
+                        objectsList.appendChild(objectItem);
+                    });
+                    
+                    // Add event listeners to remove buttons
+                    document.querySelectorAll('.remove-btn').forEach(btn => {
+                        btn.addEventListener('click', (e) => {
+                            const objectId = e.target.getAttribute('data-id');
+                            removeObject(objectId);
+                        });
+                    });
+                })
+                .catch(error => {
+                    console.error('Error fetching objects:', error);
+                    document.getElementById('objectsList').innerHTML = 
+                        '<p class="error">Error loading objects. Please refresh the page.</p>';
+                });
+        }
+        
+        // Function to remove a specific object
+        function removeObject(objectId) {
+            if (confirm(`Are you sure you want to remove object ${objectId}?`)) {
+                fetch(`/api/room/${roomId}/objects/${objectId}`, {
+                    method: 'DELETE'
+                })
+                .then(response => response.json())
+                .then(data => {
+                    showStatus(data.success ? 
+                        'Object removed successfully!' : 
+                        'Error removing object.', 
+                        data.success);
+                    
+                    if (data.success) {
+                        fetchObjects(); // Refresh the list
+                    }
+                })
+                .catch(error => {
+                    console.error('Error:', error);
+                    showStatus('Error removing object. Please try again.', false);
+                });
+            }
+        }
+        
+        // Clear all objects
         document.getElementById('clearBtn').addEventListener('click', () => {
             if (confirm('Are you sure you want to clear all objects in this room? This cannot be undone.')) {
-                const roomId = <%= roomId %>;
-                
                 fetch(`/api/room/${roomId}/clear`, {
                     method: 'POST',
                     headers: {
@@ -64,34 +184,33 @@
                 })
                 .then(response => response.json())
                 .then(data => {
-                    const statusEl = document.getElementById('statusMessage');
-                    statusEl.style.display = 'block';
+                    showStatus(data.success ? 
+                        'Room cleared successfully!' : 
+                        'Error clearing room.', 
+                        data.success);
                     
                     if (data.success) {
-                        statusEl.textContent = 'Room cleared successfully!';
-                        statusEl.className = 'status success';
-                    } else {
-                        statusEl.textContent = 'Error clearing room. Please try again.';
-                        statusEl.className = 'status error';
+                        fetchObjects(); // Refresh the list
                     }
-                    
-                    setTimeout(() => {
-                        statusEl.style.display = 'none';
-                    }, 3000);
                 })
                 .catch(error => {
                     console.error('Error:', error);
-                    const statusEl = document.getElementById('statusMessage');
-                    statusEl.style.display = 'block';
-                    statusEl.textContent = 'Error clearing room. Please try again.';
-                    statusEl.className = 'status error';
-                    
-                    setTimeout(() => {
-                        statusEl.style.display = 'none';
-                    }, 3000);
+                    showStatus('Error clearing room. Please try again.', false);
                 });
             }
         });
+        
+        // Helper function to show status messages
+        function showStatus(message, isSuccess) {
+            const statusEl = document.getElementById('statusMessage');
+            statusEl.style.display = 'block';
+            statusEl.textContent = message;
+            statusEl.className = `status ${isSuccess ? 'success' : 'error'}`;
+            
+            setTimeout(() => {
+                statusEl.style.display = 'none';
+            }, 3000);
+        }
     </script>
 </body>
 </html>

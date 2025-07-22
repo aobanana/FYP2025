@@ -145,7 +145,7 @@ document.addEventListener('DOMContentLoaded', () => {
     let walls = createWalls();
     World.add(engine.world, walls);
 
-    const addTextRectangle = (world, x, y, width, height, title, content) => {
+    const addTextRectangle = (world, x, y, width, height, title, content, storageId) => {
         // Create the physical rectangle body
         const body = Bodies.rectangle(x, y, width, height, {
             chamfer: { radius: 0 },
@@ -155,6 +155,17 @@ document.addEventListener('DOMContentLoaded', () => {
                 lineWidth: 1          // 1px border
             }
         });
+
+        // Store text data with the body including storage ID
+        body.customId = storageId;
+        body.customData = {
+            title,
+            content,
+            width,
+            height,
+            storageId,
+            type: 'textRectangle'
+        };
 
         // Store text data with the body
         body.textData = { title, content, width, height };
@@ -262,7 +273,7 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     // Add this function to control.js (alongside addTextRectangle)
-    const addTextCircle = (world, x, y, radius, title, content) => {
+    const addTextCircle = (world, x, y, radius, title, content, storageId) => {
         // Create the physical circle body
         const body = Bodies.circle(x, y, radius, {
             render: {
@@ -270,6 +281,15 @@ document.addEventListener('DOMContentLoaded', () => {
                 lineWidth: 2
             }
         });
+
+        body.customId = storageId;
+        body.customData = {
+            title,
+            content,
+            radius,
+            storageId,
+            type: 'textCircle'
+        };
 
         // Store text data with the body
         body.textData = { title, content, radius };
@@ -349,7 +369,7 @@ document.addEventListener('DOMContentLoaded', () => {
         ctx.restore();
     }
 
-    const addTextTriangle = (world, x, y, size, title, content) => {
+    const addTextTriangle = (world, x, y, size, title, content, storageId) => {
         // Create triangle vertices
         const triangleVertices = [
             { x: 0, y: -size },       // Top point
@@ -365,6 +385,15 @@ document.addEventListener('DOMContentLoaded', () => {
                 lineWidth: 2
             }
         }, true);
+
+        body.customId = storageId;
+        body.customData = {
+            title,
+            content,
+            size,
+            storageId,
+            type: 'textTriangle'
+        };
 
         // Store text data with the body
         body.textData = { title, content, size };
@@ -557,8 +586,10 @@ document.addEventListener('DOMContentLoaded', () => {
 
                 if (obj.type === 'rectangle') {
                     newBody = Bodies.rectangle(obj.x, obj.y, obj.width, obj.height, obj.options);
+                    newBody.customId = obj.id; // Store the storage ID
                 } else if (obj.type === 'circle') {
                     newBody = Bodies.circle(obj.x, obj.y, obj.radius, obj.options);
+                    newBody.customId = obj.id; // Store the storage ID
                 } else if (obj.type === 'textRectangle') {
                     newBody = addTextRectangle(
                         engine.world,
@@ -567,8 +598,10 @@ document.addEventListener('DOMContentLoaded', () => {
                         obj.width,
                         obj.height,
                         obj.title,
-                        obj.content
+                        obj.content,
+                        obj.id
                     );
+                    newBody.customId = obj.id;
                 } else if (obj.type === 'textCircle') {
                     newBody = addTextCircle(
                         engine.world,
@@ -576,8 +609,10 @@ document.addEventListener('DOMContentLoaded', () => {
                         obj.y,
                         obj.radius,
                         obj.title,
-                        obj.content
+                        obj.content,
+                        obj.id
                     );
+                    newBody.customId = obj.id;
                 } else if (obj.type === 'textTriangle') {
                     newBody = addTextTriangle(
                         engine.world,
@@ -585,8 +620,10 @@ document.addEventListener('DOMContentLoaded', () => {
                         obj.y,
                         obj.size,
                         obj.title,
-                        obj.content
+                        obj.content,
+                        obj.id
                     );
+                    newBody.customId = obj.id;
                 } else if (obj.type === 'quarterDonut') {
                     newBody = addQuarterDonut(
                         engine.world,
@@ -594,8 +631,10 @@ document.addEventListener('DOMContentLoaded', () => {
                         obj.y,
                         obj.innerRadius,
                         obj.outerRadius,
-                        obj.options
+                        obj.options,
+                        obj.id
                     );
+                    newBody.customId = obj.id;
                 }
 
                 if (newBody) {
@@ -675,8 +714,10 @@ document.addEventListener('DOMContentLoaded', () => {
 
         if (object.type === 'rectangle') {
             newBody = Bodies.rectangle(object.x, object.y, object.width, object.height, object.options);
+            newBody.customId = object.id; // Store the storage ID
         } else if (object.type === 'circle') {
             newBody = Bodies.circle(object.x, object.y, object.radius, object.options);
+            newBody.customId = object.id; // Store the storage ID
         } else if (object.type === 'textRectangle') {
             newBody = addTextRectangle(
                 engine.world,
@@ -685,8 +726,10 @@ document.addEventListener('DOMContentLoaded', () => {
                 object.width,
                 object.height,
                 object.title,
-                object.content
+                object.content,
+                object.id
             );
+            newBody.customId = object.id; // Store the storage ID
         } else if (object.type === 'textCircle') {
             newBody = addTextCircle(
                 engine.world,
@@ -694,8 +737,10 @@ document.addEventListener('DOMContentLoaded', () => {
                 object.y,
                 object.radius,
                 object.title,
-                object.content
+                object.content,
+                object.id
             );
+            newBody.customId = object.id; // Store the storage ID
         } else if (object.type === 'textTriangle') {
             newBody = addTextTriangle(
                 engine.world,
@@ -703,8 +748,10 @@ document.addEventListener('DOMContentLoaded', () => {
                 object.y,
                 object.size,
                 object.title,
-                object.content
+                object.content,
+                object.id
             );
+            newBody.customId = object.id; // Store the storage ID
         } else if (object.type === 'quarterDonut') {
             newBody = addQuarterDonut(
                 engine.world,
@@ -712,8 +759,10 @@ document.addEventListener('DOMContentLoaded', () => {
                 object.y,
                 object.innerRadius,
                 object.outerRadius,
-                object.options
+                object.options,
+                object.id
             );
+            newBody.customId = object.id; // Store the storage ID
         }
 
         if (newBody) {
@@ -754,6 +803,31 @@ document.addEventListener('DOMContentLoaded', () => {
         // Force an immediate check when enabled
         if (enabled) {
             checkCanvasExpansion();
+        }
+    });
+
+    // Listen for object removal events
+    socket.on('objectRemoved', ({ objectId }) => {
+        console.log('objectRemoved: ' + objectId);
+        const bodies = Composite.allBodies(engine.world);
+        const bodyToRemove = bodies.find(b => {
+            // Check all possible ID locations for text and regular objects
+            return (
+                b.id.toString() === objectId.toString() ||
+                (b.customId && b.customId.toString() === objectId.toString()) ||
+                (b.customData && b.customData.storageId === objectId)
+            );
+        });
+
+        if (bodyToRemove) {
+            World.remove(engine.world, bodyToRemove);
+            currentBodies = currentBodies.filter(b =>
+                b.id !== bodyToRemove.id &&
+                (!b.customId || b.customId.toString() !== objectId.toString())
+            );
+            console.log(`Removed object ${objectId}`);
+        } else {
+            console.log(`Object ${objectId} not found in physics world`);
         }
     });
 

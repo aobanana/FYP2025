@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Clear Room <%= roomId %></title>
+    <link rel="stylesheet" href="/css/style.css">
+    <style>
+        .clear-container {
+            max-width: 600px;
+            margin: 50px auto;
+            padding: 20px;
+            text-align: center;
+            background: #fff;
+            border-radius: 8px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+        .clear-btn {
+            padding: 12px 24px;
+            font-size: 18px;
+            background-color: #f44336;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            margin-top: 20px;
+        }
+        .clear-btn:hover {
+            background-color: #d32f2f;
+        }
+        .status {
+            margin-top: 20px;
+            padding: 10px;
+            border-radius: 4px;
+        }
+        .success {
+            background-color: #4CAF50;
+            color: white;
+        }
+        .error {
+            background-color: #f44336;
+            color: white;
+        }
+    </style>
+</head>
+<body>
+    <div class="clear-container">
+        <h1>Clear Room <%= roomId %></h1>
+        <p>This will permanently remove all objects from the room.</p>
+        <button id="clearBtn" class="clear-btn">Clear All Objects</button>
+        <div id="statusMessage" class="status" style="display: none;"></div>
+    </div>
+
+    <script>
+        document.getElementById('clearBtn').addEventListener('click', () => {
+            if (confirm('Are you sure you want to clear all objects in this room? This cannot be undone.')) {
+                const roomId = <%= roomId %>;
+                
+                fetch(`/api/room/${roomId}/clear`, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    }
+                })
+                .then(response => response.json())
+                .then(data => {
+                    const statusEl = document.getElementById('statusMessage');
+                    statusEl.style.display = 'block';
+                    
+                    if (data.success) {
+                        statusEl.textContent = 'Room cleared successfully!';
+                        statusEl.className = 'status success';
+                    } else {
+                        statusEl.textContent = 'Error clearing room. Please try again.';
+                        statusEl.className = 'status error';
+                    }
+                    
+                    setTimeout(() => {
+                        statusEl.style.display = 'none';
+                    }, 3000);
+                })
+                .catch(error => {
+                    console.error('Error:', error);
+                    const statusEl = document.getElementById('statusMessage');
+                    statusEl.style.display = 'block';
+                    statusEl.textContent = 'Error clearing room. Please try again.';
+                    statusEl.className = 'status error';
+                    
+                    setTimeout(() => {
+                        statusEl.style.display = 'none';
+                    }, 3000);
+                });
+            }
+        });
+    </script>
+</body>
+</html>

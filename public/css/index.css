@@ -61,8 +61,10 @@ section {
 }
 
 .body__3__1 canvas {
-    width: 82px;width: 300px;
-    height: 178px;height: auto;
+    width: 82px;
+    /*width: 300px;*/
+    height: 178px;
+    /*height: auto;*/
 }
 
 .body__3__2 {
@@ -84,7 +86,18 @@ section {
     margin: 0 5px;
 }
 
-#btnStart {}
+.body__4 {
+    padding: 0 16px;
+    text-align: center;
+    box-sizing: border-box;
+}
+
+#backButton,
+#closeButton {
+    position: absolute;
+    left: 0;
+    top: 0;
+}
 
 .form-group {
     margin-bottom: 15px;
@@ -165,8 +178,14 @@ h2 {
     font-size: 28px;
 }
 
+h3 {
+    font-size: 20px;
+    text-align: center;
+}
+
 p {
     font-size: 14px;
+    line-height: 1.5;
 }
 
 footer {
@@ -174,4 +193,115 @@ footer {
     font-size: 10px;
     color: white;
     padding: 20px 0;
+}
+
+
+
+/* soundbar*/
+#toggleMusic {
+    position: relative;
+    height: 15px;
+}
+
+#toggleMusic .bar {
+    background: white;
+    bottom: 1px;
+    height: 3px;
+    position: absolute;
+    width: 2px;
+    -webkit-animation: sound 0ms -800ms linear infinite alternate;
+    -moz-animation: sound 0ms -800ms linear infinite alternate;
+    -o-animation: sound 0ms -800ms linear infinite alternate;
+    animation: sound 0ms -800ms linear infinite alternate
+}
+
+#toggleMusic .bar {
+    background: #fdf9ce
+}
+
+#toggleMusic .bar:nth-child(1) {
+    left: 1px;
+    animation-duration: 474ms
+}
+
+#toggleMusic .bar:nth-child(2) {
+    left: 5px;
+    animation-duration: 433ms
+}
+
+#toggleMusic .bar:nth-child(3) {
+    left: 9px;
+    animation-duration: 407ms
+}
+
+#toggleMusic .bar:nth-child(4) {
+    left: 13px;
+    animation-duration: 458ms
+}
+
+#toggleMusic .bar:nth-child(5) {
+    left: 17px;
+    animation-duration: 400ms
+}
+
+#toggleMusic .bar:nth-child(6) {
+    left: 21px;
+    animation-duration: 410ms
+}
+
+#toggleMusic .bar:nth-child(7) {
+    left: 25px;
+    animation-duration: 455ms
+}
+
+#toggleMusic.off .bar {
+    animation: none
+}
+
+@-webkit-keyframes sound {
+    0% {
+        height: 3px;
+        transform: translateY(0%);
+    }
+
+    100% {
+        height: 20px;
+        transform: translateY(50%);
+    }
+}
+
+@-moz-keyframes sound {
+    0% {
+        height: 3px;
+        transform: translateY(0%);
+    }
+
+    100% {
+        height: 20px;
+        transform: translateY(50%);
+    }
+}
+
+@-o-keyframes sound {
+    0% {
+        height: 3px;
+        transform: translateY(0%);
+    }
+
+    100% {
+        height: 20px;
+        transform: translateY(50%);
+    }
+}
+
+@keyframes sound {
+    0% {
+        height: 3px;
+        transform: translateY(0%);
+    }
+
+    100% {
+        height: 20px;
+        transform: translateY(50%);
+    }
 }

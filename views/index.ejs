@@ -14,9 +14,17 @@
 <body>
     <section>
         <header>
-            <img src="images/General Icons.svg" alt="">
+            <div style="position: relative;">
+                <img id="aboutButton" src="images/btn-about.svg" alt="">
+                <img id="backButton" src="images/btn-back.svg" alt="">
+                <img id="closeButton" src="images/btn-close.svg" alt="">
+            </div>
             <img src="images/Logomark.svg" alt="">
-            <div style="width: 28px;">&nbsp;&nbsp;</div>
+            <div style="width: 28px;">
+                <!--button id="toggleMusic">Play Music</button-->
+                <input type="range" id="volumeControl" min="0" max="1" step="0.1" value="0.5" hidden>
+                <div id="toggleMusic"><div class="bar"></div><div class="bar"></div><div class="bar"></div><div class="bar"></div><div class="bar"></div><div class="bar"></div><div class="bar"></div></div>
+            </div>
         </header>
         <!--h1>Control Panel - Room <%= roomId %></h1-->
         
@@ -29,7 +37,7 @@
                     <button id="btnStart">GET STARTED</button>
                 </div>
             </div>
-            <div style="_display: none;" class="body__2">
+            <div style="visibility: hidden;_display: none;" class="body__2">
                 <form id="textObjectForm">
                     <div>
                         <h2>What’s a sense of 
@@ -51,7 +59,7 @@
                     <button type="submit" id="submit-btn" disabled>SUBMIT</button>
                 </form>
             </div>
-            <div style="_display: none;" class="body__3">
+            <div style="visibility: hidden;_display: none;" class="body__3">
                 <div class="body__3__1">
                     <canvas id="thankYouCanvas" width="82" width="178"></canvas>
                 </div>
@@ -67,8 +75,8 @@
                     <button id="saveButton">SAVE</button>
                 </div>
             </div>
-            <div style="_display: none;" class="body__4">
-                <h2>About This Site</h2>
+            <div style="visibility: hidden;_display: none;" class="body__4">
+                <h3>About This Site</h3>
                 <p>Welcome to the Seen & Unseen mobile experience — a part of an experimental design project exploring personal perception, emotion, and the aesthetics of self-expression. This platform invites you to share your own quote or reflection, which will be projected in real-time on our desktop exhibition site.</p>
                 <p>Please note: this is a non-commercial, academic project developed solely for study purposes. All content shared here is part of a temporary, creative exploration and will not be used for profit, advertising, or data collection. Your contributions remain anonymous and will not be stored after the exhibition period.</p>
                 <p>By continuing, you agree to participate in this artistic research experiment. Thank you for being part of this moment of shared beauty — where your words become part of a collective reflection.</p>
@@ -87,10 +95,16 @@
         </footer>
     </section>
 
+    <audio id="bgMusic" loop>
+  <source src="/audio/bg-music.mp3" type="audio/mpeg">
+  Your browser does not support the audio element.
+</audio>
+
     <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/4.0.1/socket.io.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/gsap@3.13.0/dist/gsap.min.js"></script>
     <script src="/js/index.js"></script>
     <script src="/js/index-page.js"></script>
     <script src="/js/index-thankyou.js"></script>
+    <script src="/js/index-audio.js"></script>
 </body>
 </html>
