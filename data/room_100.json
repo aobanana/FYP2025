@@ -260,6 +260,23 @@
           "lineWidth": 2
         }
       }
+    },
+    {
+      "id": "1753067633573",
+      "type": "textTriangle",
+      "x": 400,
+      "y": 0,
+      "size": 200,
+      "title": "222",
+      "content": "3333",
+      "options": {
+        "restitution": 0.5,
+        "render": {
+          "fillStyle": "#ffffff",
+          "strokeStyle": "#333333",
+          "lineWidth": 2
+        }
+      }
     }
   ]
 }
