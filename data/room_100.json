@@ -29,6 +29,36 @@
           "fillStyle": "#A8FEB6"
         }
       }
+    },
+    {
+      "id": "1753147084337",
+      "type": "textCircle",
+      "x": 400,
+      "y": 0,
+      "radius": 120,
+      "title": "test",
+      "content": "TEST",
+      "options": {
+        "restitution": 0.5,
+        "render": {
+          "fillStyle": "#ffffff",
+          "strokeStyle": "#333333",
+          "lineWidth": 2
+        }
+      }
+    },
+    {
+      "id": "1753147084337",
+      "type": "circle",
+      "x": 400,
+      "y": 0,
+      "radius": 120,
+      "options": {
+        "restitution": 0.8,
+        "render": {
+          "fillStyle": "#8D6917"
+        }
+      }
     }
   ]
 }
