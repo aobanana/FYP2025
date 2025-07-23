@@ -1,7 +1,7 @@
 document.addEventListener('DOMContentLoaded', () => {
     // Add these near the top of control.js
-    const MAX_OBJECTS_BEFORE_EXPAND = 20; // Adjust as needed
-    const CANVAS_BASE = 20;
+    const MAX_OBJECTS_BEFORE_EXPAND = 30; // Adjust as needed
+    const CANVAS_BASE = 60;
     const CANVAS_EXPANSION_STEP = 200; // Pixels to expand by
     let autoExpandingEnabled = true;
     let expandCanvasHeightCount = 0;

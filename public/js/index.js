@@ -3,7 +3,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const socket = io();
 
     // Default canvas dimensions (will be updated from index page)
-    let canvasWidth = 1920;  //800
+    let canvasWidth = 2500;  //800
     let canvasHeight = 600;
     let autoExpandingEnabled = true;
 
