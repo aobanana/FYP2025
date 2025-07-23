@@ -119,14 +119,14 @@ document.addEventListener('DOMContentLoaded', function () {
             ctx.fillStyle = '#ffffff';
             ctx.font = 'bold 44px "Nunito Sans"';
             ctx.textAlign = 'left';
-            
+
             subtitleLines.forEach((line, index) => {
                 ctx.fillText(line, leftMargin, contentStartY + (index * lineSpacing));
             });
         });
     }
 
-    function generateFn(){
+    function generateFn() {
         ctx.clearRect(0, 0, canvas.width, canvas.height);
         bgImage.src = 'images/Quote-Template-Background.jpg';
         generate();
@@ -136,25 +136,52 @@ document.addEventListener('DOMContentLoaded', function () {
     // Helper function to wrap text into lines
     function wrapText(ctx, text, maxWidth, font) {
         ctx.font = font;
-        const words = text.split(' ');
         const lines = [];
-        let currentLine = words[0] || '';
 
-        for (let i = 1; i < words.length; i++) {
-            const word = words[i];
-            const testLine = currentLine + ' ' + word;
-            const metrics = ctx.measureText(testLine);
+        // Check if the text contains CJK characters (Japanese, Chinese, etc.)
+        const isCJK = /[\u3000-\u303f\u3040-\u309f\u30a0-\u30ff\uff00-\uff9f\u4e00-\u9faf\u3400-\u4dbf]/.test(text);
 
-            if (metrics.width > maxWidth && currentLine) {
-                lines.push(currentLine);
-                currentLine = word;
-            } else {
-                currentLine = testLine;
+        if (isCJK) {
+            // Handle CJK text (character-by-character wrapping)
+            let currentLine = '';
+
+            for (let i = 0; i < text.length; i++) {
+                const char = text[i];
+                const testLine = currentLine + char;
+                const metrics = ctx.measureText(testLine);
+
+                if (metrics.width > maxWidth && currentLine) {
+                    lines.push(currentLine);
+                    currentLine = char;
+                } else {
+                    currentLine = testLine;
+                }
             }
-        }
 
-        if (currentLine) {
-            lines.push(currentLine);
+            if (currentLine) {
+                lines.push(currentLine);
+            }
+        } else {
+            // Handle Western text (space-separated word wrapping)
+            const words = text.split(' ');
+            let currentLine = words[0] || '';
+
+            for (let i = 1; i < words.length; i++) {
+                const word = words[i];
+                const testLine = currentLine + ' ' + word;
+                const metrics = ctx.measureText(testLine);
+
+                if (metrics.width > maxWidth && currentLine) {
+                    lines.push(currentLine);
+                    currentLine = word;
+                } else {
+                    currentLine = testLine;
+                }
+            }
+
+            if (currentLine) {
+                lines.push(currentLine);
+            }
         }
 
         return lines;

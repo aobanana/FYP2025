@@ -3,7 +3,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const socket = io();
 
     // Default canvas dimensions (will be updated from index page)
-    let canvasWidth = 800;
+    let canvasWidth = 1920;  //800
     let canvasHeight = 600;
     let autoExpandingEnabled = true;
 
@@ -12,9 +12,9 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // Listen for canvas dimension updates from index page
     socket.on('canvasDimensions', (dimensions) => {
+        console.log('Updated canvas dimensions:', dimensions);
         canvasWidth = dimensions.width;
         canvasHeight = dimensions.height;
-        console.log('Updated canvas dimensions:', dimensions);
     });
 
     socket.on('autoExpandUpdated', (enabled) => {
@@ -71,7 +71,7 @@ document.addEventListener('DOMContentLoaded', () => {
                     title: title,
                     content: content,
                     options: {
-                        restitution: 0.5,
+                        restitution: 0,
                         render: {
                             fillStyle: '#ffffff',
                             strokeStyle: '#333333',
@@ -89,7 +89,7 @@ document.addEventListener('DOMContentLoaded', () => {
                     title: title,
                     content: content,
                     options: {
-                        restitution: 0.5,
+                        restitution: 0,
                         render: {
                             fillStyle: '#ffffff',
                             strokeStyle: '#333333',
@@ -106,7 +106,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 title: title,
                 content: content,
                 options: {
-                    restitution: 0.5,
+                    restitution: 0,
                     render: {
                         fillStyle: '#ffffff',
                         strokeStyle: '#333333',
@@ -125,11 +125,7 @@ document.addEventListener('DOMContentLoaded', () => {
             gsap.to(".body__3", { autoAlpha: 1, duration: 1, delay: 0.8 });
             window.currentStage = 2;
 
-            let r = Math.floor(Math.random() * 2);
-            switch (r) {
-                case 1: document.getElementById('addBox').click(); break;
-                default: document.getElementById('addCircle').click();
-            }
+            document.getElementById('addRoundRect').click();
         }
     });
 
@@ -143,7 +139,7 @@ document.addEventListener('DOMContentLoaded', () => {
             width: 240,
             height: 240,
             options: {
-                restitution: 0.8,
+                restitution: 0,
                 render: {
                     fillStyle: getRandomColor()
                 }
@@ -161,7 +157,7 @@ document.addEventListener('DOMContentLoaded', () => {
             y: 0,                // Top of the canvas
             radius: 120,
             options: {
-                restitution: 0.8,
+                restitution: 0,
                 render: {
                     fillStyle: getRandomColor()
                 }
@@ -180,13 +176,47 @@ document.addEventListener('DOMContentLoaded', () => {
             innerRadius: 1,
             outerRadius: 60,
             options: {
-                restitution: 0.8,
+                restitution: 0,
                 render: {
                     fillStyle: getRandomColor()
                 }
             }
         };
         socket.emit('addObject', { roomId, object: donut });
+    });
+
+    document.getElementById('addRoundRect').addEventListener('click', () => {
+        let title = '';
+        let w = 110;
+        let r = Math.floor(Math.random() * 5);
+        switch (r) {
+            case 1: title = 'Feeling'; break;
+            case 2: title = 'Timing'; break;
+            case 3: title = 'Resonance';w = 140; break;
+            case 4: title = 'Journey'; break;
+            default: title = 'Story';
+        }
+
+        const roundRect = {
+            id: Date.now().toString(),
+            type: 'roundRect',  // New type
+            x: canvasWidth / 2,
+            y: 0,
+            width: w,
+            height: 35,
+            title: title,
+            options: {
+                chamfer: { radius: 35 },  // This creates rounded corners
+                restitution: 0,
+                render: {
+                    fillStyle: 'transparent',
+                    strokeStyle: '#000000',
+                    lineWidth: 1
+                }
+            }
+        };
+
+        socket.emit('addObject', { roomId, object: roundRect });
     });
 
     document.getElementById('toggleAutoExpand').addEventListener('click', () => {

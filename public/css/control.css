@@ -4,7 +4,7 @@ body {
 }
 
 header {
-    position: absolute;
+    /*position: absolute;*/position: fixed;
     left: 0;
     top: 0;
     width: 100%;
@@ -12,10 +12,20 @@ header {
     padding: 32px;
     display: flex;
     justify-content: space-between;
+    filter: drop-shadow(0px 0px 1px white);
 }
 
-.body{}
-.body__logo{position: absolute;left: 50%;top:150px;transform: translateX(-50%);}
+.body {
+    margin-bottom: 80px;
+}
+
+.body__logo {
+    /*position: absolute;*/position: fixed;
+    left: 50%;
+    top: 150px;
+    transform: translateX(-50%);
+    filter: drop-shadow(0px 0px 1px white);
+}
 
 #canvas-container {
     background: transparent;
@@ -23,11 +33,11 @@ header {
     left: 0;
     width: calc(100vw - 64px);
     /*height: 100vh;*/
-    min-height: calc( 100svh - 150px - 80px);
+    min-height: calc(100svh - 150px - 80px);
     z-index: 1;
     margin: 0 32px;
     box-sizing: border-box;
-    border-bottom: 1px solid black;
+    /*border-bottom: 1px solid black;*/
 }
 
 #canvas-container canvas {
@@ -40,6 +50,12 @@ footer {
     justify-content: space-between;
     padding: 32px;
     font-size: 12px;
+    width: 100%;
+    position: fixed;
+    left: 0;
+    bottom: 0;
+    background: url('../images/Website-Desktop.png') center/cover;
+    box-sizing: border-box;
 }
 
 .footer__left {

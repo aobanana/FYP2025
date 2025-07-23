@@ -1,6 +1,6 @@
 document.addEventListener('DOMContentLoaded', () => {
     // Add these near the top of control.js
-    const MAX_OBJECTS_BEFORE_EXPAND = 10; // Adjust as needed
+    const MAX_OBJECTS_BEFORE_EXPAND = 20; // Adjust as needed
     const CANVAS_BASE = 20;
     const CANVAS_EXPANSION_STEP = 200; // Pixels to expand by
     let autoExpandingEnabled = true;
@@ -53,6 +53,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
         // Update socket
         socket.emit('canvasDimensions', {
+            roomId: roomId,
             width: render.options.width,
             height: newHeight
         });
@@ -64,15 +65,14 @@ document.addEventListener('DOMContentLoaded', () => {
     // Matter.js setup
     const { Engine, Render, World, Bodies, Body, Composite, Events } = Matter;
 
-    // Create engine
     const engine = Engine.create({
-        gravity: { x: 0, y: 1 }
+        gravity: { x: 0, y: 1 },
+        positionIterations: 10,  // Default: 6 (Higher = Better collision resolution)
+        velocityIterations: 8,   // Default: 4 (Higher = Smoother movement)
+        enableSleeping: true
     });
+    engine.timing.timeScale = 0.8;
 
-    // Store all current bodies except walls
-    let currentBodies = [];
-
-    // Get viewport dimensions
     const getViewportDimensions = () => {
         return {
             width: window.innerWidth,
@@ -97,6 +97,14 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     });
 
+    engine.world.bounds = {
+        min: { x: 0, y: 0 },
+        max: { x: render.options.width, y: render.options.height }
+    };
+
+    // Store all current bodies except walls
+    let currentBodies = [];
+
     // Add walls to contain objects
     /*const createWalls = () => {
         const { width, height } = getViewportDimensions();
@@ -118,6 +126,9 @@ document.addEventListener('DOMContentLoaded', () => {
             // Floor (moves down as canvas expands)
             Bodies.rectangle(width / 2, height + wallThickness / 2, width, wallThickness, {
                 isStatic: true,
+                friction: 0.3,
+                frictionStatic: 0.5,
+                restitution: 0.2,
                 render: { fillStyle: '#2c3e50' },
                 label: 'floor' // Add label for easier identification
             }),
@@ -125,18 +136,27 @@ document.addEventListener('DOMContentLoaded', () => {
             // Left wall (extends beyond viewport)
             Bodies.rectangle(-wallThickness / 2, height / 2, wallThickness, height + wallExtension, {
                 isStatic: true,
+                friction: 0.3,
+                frictionStatic: 0.5,
+                restitution: 0.2,
                 render: { fillStyle: '#2c3e50' }
             }),
 
             // Right wall (extends beyond viewport)
             Bodies.rectangle(width + wallThickness / 2, height / 2, wallThickness, height + wallExtension, {
                 isStatic: true,
+                friction: 0.3,
+                frictionStatic: 0.5,
+                restitution: 0.2,
                 render: { fillStyle: '#2c3e50' }
             }),
 
             // Ceiling (stays at top)
             Bodies.rectangle(width / 2, -wallThickness / 2, width, wallThickness, {
                 isStatic: true,
+                friction: 0.3,
+                frictionStatic: 0.5,
+                restitution: 0.2,
                 render: { fillStyle: '#2c3e50' }
             })
         ];
@@ -148,6 +168,10 @@ document.addEventListener('DOMContentLoaded', () => {
     const addTextRectangle = (world, x, y, width, height, title, content, storageId) => {
         // Create the physical rectangle body
         const body = Bodies.rectangle(x, y, width, height, {
+            friction: 0.5,       // High sliding friction
+            frictionStatic: 0.8, // Very sticky when at rest
+            frictionAir: 0.05,   // Moderate air resistance
+            restitution: 0.3,     // Optional: Bounciness
             chamfer: { radius: 0 },
             render: {
                 fillStyle: '#000000',
@@ -248,34 +272,66 @@ document.addEventListener('DOMContentLoaded', () => {
     // Helper function to wrap text into lines
     function wrapTextToLines(ctx, text, maxWidth, font) {
         ctx.font = font;
-        const words = text.split(' ');
         const lines = [];
-        let currentLine = words[0] || '';
 
-        for (let i = 1; i < words.length; i++) {
-            const word = words[i];
-            const testLine = currentLine + ' ' + word;
-            const metrics = ctx.measureText(testLine);
+        // For languages without spaces (like Japanese/Chinese), we'll check character by character
+        if (!containsSpaces(text)) {
+            let currentLine = '';
 
-            if (metrics.width > maxWidth && currentLine) {
+            for (let i = 0; i < text.length; i++) {
+                const char = text[i];
+                const testLine = currentLine + char;
+                const metrics = ctx.measureText(testLine);
+
+                if (metrics.width > maxWidth && currentLine) {
+                    lines.push(currentLine);
+                    currentLine = char;
+                } else {
+                    currentLine = testLine;
+                }
+            }
+
+            if (currentLine) {
                 lines.push(currentLine);
-                currentLine = word;
-            } else {
-                currentLine = testLine;
+            }
+        } else {
+            // Original implementation for languages with spaces
+            const words = text.split(' ');
+            let currentLine = words[0] || '';
+
+            for (let i = 1; i < words.length; i++) {
+                const word = words[i];
+                const testLine = currentLine + ' ' + word;
+                const metrics = ctx.measureText(testLine);
+
+                if (metrics.width > maxWidth && currentLine) {
+                    lines.push(currentLine);
+                    currentLine = word;
+                } else {
+                    currentLine = testLine;
+                }
+            }
+
+            if (currentLine) {
+                lines.push(currentLine);
             }
         }
 
-        if (currentLine) {
-            lines.push(currentLine);
-        }
-
         return lines;
+    }
+    // Helper function to check if text contains spaces
+    function containsSpaces(text) {
+        return /\s/.test(text);
     }
 
     // Add this function to control.js (alongside addTextRectangle)
     const addTextCircle = (world, x, y, radius, title, content, storageId) => {
         // Create the physical circle body
         const body = Bodies.circle(x, y, radius, {
+            friction: 0.5,       // High sliding friction
+            frictionStatic: 0.8, // Very sticky when at rest
+            frictionAir: 0.05,   // Moderate air resistance
+            restitution: 0.3,     // Optional: Bounciness
             render: {
                 fillStyle: '#000000',
                 lineWidth: 2
@@ -379,6 +435,10 @@ document.addEventListener('DOMContentLoaded', () => {
 
         // Create the physical triangle body
         const body = Bodies.fromVertices(x, y, [triangleVertices], {
+            friction: 0.5,       // High sliding friction
+            frictionStatic: 0.8, // Very sticky when at rest
+            frictionAir: 0.05,   // Moderate air resistance
+            restitution: 0.3,     // Optional: Bounciness
             chamfer: { radius: 5 },
             render: {
                 fillStyle: '#000000',
@@ -516,13 +576,83 @@ document.addEventListener('DOMContentLoaded', () => {
         Body.set(donut, {
             friction: 0.1,
             frictionStatic: 0.5,
-            restitution: 0.3,
+            restitution: 0,
             density: 0.001
         });
 
         World.add(world, donut);
         return donut;
     };
+
+    const addRoundRect = (world, x, y, width, height, title, storageId) => {
+        const body = Bodies.rectangle(x, y, width, height, {
+            friction: 0.5,       // High sliding friction
+            frictionStatic: 0.8, // Very sticky when at rest
+            frictionAir: 0.05,   // Moderate air resistance
+            restitution: 0.3,     // Optional: Bounciness
+            chamfer: { radius: 15 },
+            render: {
+                fillStyle: 'transparent',
+                strokeStyle: '#000000',
+                lineWidth: 1
+            }
+        });
+
+        body.customId = storageId;
+        body.customData = {
+            title,
+            width,
+            height,
+            storageId,
+            type: 'roundRect'
+        };
+
+        body.textData = { title };  // Only store title
+
+        // Add custom rendering
+        if (!addRoundRect.renderingAdded) {
+            addRoundRect.renderingAdded = true;
+
+            Events.on(render, 'afterRender', function () {
+                const ctx = render.context;
+                const bodies = Composite.allBodies(engine.world);
+
+                for (let i = 0; i < bodies.length; i++) {
+                    const body = bodies[i];
+                    if (body.customData?.type === 'roundRect') {
+                        renderRoundRect(ctx, body);
+                    }
+                }
+            });
+        }
+
+        World.add(world, body);
+        return body;
+    };
+
+    function renderRoundRect(ctx, body) {
+        ctx.save();
+
+        // Get body position and angle
+        const pos = body.position;
+        const angle = body.angle;
+
+        // Transform to body's coordinate system
+        ctx.translate(pos.x, pos.y);
+        ctx.rotate(angle);
+
+        // Set text properties
+        ctx.fillStyle = '#000000';
+        ctx.textAlign = 'center';
+        ctx.textBaseline = 'middle';
+        ctx.font = '24px "Cormorant Garamond"';
+
+        // Draw title (centered)
+        ctx.fillText(body.textData.title, 0, 0);
+
+        ctx.restore();
+    }
+
     // Add this to your animation loop or update function
     /*Events.on(engine, 'afterUpdate', () => {
         const bodies = Composite.allBodies(engine.world);
@@ -536,6 +666,32 @@ document.addEventListener('DOMContentLoaded', () => {
         // Check every 60 frames (about 1 second at 60fps)
         if (Math.floor(engine.timing.timestamp) % 60 === 0) {
             checkCanvasExpansion();
+        }
+    });
+    // Add this after your engine creation
+    Events.on(engine, 'collisionStart', (event) => {
+        const pairs = event.pairs;
+
+        for (let i = 0; i < pairs.length; i++) {
+            const pair = pairs[i];
+
+            // Stronger repulsion (0.005 instead of 0.0001)
+            const forceMultiplier = 0.005;
+
+            // Apply force to separate bodies
+            Body.applyForce(pair.bodyA, pair.bodyA.position, {
+                x: (pair.bodyB.position.x - pair.bodyA.position.x) * forceMultiplier,
+                y: (pair.bodyB.position.y - pair.bodyA.position.y) * forceMultiplier
+            });
+
+            Body.applyForce(pair.bodyB, pair.bodyB.position, {
+                x: (pair.bodyA.position.x - pair.bodyB.position.x) * forceMultiplier,
+                y: (pair.bodyA.position.y - pair.bodyB.position.y) * forceMultiplier
+            });
+
+            // Optional: Small upward force to prevent "stacking"
+            Body.applyForce(pair.bodyA, pair.bodyA.position, { x: 0, y: -0.001 });
+            Body.applyForce(pair.bodyB, pair.bodyB.position, { x: 0, y: -0.001 });
         }
     });
 
@@ -635,6 +791,17 @@ document.addEventListener('DOMContentLoaded', () => {
                         obj.id
                     );
                     newBody.customId = obj.id;
+                } else if (obj.type === 'roundRect') {
+                    newBody = addRoundRect(
+                        engine.world,
+                        obj.x,
+                        obj.y,
+                        obj.width,
+                        obj.height,
+                        obj.title,
+                        obj.id
+                    );
+                    newBody.customId = obj.id;
                 }
 
                 if (newBody) {
@@ -686,6 +853,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
         // 4. Notify other clients
         socket.emit('canvasDimensions', {
+            roomId: roomId,
             width: width,
             height: height
         });
@@ -763,6 +931,17 @@ document.addEventListener('DOMContentLoaded', () => {
                 object.id
             );
             newBody.customId = object.id; // Store the storage ID
+        } else if (object.type === 'roundRect') {
+            newBody = addRoundRect(
+                engine.world,
+                object.x,
+                object.y,
+                object.width,
+                object.height,
+                object.title,
+                object.id
+            );
+            newBody.customId = object.id;
         }
 
         if (newBody) {
@@ -775,6 +954,7 @@ document.addEventListener('DOMContentLoaded', () => {
     socket.on('joinRoom', (room) => {
         // Send immediately when control page joins
         socket.emit('canvasDimensions', {
+            roomId: roomId,
             width: render.options.width,
             height: render.options.height
         });
@@ -834,6 +1014,7 @@ document.addEventListener('DOMContentLoaded', () => {
     // Also update on resize
     const sendDimensions = () => {
         socket.emit('canvasDimensions', {
+            roomId: roomId,
             width: render.options.width,
             height: render.options.height
         });
