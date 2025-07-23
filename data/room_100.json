@@ -524,6 +524,235 @@
           "lineWidth": 1
         }
       }
+    },
+    {
+      "id": "1753241730799",
+      "type": "textCircle",
+      "x": 960,
+      "y": 0,
+      "radius": 120,
+      "title": "Emma",
+      "content": "TESTING ~ HO LENG AR MOBILE 🤩🤩🤩🤩🤩",
+      "options": {
+        "restitution": 0,
+        "render": {
+          "fillStyle": "#ffffff",
+          "strokeStyle": "#333333",
+          "lineWidth": 2
+        }
+      }
+    },
+    {
+      "id": "1753241730803",
+      "type": "roundRect",
+      "x": 960,
+      "y": 0,
+      "width": 110,
+      "height": 35,
+      "title": "Feeling",
+      "options": {
+        "chamfer": {
+          "radius": 35
+        },
+        "restitution": 0,
+        "render": {
+          "fillStyle": "transparent",
+          "strokeStyle": "#000000",
+          "lineWidth": 1
+        }
+      }
+    },
+    {
+      "id": "1753241867774",
+      "type": "roundRect",
+      "x": 960,
+      "y": 0,
+      "width": 110,
+      "height": 35,
+      "title": "Feeling",
+      "options": {
+        "chamfer": {
+          "radius": 35
+        },
+        "restitution": 0,
+        "render": {
+          "fillStyle": "transparent",
+          "strokeStyle": "#000000",
+          "lineWidth": 1
+        }
+      }
+    },
+    {
+      "id": "1753249390903",
+      "type": "roundRect",
+      "x": 960,
+      "y": 0,
+      "width": 140,
+      "height": 35,
+      "title": "Resonance",
+      "options": {
+        "chamfer": {
+          "radius": 35
+        },
+        "restitution": 0,
+        "render": {
+          "fillStyle": "transparent",
+          "strokeStyle": "#000000",
+          "lineWidth": 1
+        }
+      }
+    },
+    {
+      "id": "1753249525193",
+      "type": "roundRect",
+      "x": 960,
+      "y": 0,
+      "width": 110,
+      "height": 35,
+      "title": "Story",
+      "options": {
+        "chamfer": {
+          "radius": 35
+        },
+        "restitution": 0,
+        "render": {
+          "fillStyle": "transparent",
+          "strokeStyle": "#000000",
+          "lineWidth": 1
+        }
+      }
+    },
+    {
+      "id": "1753249636561",
+      "type": "roundRect",
+      "x": 960,
+      "y": 0,
+      "width": 110,
+      "height": 35,
+      "title": "Timing",
+      "options": {
+        "chamfer": {
+          "radius": 35
+        },
+        "restitution": 0,
+        "render": {
+          "fillStyle": "transparent",
+          "strokeStyle": "#000000",
+          "lineWidth": 1
+        }
+      }
+    },
+    {
+      "id": "1753253289707",
+      "type": "textTriangle",
+      "x": 960,
+      "y": 0,
+      "size": 200,
+      "title": "Testing 2:48",
+      "content": "重新打造相機環經典標誌融入邊框，透過低調設計融入您對品牌的熱愛。同時保留必要防摔保護功能，纖薄輕巧安心便攜。",
+      "options": {
+        "restitution": 0,
+        "render": {
+          "fillStyle": "#ffffff",
+          "strokeStyle": "#333333",
+          "lineWidth": 2
+        }
+      }
+    },
+    {
+      "id": "1753253289712",
+      "type": "roundRect",
+      "x": 960,
+      "y": 0,
+      "width": 110,
+      "height": 35,
+      "title": "Journey",
+      "options": {
+        "chamfer": {
+          "radius": 35
+        },
+        "restitution": 0,
+        "render": {
+          "fillStyle": "transparent",
+          "strokeStyle": "#000000",
+          "lineWidth": 1
+        }
+      }
+    },
+    {
+      "id": "1753254208909",
+      "type": "textTriangle",
+      "x": 960,
+      "y": 0,
+      "size": 200,
+      "title": "Murakami",
+      "content": "村上隆 X CASETIFY、第二章の幕開け。 カイカイとキキ、対照的なツインキャラクターが描き出す、新しいクリエイティブな世界。 多様な個性が交わることで、創造の可能性が広がる、唯一無二のコレクショ",
+      "options": {
+        "restitution": 0,
+        "render": {
+          "fillStyle": "#ffffff",
+          "strokeStyle": "#333333",
+          "lineWidth": 2
+        }
+      }
+    },
+    {
+      "id": "1753254208911",
+      "type": "roundRect",
+      "x": 960,
+      "y": 0,
+      "width": 140,
+      "height": 35,
+      "title": "Resonance",
+      "options": {
+        "chamfer": {
+          "radius": 35
+        },
+        "restitution": 0,
+        "render": {
+          "fillStyle": "transparent",
+          "strokeStyle": "#000000",
+          "lineWidth": 1
+        }
+      }
+    },
+    {
+      "id": "1753276990493",
+      "type": "textRectangle",
+      "x": 960,
+      "y": 0,
+      "width": 240,
+      "height": 240,
+      "title": "Ghhh",
+      "content": "GHHGH",
+      "options": {
+        "restitution": 0,
+        "render": {
+          "fillStyle": "#ffffff",
+          "strokeStyle": "#333333",
+          "lineWidth": 2
+        }
+      }
+    },
+    {
+      "id": "1753276990496",
+      "type": "roundRect",
+      "x": 960,
+      "y": 0,
+      "width": 110,
+      "height": 35,
+      "title": "Feeling",
+      "options": {
+        "chamfer": {
+          "radius": 35
+        },
+        "restitution": 0,
+        "render": {
+          "fillStyle": "transparent",
+          "strokeStyle": "#000000",
+          "lineWidth": 1
+        }
+      }
     }
   ]
 }

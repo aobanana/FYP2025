@@ -274,8 +274,11 @@ document.addEventListener('DOMContentLoaded', () => {
         ctx.font = font;
         const lines = [];
 
-        // For languages without spaces (like Japanese/Chinese), we'll check character by character
-        if (!containsSpaces(text)) {
+        // Check if the text contains CJK characters (Japanese, Chinese, etc.)
+        const isCJK = /[\u3000-\u303f\u3040-\u309f\u30a0-\u30ff\uff00-\uff9f\u4e00-\u9faf\u3400-\u4dbf]/.test(text);
+
+        if (isCJK || !containsSpaces(text)) {
+            // Handle CJK text or text without spaces (character-by-character wrapping)
             let currentLine = '';
 
             for (let i = 0; i < text.length; i++) {
@@ -295,7 +298,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 lines.push(currentLine);
             }
         } else {
-            // Original implementation for languages with spaces
+            // Handle Western text (space-separated word wrapping)
             const words = text.split(' ');
             let currentLine = words[0] || '';
 

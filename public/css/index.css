@@ -1,11 +1,16 @@
+html,
+body {
+    overflow: hidden;
+}
+
 body {
     height: 100svh;
-    background: url('../images/Mobile-Background.jpg') center/cover #ffffff;
+    background: url('../images/Mobile-Background.jpg') center/cover #000000;
 }
 
 header {
     display: flex;
-    justify-content: space-between;
+    justify-content: space-between; 
     padding: 13px 0;
 }
 
