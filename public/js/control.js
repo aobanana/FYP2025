@@ -53,6 +53,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
         // Update socket
         socket.emit('canvasDimensions', {
+            roomId: roomId,
             width: render.options.width,
             height: newHeight
         });
@@ -852,6 +853,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
         // 4. Notify other clients
         socket.emit('canvasDimensions', {
+            roomId: roomId,
             width: width,
             height: height
         });
@@ -952,6 +954,7 @@ document.addEventListener('DOMContentLoaded', () => {
     socket.on('joinRoom', (room) => {
         // Send immediately when control page joins
         socket.emit('canvasDimensions', {
+            roomId: roomId,
             width: render.options.width,
             height: render.options.height
         });
@@ -1011,6 +1014,7 @@ document.addEventListener('DOMContentLoaded', () => {
     // Also update on resize
     const sendDimensions = () => {
         socket.emit('canvasDimensions', {
+            roomId: roomId,
             width: render.options.width,
             height: render.options.height
         });

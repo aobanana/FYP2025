@@ -210,7 +210,7 @@ app.delete('/api/room/:roomId/objects/:objectId', (req, res) => {
         const data = getRoomData(roomId);
 
         // 2. Find the object index - handle both string and number IDs
-        const objectIndex = data.objects.findIndex(obj => 
+        const objectIndex = data.objects.findIndex(obj =>
             obj.id.toString() === objectId.toString()
         );
 
@@ -341,6 +341,12 @@ io.on('connection', (socket) => {
     // When a client connects to the management page
     socket.on('joinManagement', (roomId) => {
         socket.join(roomId);
+    });
+
+    socket.on('canvasDimensions', ({ roomId, width, height }) => {
+        // Broadcast to all OTHER clients in the room
+        io.to(roomId).emit('canvasDimensions', { width, height });
+        console.log('room '+ roomId + ' canvasDimensions: ' + width + '/' + height);
     });
 
 });

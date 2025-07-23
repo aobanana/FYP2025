@@ -486,6 +486,44 @@
           "lineWidth": 2
         }
       }
+    },
+    {
+      "id": "1753233923850",
+      "type": "textRectangle",
+      "x": 960,
+      "y": 0,
+      "width": 240,
+      "height": 240,
+      "title": "3",
+      "content": "5555 ",
+      "options": {
+        "restitution": 0,
+        "render": {
+          "fillStyle": "#ffffff",
+          "strokeStyle": "#333333",
+          "lineWidth": 2
+        }
+      }
+    },
+    {
+      "id": "1753233923852",
+      "type": "roundRect",
+      "x": 960,
+      "y": 0,
+      "width": 110,
+      "height": 35,
+      "title": "Feeling",
+      "options": {
+        "chamfer": {
+          "radius": 35
+        },
+        "restitution": 0,
+        "render": {
+          "fillStyle": "transparent",
+          "strokeStyle": "#000000",
+          "lineWidth": 1
+        }
+      }
     }
   ]
 }

@@ -3,7 +3,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const socket = io();
 
     // Default canvas dimensions (will be updated from index page)
-    let canvasWidth = 800;
+    let canvasWidth = 1920;  //800
     let canvasHeight = 600;
     let autoExpandingEnabled = true;
 
@@ -12,9 +12,9 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // Listen for canvas dimension updates from index page
     socket.on('canvasDimensions', (dimensions) => {
+        console.log('Updated canvas dimensions:', dimensions);
         canvasWidth = dimensions.width;
         canvasHeight = dimensions.height;
-        console.log('Updated canvas dimensions:', dimensions);
     });
 
     socket.on('autoExpandUpdated', (enabled) => {
