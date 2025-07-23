@@ -9,7 +9,7 @@
       "title": "Jdjjnf",
       "content": "JDJJJDJF",
       "options": {
-        "restitution": 0.5,
+        "restitution": 0,
         "render": {
           "fillStyle": "#ffffff",
           "strokeStyle": "#333333",
@@ -18,28 +18,15 @@
       }
     },
     {
-      "id": "1753135493340",
-      "type": "circle",
-      "x": 400,
-      "y": 0,
-      "radius": 120,
-      "options": {
-        "restitution": 0.8,
-        "render": {
-          "fillStyle": "#A8FEB6"
-        }
-      }
-    },
-    {
-      "id": "1753147084337",
+      "id": "1753150577219",
       "type": "textCircle",
       "x": 400,
       "y": 0,
       "radius": 120,
-      "title": "test",
-      "content": "TEST",
+      "title": "Dhfbf",
+      "content": "DNFFNNFFBBDB FFBRNF DNDND",
       "options": {
-        "restitution": 0.5,
+        "restitution": 0,
         "render": {
           "fillStyle": "#ffffff",
           "strokeStyle": "#333333",
@@ -48,15 +35,438 @@
       }
     },
     {
-      "id": "1753147084337",
-      "type": "circle",
+      "id": "1753153646159",
+      "type": "textCircle",
       "x": 400,
       "y": 0,
       "radius": 120,
+      "title": "Guvvhh",
+      "content": "BJDJFBBF FJUFJ FJUFJ FUJFBR HFJJF FIJFBR  ",
       "options": {
-        "restitution": 0.8,
+        "restitution": 0,
         "render": {
-          "fillStyle": "#8D6917"
+          "fillStyle": "#ffffff",
+          "strokeStyle": "#333333",
+          "lineWidth": 2
+        }
+      }
+    },
+    {
+      "id": "1753168091650",
+      "type": "textRectangle",
+      "x": 400,
+      "y": 0,
+      "width": 240,
+      "height": 240,
+      "title": "Omar",
+      "content": "DESIGN IS HOW WE SPEAK WHEN WORDS FAIL.",
+      "options": {
+        "restitution": 0,
+        "render": {
+          "fillStyle": "#ffffff",
+          "strokeStyle": "#333333",
+          "lineWidth": 2
+        }
+      }
+    },
+    {
+      "id": "1753198386459",
+      "type": "textRectangle",
+      "x": 400,
+      "y": 0,
+      "width": 240,
+      "height": 240,
+      "title": "Esther",
+      "content": "愛係種設計，每個選擇都會留低一個痕。",
+      "options": {
+        "restitution": 0,
+        "render": {
+          "fillStyle": "#ffffff",
+          "strokeStyle": "#333333",
+          "lineWidth": 2
+        }
+      }
+    },
+    {
+      "id": "1753198487386",
+      "type": "textCircle",
+      "x": 400,
+      "y": 0,
+      "radius": 120,
+      "title": "Nadine",
+      "content": "TO SEE BEAUTY IS TO LET SILENCE SPEAK.",
+      "options": {
+        "restitution": 0,
+        "render": {
+          "fillStyle": "#ffffff",
+          "strokeStyle": "#333333",
+          "lineWidth": 2
+        }
+      }
+    },
+    {
+      "id": "1753198539960",
+      "type": "textTriangle",
+      "x": 400,
+      "y": 0,
+      "size": 200,
+      "title": "Casey.T👾👾👾",
+      "content": "BEAUTY LIVES IN PAUSES, NOT POSTS.",
+      "options": {
+        "restitution": 0,
+        "render": {
+          "fillStyle": "#ffffff",
+          "strokeStyle": "#333333",
+          "lineWidth": 2
+        }
+      }
+    },
+    {
+      "id": "1753198610845",
+      "type": "textRectangle",
+      "x": 400,
+      "y": 0,
+      "width": 240,
+      "height": 240,
+      "title": "Leo",
+      "content": "WE COLLECT MOMENTS LIKE STONES. THE WEIGHT BECOMES MEANING. 🗿",
+      "options": {
+        "restitution": 0,
+        "render": {
+          "fillStyle": "#ffffff",
+          "strokeStyle": "#333333",
+          "lineWidth": 2
+        }
+      }
+    },
+    {
+      "id": "1753198661160",
+      "type": "textCircle",
+      "x": 400,
+      "y": 0,
+      "radius": 120,
+      "title": "Emma",
+      "content": "THANK YOU SO MUCH TONY🙏🏻🙏🏻🙏🏻",
+      "options": {
+        "restitution": 0,
+        "render": {
+          "fillStyle": "#ffffff",
+          "strokeStyle": "#333333",
+          "lineWidth": 2
+        }
+      }
+    },
+    {
+      "id": "1753199260036",
+      "type": "textRectangle",
+      "x": 400,
+      "y": 0,
+      "width": 240,
+      "height": 240,
+      "title": "Junpei",
+      "content": "一瞬がすべてを変える。",
+      "options": {
+        "restitution": 0,
+        "render": {
+          "fillStyle": "#ffffff",
+          "strokeStyle": "#333333",
+          "lineWidth": 2
+        }
+      }
+    },
+    {
+      "id": "1753199380640",
+      "type": "textRectangle",
+      "x": 400,
+      "y": 0,
+      "width": 240,
+      "height": 240,
+      "title": "Gem ",
+      "content": "ONE CANNOT THINK WELL, LIVE WELL, SLEEP WELL, IF ONE HAS NOT DINED WELL.",
+      "options": {
+        "restitution": 0,
+        "render": {
+          "fillStyle": "#ffffff",
+          "strokeStyle": "#333333",
+          "lineWidth": 2
+        }
+      }
+    },
+    {
+      "id": "1753199404001",
+      "type": "textCircle",
+      "x": 400,
+      "y": 0,
+      "radius": 120,
+      "title": "Testing japanese",
+      "content": "見えないものに意味がある」という言葉は、目に見えるものだけでなく、目に見えない心の豊かさや精神的な価値、あるいは目に見えない存在や根源的なものが重要であるという意味を表します。",
+      "options": {
+        "restitution": 0,
+        "render": {
+          "fillStyle": "#ffffff",
+          "strokeStyle": "#333333",
+          "lineWidth": 2
+        }
+      }
+    },
+    {
+      "id": "1753226396845",
+      "type": "textTriangle",
+      "x": 400,
+      "y": 0,
+      "size": 200,
+      "title": "H",
+      "content": "V",
+      "options": {
+        "restitution": 0,
+        "render": {
+          "fillStyle": "#ffffff",
+          "strokeStyle": "#333333",
+          "lineWidth": 2
+        }
+      }
+    },
+    {
+      "id": "1753227499725",
+      "type": "textRectangle",
+      "x": 100,
+      "y": 0,
+      "width": 107,
+      "height": 35,
+      "title": "Feeling",
+      "content": "",
+      "options": {
+        "restitution": 0,
+        "render": {
+          "fillStyle": "#000000",
+          "strokeStyle": "#333333",
+          "lineWidth": 2
+        }
+      }
+    },
+    {
+      "id": "1753228650712",
+      "type": "roundRect",
+      "x": 400,
+      "y": 0,
+      "width": 200,
+      "height": 100,
+      "title": "Title",
+      "options": {
+        "chamfer": {
+          "radius": 15
+        },
+        "restitution": 0,
+        "render": {
+          "fillStyle": "transparent",
+          "strokeStyle": "#000000",
+          "lineWidth": 1
+        }
+      }
+    },
+    {
+      "id": "1753229466975",
+      "type": "roundRect",
+      "x": 400,
+      "y": 0,
+      "width": 110,
+      "height": 35,
+      "title": "Feeling",
+      "options": {
+        "chamfer": {
+          "radius": 35
+        },
+        "restitution": 0,
+        "render": {
+          "fillStyle": "transparent",
+          "strokeStyle": "#000000",
+          "lineWidth": 1
+        }
+      }
+    },
+    {
+      "id": "1753230225711",
+      "type": "textCircle",
+      "x": 400,
+      "y": 0,
+      "radius": 120,
+      "title": "test ing",
+      "content": "見えないものに意味がある」という言葉は、目に見えるものだけでなく、目に見えない心の豊かさや精神的な価値、あるいは目に見えない存在や根源的なものが重要であるという意味を表します。",
+      "options": {
+        "restitution": 0,
+        "render": {
+          "fillStyle": "#ffffff",
+          "strokeStyle": "#333333",
+          "lineWidth": 2
+        }
+      }
+    },
+    {
+      "id": "1753230225712",
+      "type": "roundRect",
+      "x": 400,
+      "y": 0,
+      "width": 110,
+      "height": 35,
+      "title": "Feeling",
+      "options": {
+        "chamfer": {
+          "radius": 35
+        },
+        "restitution": 0,
+        "render": {
+          "fillStyle": "transparent",
+          "strokeStyle": "#000000",
+          "lineWidth": 1
+        }
+      }
+    },
+    {
+      "id": "1753230280151",
+      "type": "textTriangle",
+      "x": 400,
+      "y": 0,
+      "size": 200,
+      "title": "見えないもの",
+      "content": "見えないものに意味がある」という言葉は、目に見えるものだけでなく、目に見えない心の豊かさや精神的な価値、あるいは目に見えない存在や根源的なものが重要であるという意味を表します。重要であるという重要で。",
+      "options": {
+        "restitution": 0,
+        "render": {
+          "fillStyle": "#ffffff",
+          "strokeStyle": "#333333",
+          "lineWidth": 2
+        }
+      }
+    },
+    {
+      "id": "1753230280152",
+      "type": "roundRect",
+      "x": 400,
+      "y": 0,
+      "width": 110,
+      "height": 35,
+      "title": "Story",
+      "options": {
+        "chamfer": {
+          "radius": 35
+        },
+        "restitution": 0,
+        "render": {
+          "fillStyle": "transparent",
+          "strokeStyle": "#000000",
+          "lineWidth": 1
+        }
+      }
+    },
+    {
+      "id": "1753230308967",
+      "type": "textRectangle",
+      "x": 400,
+      "y": 0,
+      "width": 240,
+      "height": 240,
+      "title": "100",
+      "content": "見えないものに意味がある」という言葉は、目に見えるものだけでなく、目に見えない心の豊かさや精神的な価値、あるいは目に見えない存在や根源的なものが重要であるという意味を表します。重要であるという重要で。",
+      "options": {
+        "restitution": 0,
+        "render": {
+          "fillStyle": "#ffffff",
+          "strokeStyle": "#333333",
+          "lineWidth": 2
+        }
+      }
+    },
+    {
+      "id": "1753230308968",
+      "type": "roundRect",
+      "x": 400,
+      "y": 0,
+      "width": 110,
+      "height": 35,
+      "title": "Journey",
+      "options": {
+        "chamfer": {
+          "radius": 35
+        },
+        "restitution": 0,
+        "render": {
+          "fillStyle": "transparent",
+          "strokeStyle": "#000000",
+          "lineWidth": 1
+        }
+      }
+    },
+    {
+      "id": "1753230328007",
+      "type": "textTriangle",
+      "x": 400,
+      "y": 0,
+      "size": 200,
+      "title": "100",
+      "content": "見えないものに意味がある」という言葉は、目に見えるものだけでなく、目に見えない心の豊かさや精神的な価値、あるいは目に見えない存在や根源的なものが重要であるという意味を表します。重要であるという重要で。",
+      "options": {
+        "restitution": 0,
+        "render": {
+          "fillStyle": "#ffffff",
+          "strokeStyle": "#333333",
+          "lineWidth": 2
+        }
+      }
+    },
+    {
+      "id": "1753230328008",
+      "type": "roundRect",
+      "x": 400,
+      "y": 0,
+      "width": 140,
+      "height": 35,
+      "title": "Resonance",
+      "options": {
+        "chamfer": {
+          "radius": 35
+        },
+        "restitution": 0,
+        "render": {
+          "fillStyle": "transparent",
+          "strokeStyle": "#000000",
+          "lineWidth": 1
+        }
+      }
+    },
+    {
+      "id": "1753230337143",
+      "type": "textCircle",
+      "x": 400,
+      "y": 0,
+      "radius": 120,
+      "title": "100",
+      "content": "見えないものに意味がある」という言葉は、目に見えるものだけでなく、目に見えない心の豊かさや精神的な価値、あるいは目に見えない存在や根源的なものが重要であるという意味を表します。重要であるという重要で。",
+      "options": {
+        "restitution": 0,
+        "render": {
+          "fillStyle": "#ffffff",
+          "strokeStyle": "#333333",
+          "lineWidth": 2
+        }
+      }
+    },
+    {
+      "id": "1753230337144",
+      "type": "roundRect",
+      "x": 400,
+      "y": 0,
+      "width": 140,
+      "height": 35,
+      "title": "Resonance",
+      "options": {
+        "chamfer": {
+          "radius": 35
+        },
+        "restitution": 0,
+        "render": {
+          "fillStyle": "transparent",
+          "strokeStyle": "#000000",
+          "lineWidth": 1
         }
       }
     }
