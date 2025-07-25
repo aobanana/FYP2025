@@ -1,30 +1,13 @@
 {
   "objects": [
     {
-      "id": "1753135493337",
-      "type": "textTriangle",
-      "x": 400,
-      "y": 0,
-      "size": 200,
-      "title": "Jdjjnf",
-      "content": "JDJJJDJF",
-      "options": {
-        "restitution": 0,
-        "render": {
-          "fillStyle": "#ffffff",
-          "strokeStyle": "#333333",
-          "lineWidth": 2
-        }
-      }
-    },
-    {
-      "id": "1753150577219",
+      "id": "1753281594859",
       "type": "textCircle",
-      "x": 400,
+      "x": 1250,
       "y": 0,
       "radius": 120,
-      "title": "Dhfbf",
-      "content": "DNFFNNFFBBDB FFBRNF DNDND",
+      "title": "悠然",
+      "content": "夢入面我變咗粒塵，但我覺得自己閃閃發光 ✨",
       "options": {
         "restitution": 0,
         "render": {
@@ -35,243 +18,13 @@
       }
     },
     {
-      "id": "1753153646159",
-      "type": "textCircle",
-      "x": 400,
-      "y": 0,
-      "radius": 120,
-      "title": "Guvvhh",
-      "content": "BJDJFBBF FJUFJ FJUFJ FUJFBR HFJJF FIJFBR  ",
-      "options": {
-        "restitution": 0,
-        "render": {
-          "fillStyle": "#ffffff",
-          "strokeStyle": "#333333",
-          "lineWidth": 2
-        }
-      }
-    },
-    {
-      "id": "1753168091650",
-      "type": "textRectangle",
-      "x": 400,
-      "y": 0,
-      "width": 240,
-      "height": 240,
-      "title": "Omar",
-      "content": "DESIGN IS HOW WE SPEAK WHEN WORDS FAIL.",
-      "options": {
-        "restitution": 0,
-        "render": {
-          "fillStyle": "#ffffff",
-          "strokeStyle": "#333333",
-          "lineWidth": 2
-        }
-      }
-    },
-    {
-      "id": "1753198386459",
-      "type": "textRectangle",
-      "x": 400,
-      "y": 0,
-      "width": 240,
-      "height": 240,
-      "title": "Esther",
-      "content": "愛係種設計，每個選擇都會留低一個痕。",
-      "options": {
-        "restitution": 0,
-        "render": {
-          "fillStyle": "#ffffff",
-          "strokeStyle": "#333333",
-          "lineWidth": 2
-        }
-      }
-    },
-    {
-      "id": "1753198487386",
-      "type": "textCircle",
-      "x": 400,
-      "y": 0,
-      "radius": 120,
-      "title": "Nadine",
-      "content": "TO SEE BEAUTY IS TO LET SILENCE SPEAK.",
-      "options": {
-        "restitution": 0,
-        "render": {
-          "fillStyle": "#ffffff",
-          "strokeStyle": "#333333",
-          "lineWidth": 2
-        }
-      }
-    },
-    {
-      "id": "1753198539960",
-      "type": "textTriangle",
-      "x": 400,
-      "y": 0,
-      "size": 200,
-      "title": "Casey.T👾👾👾",
-      "content": "BEAUTY LIVES IN PAUSES, NOT POSTS.",
-      "options": {
-        "restitution": 0,
-        "render": {
-          "fillStyle": "#ffffff",
-          "strokeStyle": "#333333",
-          "lineWidth": 2
-        }
-      }
-    },
-    {
-      "id": "1753198610845",
-      "type": "textRectangle",
-      "x": 400,
-      "y": 0,
-      "width": 240,
-      "height": 240,
-      "title": "Leo",
-      "content": "WE COLLECT MOMENTS LIKE STONES. THE WEIGHT BECOMES MEANING. 🗿",
-      "options": {
-        "restitution": 0,
-        "render": {
-          "fillStyle": "#ffffff",
-          "strokeStyle": "#333333",
-          "lineWidth": 2
-        }
-      }
-    },
-    {
-      "id": "1753198661160",
-      "type": "textCircle",
-      "x": 400,
-      "y": 0,
-      "radius": 120,
-      "title": "Emma",
-      "content": "THANK YOU SO MUCH TONY🙏🏻🙏🏻🙏🏻",
-      "options": {
-        "restitution": 0,
-        "render": {
-          "fillStyle": "#ffffff",
-          "strokeStyle": "#333333",
-          "lineWidth": 2
-        }
-      }
-    },
-    {
-      "id": "1753199260036",
-      "type": "textRectangle",
-      "x": 400,
-      "y": 0,
-      "width": 240,
-      "height": 240,
-      "title": "Junpei",
-      "content": "一瞬がすべてを変える。",
-      "options": {
-        "restitution": 0,
-        "render": {
-          "fillStyle": "#ffffff",
-          "strokeStyle": "#333333",
-          "lineWidth": 2
-        }
-      }
-    },
-    {
-      "id": "1753199380640",
-      "type": "textRectangle",
-      "x": 400,
-      "y": 0,
-      "width": 240,
-      "height": 240,
-      "title": "Gem ",
-      "content": "ONE CANNOT THINK WELL, LIVE WELL, SLEEP WELL, IF ONE HAS NOT DINED WELL.",
-      "options": {
-        "restitution": 0,
-        "render": {
-          "fillStyle": "#ffffff",
-          "strokeStyle": "#333333",
-          "lineWidth": 2
-        }
-      }
-    },
-    {
-      "id": "1753199404001",
-      "type": "textCircle",
-      "x": 400,
-      "y": 0,
-      "radius": 120,
-      "title": "Testing japanese",
-      "content": "見えないものに意味がある」という言葉は、目に見えるものだけでなく、目に見えない心の豊かさや精神的な価値、あるいは目に見えない存在や根源的なものが重要であるという意味を表します。",
-      "options": {
-        "restitution": 0,
-        "render": {
-          "fillStyle": "#ffffff",
-          "strokeStyle": "#333333",
-          "lineWidth": 2
-        }
-      }
-    },
-    {
-      "id": "1753226396845",
-      "type": "textTriangle",
-      "x": 400,
-      "y": 0,
-      "size": 200,
-      "title": "H",
-      "content": "V",
-      "options": {
-        "restitution": 0,
-        "render": {
-          "fillStyle": "#ffffff",
-          "strokeStyle": "#333333",
-          "lineWidth": 2
-        }
-      }
-    },
-    {
-      "id": "1753227499725",
-      "type": "textRectangle",
-      "x": 100,
-      "y": 0,
-      "width": 107,
-      "height": 35,
-      "title": "Feeling",
-      "content": "",
-      "options": {
-        "restitution": 0,
-        "render": {
-          "fillStyle": "#000000",
-          "strokeStyle": "#333333",
-          "lineWidth": 2
-        }
-      }
-    },
-    {
-      "id": "1753228650712",
+      "id": "1753281594862",
       "type": "roundRect",
-      "x": 400,
+      "x": 1250,
       "y": 0,
-      "width": 200,
-      "height": 100,
-      "title": "Title",
-      "options": {
-        "chamfer": {
-          "radius": 15
-        },
-        "restitution": 0,
-        "render": {
-          "fillStyle": "transparent",
-          "strokeStyle": "#000000",
-          "lineWidth": 1
-        }
-      }
-    },
-    {
-      "id": "1753229466975",
-      "type": "roundRect",
-      "x": 400,
-      "y": 0,
-      "width": 110,
+      "width": 140,
       "height": 35,
-      "title": "Feeling",
+      "title": "Resonance",
       "options": {
         "chamfer": {
           "radius": 35
@@ -285,50 +38,13 @@
       }
     },
     {
-      "id": "1753230225711",
-      "type": "textCircle",
-      "x": 400,
-      "y": 0,
-      "radius": 120,
-      "title": "test ing",
-      "content": "見えないものに意味がある」という言葉は、目に見えるものだけでなく、目に見えない心の豊かさや精神的な価値、あるいは目に見えない存在や根源的なものが重要であるという意味を表します。",
-      "options": {
-        "restitution": 0,
-        "render": {
-          "fillStyle": "#ffffff",
-          "strokeStyle": "#333333",
-          "lineWidth": 2
-        }
-      }
-    },
-    {
-      "id": "1753230225712",
-      "type": "roundRect",
-      "x": 400,
-      "y": 0,
-      "width": 110,
-      "height": 35,
-      "title": "Feeling",
-      "options": {
-        "chamfer": {
-          "radius": 35
-        },
-        "restitution": 0,
-        "render": {
-          "fillStyle": "transparent",
-          "strokeStyle": "#000000",
-          "lineWidth": 1
-        }
-      }
-    },
-    {
-      "id": "1753230280151",
+      "id": "1753281609480",
       "type": "textTriangle",
-      "x": 400,
+      "x": 1250,
       "y": 0,
       "size": 200,
-      "title": "見えないもの",
-      "content": "見えないものに意味がある」という言葉は、目に見えるものだけでなく、目に見えない心の豊かさや精神的な価値、あるいは目に見えない存在や根源的なものが重要であるという意味を表します。重要であるという重要で。",
+      "title": "Noah M.",
+      "content": "THE MOON FOLLOWED ME HOME LAST NIGHT. SHE LOOKED CONCERNED.",
       "options": {
         "restitution": 0,
         "render": {
@@ -339,9 +55,9 @@
       }
     },
     {
-      "id": "1753230280152",
+      "id": "1753281609482",
       "type": "roundRect",
-      "x": 400,
+      "x": 1250,
       "y": 0,
       "width": 110,
       "height": 35,
@@ -359,14 +75,13 @@
       }
     },
     {
-      "id": "1753230308967",
-      "type": "textRectangle",
-      "x": 400,
+      "id": "1753281623358",
+      "type": "textCircle",
+      "x": 1250,
       "y": 0,
-      "width": 240,
-      "height": 240,
-      "title": "100",
-      "content": "見えないものに意味がある」という言葉は、目に見えるものだけでなく、目に見えない心の豊かさや精神的な価値、あるいは目に見えない存在や根源的なものが重要であるという意味を表します。重要であるという重要で。",
+      "radius": 120,
+      "title": "Yen 🕊️",
+      "content": "時間彷彿停頓咗一秒，我睇住佢笑，個世界都靜咗。",
       "options": {
         "restitution": 0,
         "render": {
@@ -377,9 +92,9 @@
       }
     },
     {
-      "id": "1753230308968",
+      "id": "1753281623360",
       "type": "roundRect",
-      "x": 400,
+      "x": 1250,
       "y": 0,
       "width": 110,
       "height": 35,
@@ -397,105 +112,14 @@
       }
     },
     {
-      "id": "1753230328007",
-      "type": "textTriangle",
-      "x": 400,
-      "y": 0,
-      "size": 200,
-      "title": "100",
-      "content": "見えないものに意味がある」という言葉は、目に見えるものだけでなく、目に見えない心の豊かさや精神的な価値、あるいは目に見えない存在や根源的なものが重要であるという意味を表します。重要であるという重要で。",
-      "options": {
-        "restitution": 0,
-        "render": {
-          "fillStyle": "#ffffff",
-          "strokeStyle": "#333333",
-          "lineWidth": 2
-        }
-      }
-    },
-    {
-      "id": "1753230328008",
-      "type": "roundRect",
-      "x": 400,
-      "y": 0,
-      "width": 140,
-      "height": 35,
-      "title": "Resonance",
-      "options": {
-        "chamfer": {
-          "radius": 35
-        },
-        "restitution": 0,
-        "render": {
-          "fillStyle": "transparent",
-          "strokeStyle": "#000000",
-          "lineWidth": 1
-        }
-      }
-    },
-    {
-      "id": "1753230337143",
-      "type": "textCircle",
-      "x": 400,
-      "y": 0,
-      "radius": 120,
-      "title": "100",
-      "content": "見えないものに意味がある」という言葉は、目に見えるものだけでなく、目に見えない心の豊かさや精神的な価値、あるいは目に見えない存在や根源的なものが重要であるという意味を表します。重要であるという重要で。",
-      "options": {
-        "restitution": 0,
-        "render": {
-          "fillStyle": "#ffffff",
-          "strokeStyle": "#333333",
-          "lineWidth": 2
-        }
-      }
-    },
-    {
-      "id": "1753230337144",
-      "type": "roundRect",
-      "x": 400,
-      "y": 0,
-      "width": 140,
-      "height": 35,
-      "title": "Resonance",
-      "options": {
-        "chamfer": {
-          "radius": 35
-        },
-        "restitution": 0,
-        "render": {
-          "fillStyle": "transparent",
-          "strokeStyle": "#000000",
-          "lineWidth": 1
-        }
-      }
-    },
-    {
-      "id": "1753067633573",
-      "type": "textTriangle",
-      "x": 400,
-      "y": 0,
-      "size": 200,
-      "title": "222",
-      "content": "3333",
-      "options": {
-        "restitution": 0.5,
-        "render": {
-          "fillStyle": "#ffffff",
-          "strokeStyle": "#333333",
-          "lineWidth": 2
-        }
-      }
-    },
-    {
-      "id": "1753233923850",
+      "id": "1753281641872",
       "type": "textRectangle",
-      "x": 960,
+      "x": 1250,
       "y": 0,
       "width": 240,
       "height": 240,
-      "title": "3",
-      "content": "5555 ",
+      "title": "Juno",
+      "content": "LIGHT THROUGH BLINDS PAINTS PRISON BARS. OR PIANO KEYS. DEPENDS ON THE SONG. ",
       "options": {
         "restitution": 0,
         "render": {
@@ -506,106 +130,9 @@
       }
     },
     {
-      "id": "1753233923852",
+      "id": "1753281641874",
       "type": "roundRect",
-      "x": 960,
-      "y": 0,
-      "width": 110,
-      "height": 35,
-      "title": "Feeling",
-      "options": {
-        "chamfer": {
-          "radius": 35
-        },
-        "restitution": 0,
-        "render": {
-          "fillStyle": "transparent",
-          "strokeStyle": "#000000",
-          "lineWidth": 1
-        }
-      }
-    },
-    {
-      "id": "1753241730799",
-      "type": "textCircle",
-      "x": 960,
-      "y": 0,
-      "radius": 120,
-      "title": "Emma",
-      "content": "TESTING ~ HO LENG AR MOBILE 🤩🤩🤩🤩🤩",
-      "options": {
-        "restitution": 0,
-        "render": {
-          "fillStyle": "#ffffff",
-          "strokeStyle": "#333333",
-          "lineWidth": 2
-        }
-      }
-    },
-    {
-      "id": "1753241730803",
-      "type": "roundRect",
-      "x": 960,
-      "y": 0,
-      "width": 110,
-      "height": 35,
-      "title": "Feeling",
-      "options": {
-        "chamfer": {
-          "radius": 35
-        },
-        "restitution": 0,
-        "render": {
-          "fillStyle": "transparent",
-          "strokeStyle": "#000000",
-          "lineWidth": 1
-        }
-      }
-    },
-    {
-      "id": "1753241867774",
-      "type": "roundRect",
-      "x": 960,
-      "y": 0,
-      "width": 110,
-      "height": 35,
-      "title": "Feeling",
-      "options": {
-        "chamfer": {
-          "radius": 35
-        },
-        "restitution": 0,
-        "render": {
-          "fillStyle": "transparent",
-          "strokeStyle": "#000000",
-          "lineWidth": 1
-        }
-      }
-    },
-    {
-      "id": "1753249390903",
-      "type": "roundRect",
-      "x": 960,
-      "y": 0,
-      "width": 140,
-      "height": 35,
-      "title": "Resonance",
-      "options": {
-        "chamfer": {
-          "radius": 35
-        },
-        "restitution": 0,
-        "render": {
-          "fillStyle": "transparent",
-          "strokeStyle": "#000000",
-          "lineWidth": 1
-        }
-      }
-    },
-    {
-      "id": "1753249525193",
-      "type": "roundRect",
-      "x": 960,
+      "x": 1250,
       "y": 0,
       "width": 110,
       "height": 35,
@@ -623,9 +150,63 @@
       }
     },
     {
-      "id": "1753249636561",
+      "id": "1753281658768",
+      "type": "textTriangle",
+      "x": 1250,
+      "y": 0,
+      "size": 200,
+      "title": "Elena R.",
+      "content": "SHE SAID NOTHING. BUT HER SILENCE HUMMED LIKE WIND BETWEEN STARS.",
+      "options": {
+        "restitution": 0,
+        "render": {
+          "fillStyle": "#ffffff",
+          "strokeStyle": "#333333",
+          "lineWidth": 2
+        }
+      }
+    },
+    {
+      "id": "1753281658769",
       "type": "roundRect",
-      "x": 960,
+      "x": 1250,
+      "y": 0,
+      "width": 140,
+      "height": 35,
+      "title": "Resonance",
+      "options": {
+        "chamfer": {
+          "radius": 35
+        },
+        "restitution": 0,
+        "render": {
+          "fillStyle": "transparent",
+          "strokeStyle": "#000000",
+          "lineWidth": 1
+        }
+      }
+    },
+    {
+      "id": "1753281674001",
+      "type": "textCircle",
+      "x": 1250,
+      "y": 0,
+      "radius": 120,
+      "title": "阿喬",
+      "content": "雲今日飄得特別慢，好似唔趕時間。",
+      "options": {
+        "restitution": 0,
+        "render": {
+          "fillStyle": "#ffffff",
+          "strokeStyle": "#333333",
+          "lineWidth": 2
+        }
+      }
+    },
+    {
+      "id": "1753281674002",
+      "type": "roundRect",
+      "x": 1250,
       "y": 0,
       "width": 110,
       "height": 35,
@@ -643,13 +224,13 @@
       }
     },
     {
-      "id": "1753253289707",
-      "type": "textTriangle",
-      "x": 960,
+      "id": "1753281696994",
+      "type": "textCircle",
+      "x": 1250,
       "y": 0,
-      "size": 200,
-      "title": "Testing 2:48",
-      "content": "重新打造相機環經典標誌融入邊框，透過低調設計融入您對品牌的熱愛。同時保留必要防摔保護功能，纖薄輕巧安心便攜。",
+      "radius": 120,
+      "title": "阿昇",
+      "content": "她的聲音像深夜的鋼琴，靜靜地，擊中我。",
       "options": {
         "restitution": 0,
         "render": {
@@ -660,9 +241,9 @@
       }
     },
     {
-      "id": "1753253289712",
+      "id": "1753281696995",
       "type": "roundRect",
-      "x": 960,
+      "x": 1250,
       "y": 0,
       "width": 110,
       "height": 35,
@@ -680,13 +261,13 @@
       }
     },
     {
-      "id": "1753254208909",
-      "type": "textTriangle",
-      "x": 960,
+      "id": "1753281713456",
+      "type": "textCircle",
+      "x": 1250,
       "y": 0,
-      "size": 200,
-      "title": "Murakami",
-      "content": "村上隆 X CASETIFY、第二章の幕開け。 カイカイとキキ、対照的なツインキャラクターが描き出す、新しいクリエイティブな世界。 多様な個性が交わることで、創造の可能性が広がる、唯一無二のコレクショ",
+      "radius": 120,
+      "title": "Vic 🧊",
+      "content": "I ONCE DREW HEARTS ON THE FOGGED GLASS FOR YOU. THEY’RE PROBABLY STILL THERE.",
       "options": {
         "restitution": 0,
         "render": {
@@ -697,9 +278,270 @@
       }
     },
     {
-      "id": "1753254208911",
+      "id": "1753281713458",
       "type": "roundRect",
-      "x": 960,
+      "x": 1250,
+      "y": 0,
+      "width": 110,
+      "height": 35,
+      "title": "Feeling",
+      "options": {
+        "chamfer": {
+          "radius": 35
+        },
+        "restitution": 0,
+        "render": {
+          "fillStyle": "transparent",
+          "strokeStyle": "#000000",
+          "lineWidth": 1
+        }
+      }
+    },
+    {
+      "id": "1753281742804",
+      "type": "textCircle",
+      "x": 1250,
+      "y": 0,
+      "radius": 120,
+      "title": "Anson Ma",
+      "content": "最記得係同你講再見。 ",
+      "options": {
+        "restitution": 0,
+        "render": {
+          "fillStyle": "#ffffff",
+          "strokeStyle": "#333333",
+          "lineWidth": 2
+        }
+      }
+    },
+    {
+      "id": "1753281742805",
+      "type": "roundRect",
+      "x": 1250,
+      "y": 0,
+      "width": 110,
+      "height": 35,
+      "title": "Timing",
+      "options": {
+        "chamfer": {
+          "radius": 35
+        },
+        "restitution": 0,
+        "render": {
+          "fillStyle": "transparent",
+          "strokeStyle": "#000000",
+          "lineWidth": 1
+        }
+      }
+    },
+    {
+      "id": "1753281761955",
+      "type": "textTriangle",
+      "x": 1250,
+      "y": 0,
+      "size": 200,
+      "title": "JiaJia",
+      "content": "GRIEF IS JUST LOVE WITH NOWHERE TO GO.",
+      "options": {
+        "restitution": 0,
+        "render": {
+          "fillStyle": "#ffffff",
+          "strokeStyle": "#333333",
+          "lineWidth": 2
+        }
+      }
+    },
+    {
+      "id": "1753281761956",
+      "type": "roundRect",
+      "x": 1250,
+      "y": 0,
+      "width": 110,
+      "height": 35,
+      "title": "Timing",
+      "options": {
+        "chamfer": {
+          "radius": 35
+        },
+        "restitution": 0,
+        "render": {
+          "fillStyle": "transparent",
+          "strokeStyle": "#000000",
+          "lineWidth": 1
+        }
+      }
+    },
+    {
+      "id": "1753281777223",
+      "type": "textRectangle",
+      "x": 1250,
+      "y": 0,
+      "width": 240,
+      "height": 240,
+      "title": "Casey T.",
+      "content": "BEAUTY LIVES IN PAUSES, NOT POSTS.",
+      "options": {
+        "restitution": 0,
+        "render": {
+          "fillStyle": "#ffffff",
+          "strokeStyle": "#333333",
+          "lineWidth": 2
+        }
+      }
+    },
+    {
+      "id": "1753281777225",
+      "type": "roundRect",
+      "x": 1250,
+      "y": 0,
+      "width": 110,
+      "height": 35,
+      "title": "Timing",
+      "options": {
+        "chamfer": {
+          "radius": 35
+        },
+        "restitution": 0,
+        "render": {
+          "fillStyle": "transparent",
+          "strokeStyle": "#000000",
+          "lineWidth": 1
+        }
+      }
+    },
+    {
+      "id": "1753281790403",
+      "type": "textCircle",
+      "x": 1250,
+      "y": 0,
+      "radius": 120,
+      "title": "Esther",
+      "content": "愛係種設計，每個選擇都會留低一個痕。",
+      "options": {
+        "restitution": 0,
+        "render": {
+          "fillStyle": "#ffffff",
+          "strokeStyle": "#333333",
+          "lineWidth": 2
+        }
+      }
+    },
+    {
+      "id": "1753281790404",
+      "type": "roundRect",
+      "x": 1250,
+      "y": 0,
+      "width": 110,
+      "height": 35,
+      "title": "Journey",
+      "options": {
+        "chamfer": {
+          "radius": 35
+        },
+        "restitution": 0,
+        "render": {
+          "fillStyle": "transparent",
+          "strokeStyle": "#000000",
+          "lineWidth": 1
+        }
+      }
+    },
+    {
+      "id": "1753281805585",
+      "type": "textCircle",
+      "x": 1250,
+      "y": 0,
+      "radius": 120,
+      "title": "Omar",
+      "content": "DESIGN IS HOW WE SPEAK WHEN WORDS FAIL.",
+      "options": {
+        "restitution": 0,
+        "render": {
+          "fillStyle": "#ffffff",
+          "strokeStyle": "#333333",
+          "lineWidth": 2
+        }
+      }
+    },
+    {
+      "id": "1753281805586",
+      "type": "roundRect",
+      "x": 1250,
+      "y": 0,
+      "width": 110,
+      "height": 35,
+      "title": "Timing",
+      "options": {
+        "chamfer": {
+          "radius": 35
+        },
+        "restitution": 0,
+        "render": {
+          "fillStyle": "transparent",
+          "strokeStyle": "#000000",
+          "lineWidth": 1
+        }
+      }
+    },
+    {
+      "id": "1753281903288",
+      "type": "textRectangle",
+      "x": 1250,
+      "y": 0,
+      "width": 240,
+      "height": 240,
+      "title": "Emma Fung",
+      "content": "我好投入同享受做我份FYP，至少對得起自己。",
+      "options": {
+        "restitution": 0,
+        "render": {
+          "fillStyle": "#ffffff",
+          "strokeStyle": "#333333",
+          "lineWidth": 2
+        }
+      }
+    },
+    {
+      "id": "1753281903290",
+      "type": "roundRect",
+      "x": 1250,
+      "y": 0,
+      "width": 110,
+      "height": 35,
+      "title": "Story",
+      "options": {
+        "chamfer": {
+          "radius": 35
+        },
+        "restitution": 0,
+        "render": {
+          "fillStyle": "transparent",
+          "strokeStyle": "#000000",
+          "lineWidth": 1
+        }
+      }
+    },
+    {
+      "id": "1753313151328",
+      "type": "textTriangle",
+      "x": 1250,
+      "y": 0,
+      "size": 200,
+      "title": "Evan K.",
+      "content": "我發現設計唔止關於靚，而係睇得見感覺。",
+      "options": {
+        "restitution": 0,
+        "render": {
+          "fillStyle": "#ffffff",
+          "strokeStyle": "#333333",
+          "lineWidth": 2
+        }
+      }
+    },
+    {
+      "id": "1753313151330",
+      "type": "roundRect",
+      "x": 1250,
       "y": 0,
       "width": 140,
       "height": 35,
@@ -717,14 +559,14 @@
       }
     },
     {
-      "id": "1753276990493",
+      "id": "1753313166428",
       "type": "textRectangle",
-      "x": 960,
+      "x": 1250,
       "y": 0,
       "width": 240,
       "height": 240,
-      "title": "Ghhh",
-      "content": "GHHGH",
+      "title": "Yuki",
+      "content": "你今日點樣睇世界，會決定你明日點樣設計佢。",
       "options": {
         "restitution": 0,
         "render": {
@@ -735,9 +577,566 @@
       }
     },
     {
-      "id": "1753276990496",
+      "id": "1753313166430",
       "type": "roundRect",
-      "x": 960,
+      "x": 1250,
+      "y": 0,
+      "width": 110,
+      "height": 35,
+      "title": "Feeling",
+      "options": {
+        "chamfer": {
+          "radius": 35
+        },
+        "restitution": 0,
+        "render": {
+          "fillStyle": "transparent",
+          "strokeStyle": "#000000",
+          "lineWidth": 1
+        }
+      }
+    },
+    {
+      "id": "1753313194042",
+      "type": "textCircle",
+      "x": 1250,
+      "y": 0,
+      "radius": 120,
+      "title": "Paul",
+      "content": "EVERY PATTERN IS A MEMORY IN DISGUISE.",
+      "options": {
+        "restitution": 0,
+        "render": {
+          "fillStyle": "#ffffff",
+          "strokeStyle": "#333333",
+          "lineWidth": 2
+        }
+      }
+    },
+    {
+      "id": "1753313194043",
+      "type": "roundRect",
+      "x": 1250,
+      "y": 0,
+      "width": 110,
+      "height": 35,
+      "title": "Timing",
+      "options": {
+        "chamfer": {
+          "radius": 35
+        },
+        "restitution": 0,
+        "render": {
+          "fillStyle": "transparent",
+          "strokeStyle": "#000000",
+          "lineWidth": 1
+        }
+      }
+    },
+    {
+      "id": "1753313210682",
+      "type": "textTriangle",
+      "x": 1250,
+      "y": 0,
+      "size": 200,
+      "title": "Ami 🪨",
+      "content": "A STORY HIDES IN EVERY CRACK, IF YOU STARE LONG ENOUGH.",
+      "options": {
+        "restitution": 0,
+        "render": {
+          "fillStyle": "#ffffff",
+          "strokeStyle": "#333333",
+          "lineWidth": 2
+        }
+      }
+    },
+    {
+      "id": "1753313210684",
+      "type": "roundRect",
+      "x": 1250,
+      "y": 0,
+      "width": 140,
+      "height": 35,
+      "title": "Resonance",
+      "options": {
+        "chamfer": {
+          "radius": 35
+        },
+        "restitution": 0,
+        "render": {
+          "fillStyle": "transparent",
+          "strokeStyle": "#000000",
+          "lineWidth": 1
+        }
+      }
+    },
+    {
+      "id": "1753313244524",
+      "type": "textRectangle",
+      "x": 1250,
+      "y": 0,
+      "width": 240,
+      "height": 240,
+      "title": "Daniel",
+      "content": "WE DIDN’T KISS, BUT THE AIR BETWEEN US DID.",
+      "options": {
+        "restitution": 0,
+        "render": {
+          "fillStyle": "#ffffff",
+          "strokeStyle": "#333333",
+          "lineWidth": 2
+        }
+      }
+    },
+    {
+      "id": "1753313244526",
+      "type": "roundRect",
+      "x": 1250,
+      "y": 0,
+      "width": 110,
+      "height": 35,
+      "title": "Feeling",
+      "options": {
+        "chamfer": {
+          "radius": 35
+        },
+        "restitution": 0,
+        "render": {
+          "fillStyle": "transparent",
+          "strokeStyle": "#000000",
+          "lineWidth": 1
+        }
+      }
+    },
+    {
+      "id": "1753313286337",
+      "type": "textTriangle",
+      "x": 1250,
+      "y": 0,
+      "size": 200,
+      "title": "Kazuki",
+      "content": "COFFEE SPILLED, BUT THE PATTERN LOOKED LIKE A MAP TO SOMEWHERE SOFT.",
+      "options": {
+        "restitution": 0,
+        "render": {
+          "fillStyle": "#ffffff",
+          "strokeStyle": "#333333",
+          "lineWidth": 2
+        }
+      }
+    },
+    {
+      "id": "1753313286340",
+      "type": "roundRect",
+      "x": 1250,
+      "y": 0,
+      "width": 140,
+      "height": 35,
+      "title": "Resonance",
+      "options": {
+        "chamfer": {
+          "radius": 35
+        },
+        "restitution": 0,
+        "render": {
+          "fillStyle": "transparent",
+          "strokeStyle": "#000000",
+          "lineWidth": 1
+        }
+      }
+    },
+    {
+      "id": "1753313343365",
+      "type": "textCircle",
+      "x": 1250,
+      "y": 0,
+      "radius": 120,
+      "title": "Momo Chan",
+      "content": "SATURDAY I SAW LE SSERAFIM WITH MY DAUGHTER. SHE SANG LOUDER THAN ME.",
+      "options": {
+        "restitution": 0,
+        "render": {
+          "fillStyle": "#ffffff",
+          "strokeStyle": "#333333",
+          "lineWidth": 2
+        }
+      }
+    },
+    {
+      "id": "1753313343367",
+      "type": "roundRect",
+      "x": 1250,
+      "y": 0,
+      "width": 110,
+      "height": 35,
+      "title": "Feeling",
+      "options": {
+        "chamfer": {
+          "radius": 35
+        },
+        "restitution": 0,
+        "render": {
+          "fillStyle": "transparent",
+          "strokeStyle": "#000000",
+          "lineWidth": 1
+        }
+      }
+    },
+    {
+      "id": "1753313368485",
+      "type": "textCircle",
+      "x": 1250,
+      "y": 0,
+      "radius": 120,
+      "title": "Rei",
+      "content": "OUR SHADOWS OVERLAPPED. I THINK THAT COUNTS AS A DANCE.",
+      "options": {
+        "restitution": 0,
+        "render": {
+          "fillStyle": "#ffffff",
+          "strokeStyle": "#333333",
+          "lineWidth": 2
+        }
+      }
+    },
+    {
+      "id": "1753313368487",
+      "type": "roundRect",
+      "x": 1250,
+      "y": 0,
+      "width": 110,
+      "height": 35,
+      "title": "Journey",
+      "options": {
+        "chamfer": {
+          "radius": 35
+        },
+        "restitution": 0,
+        "render": {
+          "fillStyle": "transparent",
+          "strokeStyle": "#000000",
+          "lineWidth": 1
+        }
+      }
+    },
+    {
+      "id": "1753313758582",
+      "type": "textCircle",
+      "x": 1250,
+      "y": 0,
+      "radius": 120,
+      "title": "Unknown",
+      "content": "LIFE IS BEAUTIFUL, NOT BECAUSE OF WHAT WE SEE, BUT BECAUSE OF WHAT WE FEEL.",
+      "options": {
+        "restitution": 0,
+        "render": {
+          "fillStyle": "#ffffff",
+          "strokeStyle": "#333333",
+          "lineWidth": 2
+        }
+      }
+    },
+    {
+      "id": "1753313758584",
+      "type": "roundRect",
+      "x": 1250,
+      "y": 0,
+      "width": 140,
+      "height": 35,
+      "title": "Resonance",
+      "options": {
+        "chamfer": {
+          "radius": 35
+        },
+        "restitution": 0,
+        "render": {
+          "fillStyle": "transparent",
+          "strokeStyle": "#000000",
+          "lineWidth": 1
+        }
+      }
+    },
+    {
+      "id": "1753313779496",
+      "type": "textRectangle",
+      "x": 1250,
+      "y": 0,
+      "width": 240,
+      "height": 240,
+      "title": "Ram Dass",
+      "content": "THE QUIETER YOU BECOME, THE MORE YOU CAN HEAR.",
+      "options": {
+        "restitution": 0,
+        "render": {
+          "fillStyle": "#ffffff",
+          "strokeStyle": "#333333",
+          "lineWidth": 2
+        }
+      }
+    },
+    {
+      "id": "1753313779497",
+      "type": "roundRect",
+      "x": 1250,
+      "y": 0,
+      "width": 110,
+      "height": 35,
+      "title": "Journey",
+      "options": {
+        "chamfer": {
+          "radius": 35
+        },
+        "restitution": 0,
+        "render": {
+          "fillStyle": "transparent",
+          "strokeStyle": "#000000",
+          "lineWidth": 1
+        }
+      }
+    },
+    {
+      "id": "1753313807365",
+      "type": "textTriangle",
+      "x": 1250,
+      "y": 0,
+      "size": 200,
+      "title": "Confucius",
+      "content": "EVERYTHING HAS BEAUTY, BUT NOT EVERYONE SEES IT.",
+      "options": {
+        "restitution": 0,
+        "render": {
+          "fillStyle": "#ffffff",
+          "strokeStyle": "#333333",
+          "lineWidth": 2
+        }
+      }
+    },
+    {
+      "id": "1753313807367",
+      "type": "roundRect",
+      "x": 1250,
+      "y": 0,
+      "width": 140,
+      "height": 35,
+      "title": "Resonance",
+      "options": {
+        "chamfer": {
+          "radius": 35
+        },
+        "restitution": 0,
+        "render": {
+          "fillStyle": "transparent",
+          "strokeStyle": "#000000",
+          "lineWidth": 1
+        }
+      }
+    },
+    {
+      "id": "1753313853431",
+      "type": "textTriangle",
+      "x": 1250,
+      "y": 0,
+      "size": 200,
+      "title": "Paulo Coelho",
+      "content": "THE SIMPLE THINGS ARE ALSO THE MOST EXTRAORDINARY THINGS, AND ONLY THE WISE CAN SEE THEM.",
+      "options": {
+        "restitution": 0,
+        "render": {
+          "fillStyle": "#ffffff",
+          "strokeStyle": "#333333",
+          "lineWidth": 2
+        }
+      }
+    },
+    {
+      "id": "1753313853433",
+      "type": "roundRect",
+      "x": 1250,
+      "y": 0,
+      "width": 110,
+      "height": 35,
+      "title": "Feeling",
+      "options": {
+        "chamfer": {
+          "radius": 35
+        },
+        "restitution": 0,
+        "render": {
+          "fillStyle": "transparent",
+          "strokeStyle": "#000000",
+          "lineWidth": 1
+        }
+      }
+    },
+    {
+      "id": "1753313867510",
+      "type": "textCircle",
+      "x": 1250,
+      "y": 0,
+      "radius": 120,
+      "title": "Allie Otoski",
+      "content": "THERE IS BEAUTY IN THE QUIET MOMENTS...",
+      "options": {
+        "restitution": 0,
+        "render": {
+          "fillStyle": "#ffffff",
+          "strokeStyle": "#333333",
+          "lineWidth": 2
+        }
+      }
+    },
+    {
+      "id": "1753313867512",
+      "type": "roundRect",
+      "x": 1250,
+      "y": 0,
+      "width": 110,
+      "height": 35,
+      "title": "Timing",
+      "options": {
+        "chamfer": {
+          "radius": 35
+        },
+        "restitution": 0,
+        "render": {
+          "fillStyle": "transparent",
+          "strokeStyle": "#000000",
+          "lineWidth": 1
+        }
+      }
+    },
+    {
+      "id": "1753313883245",
+      "type": "textCircle",
+      "x": 1250,
+      "y": 0,
+      "radius": 120,
+      "title": "Eden Phillpotts",
+      "content": "THE WORLD IS FULL OF MAGIC THINGS, PATIENTLY WAITING FOR OUR SENSES TO GROW SHARPER.",
+      "options": {
+        "restitution": 0,
+        "render": {
+          "fillStyle": "#ffffff",
+          "strokeStyle": "#333333",
+          "lineWidth": 2
+        }
+      }
+    },
+    {
+      "id": "1753313883246",
+      "type": "roundRect",
+      "x": 1250,
+      "y": 0,
+      "width": 140,
+      "height": 35,
+      "title": "Resonance",
+      "options": {
+        "chamfer": {
+          "radius": 35
+        },
+        "restitution": 0,
+        "render": {
+          "fillStyle": "transparent",
+          "strokeStyle": "#000000",
+          "lineWidth": 1
+        }
+      }
+    },
+    {
+      "id": "1753313907397",
+      "type": "textTriangle",
+      "x": 1250,
+      "y": 0,
+      "size": 200,
+      "title": "Unknown",
+      "content": "TO HAVE AN APPRECIATION FOR THE HIDDEN BEAUTY WITHIN THE MOST MODEST AND UNEXPECTED PLACES, IS TRUE ",
+      "options": {
+        "restitution": 0,
+        "render": {
+          "fillStyle": "#ffffff",
+          "strokeStyle": "#333333",
+          "lineWidth": 2
+        }
+      }
+    },
+    {
+      "id": "1753313907399",
+      "type": "roundRect",
+      "x": 1250,
+      "y": 0,
+      "width": 110,
+      "height": 35,
+      "title": "Journey",
+      "options": {
+        "chamfer": {
+          "radius": 35
+        },
+        "restitution": 0,
+        "render": {
+          "fillStyle": "transparent",
+          "strokeStyle": "#000000",
+          "lineWidth": 1
+        }
+      }
+    },
+    {
+      "id": "1753313925193",
+      "type": "textTriangle",
+      "x": 1250,
+      "y": 0,
+      "size": 200,
+      "title": "Unknown",
+      "content": "SILENCE ISN'T EMPTY, IT'S FULL OF ANSWERS.",
+      "options": {
+        "restitution": 0,
+        "render": {
+          "fillStyle": "#ffffff",
+          "strokeStyle": "#333333",
+          "lineWidth": 2
+        }
+      }
+    },
+    {
+      "id": "1753313925194",
+      "type": "roundRect",
+      "x": 1250,
+      "y": 0,
+      "width": 140,
+      "height": 35,
+      "title": "Resonance",
+      "options": {
+        "chamfer": {
+          "radius": 35
+        },
+        "restitution": 0,
+        "render": {
+          "fillStyle": "transparent",
+          "strokeStyle": "#000000",
+          "lineWidth": 1
+        }
+      }
+    },
+    {
+      "id": "1753414889256",
+      "type": "textTriangle",
+      "x": 1250,
+      "y": 0,
+      "size": 200,
+      "title": "Wyman",
+      "content": "BEAUTIFUL",
+      "options": {
+        "restitution": 0,
+        "render": {
+          "fillStyle": "#ffffff",
+          "strokeStyle": "#333333",
+          "lineWidth": 2
+        }
+      }
+    },
+    {
+      "id": "1753414889260",
+      "type": "roundRect",
+      "x": 1250,
       "y": 0,
       "width": 110,
       "height": 35,

@@ -67,15 +67,9 @@ document.addEventListener('DOMContentLoaded', () => {
 
     const engine = Engine.create({
         gravity: { x: 0, y: 1 },
-        positionIterations: 20,  // Increased from 10 for better collision resolution
-        velocityIterations: 15,  // Increased from 8 for smoother movement
-        enableSleeping: true,
-        constraintIterations: 10, // Add this for better constraint resolution
-        enableSleeping: true,
-        sleeping: {
-            timeBeforeSleep: 1000, // Time in ms before a body goes to sleep
-            speedThreshold: 0.1    // Minimum speed before sleeping
-        }
+        positionIterations: 10,  // Default: 6 (Higher = Better collision resolution)
+        velocityIterations: 8,   // Default: 4 (Higher = Smoother movement)
+        enableSleeping: true
     });
     engine.timing.timeScale = 0.8;
 
